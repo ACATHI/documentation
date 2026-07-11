@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Registre de l'informe -->
+    <record id="action_report_application_bcn" model="ir.actions.report">
+        <field name="name">Sol·licitud Ajuntament de Barcelona</field>
+        <field name="model">grant.application</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">grant_management.report_application_bcn_document</field>
+        <field name="report_file">grant_management.report_application_bcn_document</field>
+        <field name="binding_model_id" ref="model_grant_application"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="base.paperformat_euro"/>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         PLANTILLA PRINCIPAL
+    ═══════════════════════════════════════════════════════════════════════ -->
+
+    <template id="report_application_bcn_document">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="grant_management.report_application_bcn_styles">
+                <t t-call="web.external_layout">
+                    <div class="page">
+
+                        <!-- ── CAPÇALERA ─────────────────────────────────── -->
+                        <div class="row mb-4" style="border-bottom:2px solid #003366; padding-bottom:12px;">
+                            <div class="col-8">
+                                <h2 style="color:#003366; margin:0;">
+                                    SOL·LICITUD DE SUBVENCIÓ
+                                </h2>
+                                <h4 style="color:#333; margin-top:4px;">
+                                    <t t-esc="o.call_id.name or ''"/>
+                                </h4>
+                                <p style="margin:0; color:#666;">
+                                    Any <t t-esc="o.call_id.year or ''"/> ·
+                                    Línia: <t t-esc="o.call_id.line_code or '—'"/>
+                                    <t t-if="o.call_id.subline_name">
+                                        — <t t-esc="o.call_id.subline_name"/>
+                                    </t>
+                                </p>
+                            </div>
+                            <div class="col-4 text-right">
+                                <t t-if="o.funder_id.logo">
+                                    <img t-att-src="image_data_uri(o.funder_id.logo)"
+                                         style="max-height:70px; max-width:160px;"/>
+                                </t>
+                            </div>
+                        </div>
+
+                        <!-- ── 1. DADES DE L'ENTITAT ─────────────────────── -->
+                        <div class="mb-4">
+                            <h4 class="report-section-title">1. Dades de l'entitat sol·licitant</h4>
+                            <table class="table table-sm table-bordered">
+                                <tr>
+                                    <th style="width:25%; background:#f0f4f8;">Nom de l'entitat</th>
+                                    <td colspan="3"><t t-esc="o.partner_id.name or ''"/></td>
+                                </tr>
+                                <tr>
+                                    <th style="background:#f0f4f8;">NIF / CIF</th>
+                                    <td><t t-esc="o.nif or ''"/></td>
+                                    <th style="background:#f0f4f8;">Anys d'activitat</th>
+                                    <td><t t-esc="o.entity_years_activity or '—'"/></td>
+                                </tr>
+                                <tr>
+                                    <th style="background:#f0f4f8;">Persona de contacte</th>
+                                    <td><t t-esc="o.contact_person or ''"/></td>
+                                    <th style="background:#f0f4f8;">Telèfon</th>
+                                    <td><t t-esc="o.contact_phone or ''"/></td>
+                                </tr>
+                                <tr>
+                                    <th style="background:#f0f4f8;">Correu electrònic</th>
+                                    <td><t t-esc="o.contact_email or ''"/></td>
+                                    <th style="background:#f0f4f8;">Membre de federació</th>
+                                    <td>
+                                        <t t-if="o.federation_member">
+                                            Sí — <t t-esc="o.federation_names or ''"/>
+                                        </t>
+                                        <t t-else="">No</t>
+                                    </td>
+                                </tr>
+                            </table>
+                            <t t-if="o.entity_feminist_trajectory_html">
+                                <p><strong>Trajectòria feminista de l'entitat:</strong></p>
+                                <div class="report-html-content">
+                                    <t t-raw="o.entity_feminist_trajectory_html or ''"/>
+                                </div>
+                            </t>
+                        </div>
+
+                        <!-- ── 2. DADES DEL PROJECTE ─────────────────────── -->
+                        <div class="mb-4">
+                            <h4 class="report-section-title">2. Dades del projecte</h4>
+                            <table class="table table-sm table-bordered">
+                                <tr>
+                                    <th style="width:25%; background:#f0f4f8;">Nom del projecte</th>
+                                    <td colspan="3"><strong><t t-esc="o.name or ''"/></strong></td>
+                                </tr>
+                                <tr>
+                                    <th style="background:#f0f4f8;">Línia</th>
+                                    <td><t t-esc="o.call_line or '—'"/></td>
+                                    <th style="background:#f0f4f8;">Àmbit territorial</th>
+                                    <td><t t-esc="o.ambit or '—'"/></td>
+                                </tr>
+                                <tr>
+                                    <th style="background:#f0f4f8;">Data inici</th>
+                                    <td><t t-esc="o.date_start or '—'"/></td>
+                                    <th style="background:#f0f4f8;">Data fi</th>
+                                    <td><t t-esc="o.date_end or '—'"/></td>
+                                </tr>
+                                <tr>
+                                    <th style="background:#f0f4f8;">Import sol·licitat</th>
+                                    <td>
+                                        <strong>
+                                            <t t-esc="'{:,.2f} €'.format(o.amount_requested or 0)"/>
+                                        </strong>
+                                    </td>
+                                    <th style="background:#f0f4f8;">% sobre pressupost total</th>
+                                    <td><t t-esc="'{:.1f}%'.format(o.grant_pct or 0)"/></td>
+                                </tr>
+                                <tr>
+                                    <th style="background:#f0f4f8;">Nre. beneficiaris previstos</th>
+                                    <td colspan="3"><t t-esc="o.num_participants or '—'"/></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <!-- ── 3. NECESSITAT SOCIAL ──────────────────────── -->
+                        <div class="mb-4">
+                            <h4 class="report-section-title">3. Context i necessitat social</h4>
+                            <div class="report-html-content">
+                                <t t-raw="o.background_html or '&lt;p&gt;—&lt;/p&gt;'"/>
+                            </div>
+                        </div>
+
+                        <!-- ── 4. DESCRIPCIÓ DEL PROJECTE ────────────────── -->
+                        <div class="mb-4">
+                            <h4 class="report-section-title">4. Descripció del projecte</h4>
+                            <div class="report-html-content">
+                                <t t-raw="o.description_html or '&lt;p&gt;—&lt;/p&gt;'"/>
+                            </div>
+                        </div>
+
+                        <!-- ── 5. GRUP DESTINATARI I OBJECTIUS ───────────── -->
+                        <div class="mb-4">
+                            <h4 class="report-section-title">5. Grup destinatari i objectius</h4>
+                            <p><strong>Grup destinatari:</strong></p>
+                            <div class="report-html-content">
+                                <t t-raw="o.target_group_html or '&lt;p&gt;—&lt;/p&gt;'"/>
+                            </div>
+                            <p class="mt-2"><strong>Objectiu general:</strong></p>
+                            <p><t t-esc="o.general_objective or '—'"/></p>
+                            <t t-if="o.specific_objectives_html">
+                                <p><strong>Objectius específics:</strong></p>
+                                <div class="report-html-content">
+                                    <t t-raw="o.specific_objectives_html"/>
+                                </div>
+                            </t>
+                        </div>
+
+                        <!-- ── 6. PLA D'EXECUCIÓ ─────────────────────────── -->
+                        <div class="mb-4">
+                            <h4 class="report-section-title">6. Pla d'execució</h4>
+                            <t t-if="o.methodology_html">
+                                <p><strong>Metodologia:</strong></p>
+                                <div class="report-html-content">
+                                    <t t-raw="o.methodology_html"/>
+                                </div>
+                            </t>
+                            <t t-if="o.grant_activity_ids">
+                                <p class="mt-2"><strong>Activitats:</strong></p>
+                                <table class="table table-sm table-bordered">
+                                    <thead style="background:#003366; color:white;">
+                                        <tr>
+                                            <th style="width:5%">Nre.</th>
+                                            <th style="width:35%">Activitat</th>
+                                            <th style="width:15%">Inici</th>
+                                            <th style="width:15%">Fi</th>
+                                            <th style="width:15%">Responsable</th>
+                                            <th style="width:15%">Mesos execució</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="o.grant_activity_ids" t-as="act">
+                                            <tr>
+                                                <td class="text-center">
+                                                    <t t-esc="act_index + 1"/>
+                                                </td>
+                                                <td><t t-esc="act.name"/></td>
+                                                <td><t t-esc="act.date_start or '—'"/></td>
+                                                <td><t t-esc="act.date_end or '—'"/></td>
+                                                <td><t t-esc="act.responsible or '—'"/></td>
+                                                <td><t t-esc="act.execution_months or '—'"/></td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </t>
+                            <t t-if="o.indicator_ids">
+                                <p class="mt-2"><strong>Indicadors de seguiment:</strong></p>
+                                <table class="table table-sm table-bordered">
+                                    <thead style="background:#003366; color:white;">
+                                        <tr>
+                                            <th style="width:40%">Indicador</th>
+                                            <th style="width:15%">Tipus</th>
+                                            <th style="width:20%">Valor previst</th>
+                                            <th style="width:25%">Font de verificació</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="o.indicator_ids" t-as="ind">
+                                            <tr>
+                                                <td><t t-esc="ind.name"/></td>
+                                                <td>
+                                                    <t t-esc="dict(ind._fields['indicator_type'].selection).get(ind.indicator_type, '')"/>
+                                                </td>
+                                                <td>
+                                                    <t t-if="ind.expected_value">
+                                                        <t t-esc="ind.expected_value"/>
+                                                    </t>
+                                                    <t t-elif="ind.expected_value_num">
+                                                        <t t-esc="ind.expected_value_num"/>
+                                                    </t>
+                                                    <t t-else="">—</t>
+                                                </td>
+                                                <td><t t-esc="ind.source or '—'"/></td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </t>
+                        </div>
+
+                        <!-- ── 7. PERSPECTIVA ECOSOCIAL (condicional BCN) ── -->
+                        <t t-if="o.show_ecosocial and o.ecosocial_perspective_html">
+                            <div class="mb-4">
+                                <h4 class="report-section-title">7. Perspectiva ecosocial</h4>
+                                <div class="report-html-content">
+                                    <t t-raw="o.ecosocial_perspective_html"/>
+                                </div>
+                            </div>
+                        </t>
+
+                        <!-- ── 8. PERSPECTIVA INTERCULTURAL (condicional BCN) -->
+                        <t t-if="o.show_intercultural and o.intercultural_perspective_html">
+                            <div class="mb-4">
+                                <h4 class="report-section-title">8. Perspectiva intercultural</h4>
+                                <div class="report-html-content">
+                                    <t t-raw="o.intercultural_perspective_html"/>
+                                </div>
+                            </div>
+                        </t>
+
+                        <!-- ── 9. PERSPECTIVA DE GÈNERE ──────────────────── -->
+                        <t t-if="o.gender_perspective_html">
+                            <div class="mb-4">
+                                <h4 class="report-section-title">9. Perspectiva de gènere</h4>
+                                <div class="report-html-content">
+                                    <t t-raw="o.gender_perspective_html"/>
+                                </div>
+                            </div>
+                        </t>
+
+                        <!-- ── 10. COMUNICACIÓ ───────────────────────────── -->
+                        <div class="mb-4">
+                            <h4 class="report-section-title">10. Pla de comunicació</h4>
+                            <t t-if="o.communication_plan_html">
+                                <div class="report-html-content">
+                                    <t t-raw="o.communication_plan_html"/>
+                                </div>
+                            </t>
+                            <t t-if="o.communication_products or o.communication_message">
+                                <table class="table table-sm table-bordered mt-2">
+                                    <t t-if="o.communication_products">
+                                        <tr>
+                                            <th style="width:30%; background:#f0f4f8;">Productes de comunicació</th>
+                                            <td><t t-esc="o.communication_products"/></td>
+                                        </tr>
+                                    </t>
+                                    <t t-if="o.communication_message">
+                                        <tr>
+                                            <th style="background:#f0f4f8;">Missatge comunicatiu</th>
+                                            <td><t t-esc="o.communication_message"/></td>
+                                        </tr>
+                                    </t>
+                                </table>
+                            </t>
+                        </div>
+
+                        <!-- ── 11. VIABILITAT I COL·LABORADORS ───────────── -->
+                        <div class="mb-4">
+                            <h4 class="report-section-title">11. Viabilitat econòmica i col·laboradors</h4>
+                            <table class="table table-sm table-bordered">
+                                <tr>
+                                    <th style="width:40%; background:#f0f4f8;">% finançament propi</th>
+                                    <td><t t-esc="'{:.1f}%'.format(o.own_funding_pct or 0)"/></td>
+                                    <th style="background:#f0f4f8;">% pressupost / pressupost entitat</th>
+                                    <td><t t-esc="'{:.1f}%'.format(o.project_budget_pct_entity or 0)"/></td>
+                                </tr>
+                            </table>
+                            <t t-if="o.cofunding_ids">
+                                <p><strong>Cofinançament:</strong></p>
+                                <table class="table table-sm table-bordered">
+                                    <thead style="background:#e8eef5;">
+                                        <tr>
+                                            <th>Administració / entitat</th>
+                                            <th>Concepte / programa</th>
+                                            <th class="text-right">Import (€)</th>
+                                            <th>Estat</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="o.cofunding_ids" t-as="cf">
+                                            <tr>
+                                                <td><t t-esc="cf.administration"/></td>
+                                                <td><t t-esc="cf.concept or '—'"/></td>
+                                                <td class="text-right">
+                                                    <t t-esc="'{:,.2f}'.format(cf.amount or 0)"/>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="dict(cf._fields['cofunding_state'].selection).get(cf.cofunding_state, '')"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </t>
+                            <t t-if="o.collaborator_ids">
+                                <p><strong>Entitats col·laboradores:</strong></p>
+                                <table class="table table-sm table-bordered">
+                                    <thead style="background:#e8eef5;">
+                                        <tr>
+                                            <th style="width:40%">Entitat</th>
+                                            <th style="width:30%">Rol en el projecte</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="o.collaborator_ids" t-as="col">
+                                            <tr>
+                                                <td><t t-esc="col.name or ''"/></td>
+                                                <td><t t-esc="col.role or '—'"/></td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </t>
+                        </div>
+
+                        <!-- ── 12. PRESSUPOST ────────────────────────────── -->
+                        <div class="mb-4">
+                            <h4 class="report-section-title">12. Pressupost del projecte</h4>
+
+                            <!-- Despeses -->
+                            <p><strong>Despeses:</strong></p>
+                            <table class="table table-sm table-bordered">
+                                <thead style="background:#003366; color:white;">
+                                    <tr>
+                                        <th style="width:25%">Categoria</th>
+                                        <th style="width:35%">Descripció</th>
+                                        <th class="text-right" style="width:20%">Import sol·licitat (€)</th>
+                                        <th class="text-right" style="width:20%">% sobre total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.budget_expense_ids" t-as="exp">
+                                        <tr>
+                                            <td><t t-esc="exp.category_id.name"/></td>
+                                            <td><t t-esc="exp.description or '—'"/></td>
+                                            <td class="text-right">
+                                                <t t-esc="'{:,.2f}'.format(exp.amount_requested or 0)"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <t t-if="o.total_expenses">
+                                                    <t t-esc="'{:.1f}%'.format((exp.amount_requested or 0) / o.total_expenses * 100)"/>
+                                                </t>
+                                                <t t-else="">—</t>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                                <tfoot style="background:#e8eef5; font-weight:bold;">
+                                    <tr>
+                                        <td colspan="2"><strong>TOTAL DESPESES</strong></td>
+                                        <td class="text-right">
+                                            <strong><t t-esc="'{:,.2f}'.format(o.total_expenses or 0)"/></strong>
+                                        </td>
+                                        <td class="text-right">100%</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+
+                            <!-- Ingressos -->
+                            <p class="mt-2"><strong>Ingressos:</strong></p>
+                            <table class="table table-sm table-bordered">
+                                <thead style="background:#003366; color:white;">
+                                    <tr>
+                                        <th style="width:30%">Tipus</th>
+                                        <th style="width:40%">Descripció</th>
+                                        <th class="text-right" style="width:30%">Import (€)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.budget_income_ids" t-as="inc">
+                                        <tr>
+                                            <td>
+                                                <t t-esc="dict(inc._fields['source_type'].selection).get(inc.source_type, '')"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="inc.description or ''"/>
+                                                <t t-if="inc.funder_id"> (<t t-esc="inc.funder_id.name"/>)</t>
+                                            </td>
+                                            <td class="text-right">
+                                                <t t-esc="'{:,.2f}'.format(inc.amount or 0)"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                                <tfoot style="background:#e8eef5; font-weight:bold;">
+                                    <tr>
+                                        <td colspan="2"><strong>TOTAL INGRESSOS</strong></td>
+                                        <td class="text-right">
+                                            <strong><t t-esc="'{:,.2f}'.format(o.total_income or 0)"/></strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <strong>Import sol·licitat a l'Ajuntament</strong>
+                                        </td>
+                                        <td class="text-right">
+                                            <strong style="color:#003366;">
+                                                <t t-esc="'{:,.2f}'.format(o.amount_requested or 0)"/>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+                        <!-- ── 13. CLÀUSULES SOCIALS (condicional) ───────── -->
+                        <t t-if="o.show_social_clauses">
+                            <div class="mb-4">
+                                <h4 class="report-section-title">13. Clàusules socials</h4>
+                                <table class="table table-sm table-bordered">
+                                    <t t-if="o.vulnerable_staff_count">
+                                        <tr>
+                                            <th style="width:40%; background:#f0f4f8;">Personal en situació de vulnerabilitat</th>
+                                            <td><t t-esc="o.vulnerable_staff_count"/> persones</td>
+                                        </tr>
+                                    </t>
+                                    <t t-if="o.permanent_staff_pct">
+                                        <tr>
+                                            <th style="background:#f0f4f8;">% personal indefinit</th>
+                                            <td><t t-esc="'{:.1f}%'.format(o.permanent_staff_pct)"/></td>
+                                        </tr>
+                                    </t>
+                                </table>
+                                <t t-if="o.reconciliation_measures_html">
+                                    <p><strong>Mesures de conciliació:</strong></p>
+                                    <div class="report-html-content">
+                                        <t t-raw="o.reconciliation_measures_html"/>
+                                    </div>
+                                </t>
+                                <t t-if="o.harassment_protocol_html">
+                                    <p><strong>Protocol d'assetjament:</strong></p>
+                                    <div class="report-html-content">
+                                        <t t-raw="o.harassment_protocol_html"/>
+                                    </div>
+                                </t>
+                            </div>
+                        </t>
+
+                        <!-- ── 14. PLA DE REVALORACIÓ (condicional BCN) ──── -->
+                        <t t-if="o.show_revaluation_plan and o.revaluation_plan_html">
+                            <div class="mb-4">
+                                <h4 class="report-section-title">14. Pla de Revaloració</h4>
+                                <div class="report-html-content">
+                                    <t t-raw="o.revaluation_plan_html"/>
+                                </div>
+                            </div>
+                        </t>
+
+                        <!-- ── PEU ───────────────────────────────────────── -->
+                        <div class="mt-5 pt-3" style="border-top:1px solid #ccc; font-size:10px; color:#666;">
+                            <div class="row">
+                                <div class="col-6">
+                                    Referència expedient: <t t-esc="o.name or ''"/>
+                                </div>
+                                <div class="col-6 text-right">
+                                    Data de generació:
+                                    <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y')"/>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- Estils addicionals -->
+    <template id="report_application_bcn_styles">
+        <t t-call="web.html_container">
+            <style>
+                .report-section-title {
+                    color: #003366;
+                    border-left: 4px solid #003366;
+                    padding-left: 8px;
+                    margin-top: 20px;
+                    margin-bottom: 10px;
+                    font-size: 13pt;
+                }
+                .report-html-content p { margin-bottom: 4px; }
+                .table th { font-size: 9pt; }
+                .table td { font-size: 9pt; }
+                tfoot td, tfoot th { font-size: 9.5pt; }
+            </style>
+            <t t-out="0"/>
+        </t>
+    </template>
+
+</odoo>

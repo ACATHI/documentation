@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="module_category_acathi_viajes" model="ir.module.category">
+        <field name="name">Viajes ACATHI</field>
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="group_viajes_user" model="res.groups">
+        <field name="name">Viajes / Usuario</field>
+        <field name="category_id" ref="module_category_acathi_viajes"/>
+        <field name="comment">Ve y gestiona solicitudes y resultados, SIN los datos de identidad (PII).</field>
+    </record>
+
+    <record id="group_viajes_pii" model="res.groups">
+        <field name="name">Viajes / Datos personales (PII)</field>
+        <field name="category_id" ref="module_category_acathi_viajes"/>
+        <field name="implied_ids" eval="[(4, ref('group_viajes_user'))]"/>
+        <field name="comment">Además de lo anterior, puede ver la identidad de la persona viajera (RGPD).</field>
+    </record>
+</odoo>

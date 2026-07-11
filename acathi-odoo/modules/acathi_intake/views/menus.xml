@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_acathi_intake_root" name="Acogida" sequence="15"
+              web_icon="acathi_intake,static/description/icon.png"
+              groups="acathi_intake.group_acathi_intake_user"/>
+
+    <menuitem id="menu_acathi_intake_requests" name="Solicitudes"
+              parent="menu_acathi_intake_root" action="action_intake_request" sequence="10"/>
+
+    <menuitem id="menu_acathi_intake_messages" name="Mensajes de canal"
+              parent="menu_acathi_intake_root" action="action_intake_message" sequence="20"
+              groups="acathi_intake.group_acathi_intake_manager"/>
+</odoo>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_intake_message_tree" model="ir.ui.view">
+        <field name="name">acathi.intake.message.tree</field>
+        <field name="model">acathi.intake.message</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="timestamp"/>
+                <field name="request_id"/>
+                <field name="partner_id"/>
+                <field name="channel"/>
+                <field name="direction"/>
+                <field name="body"/>
+                <field name="processed_by_bot"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_intake_message" model="ir.actions.act_window">
+        <field name="name">Mensajes de canal</field>
+        <field name="res_model">acathi.intake.message</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

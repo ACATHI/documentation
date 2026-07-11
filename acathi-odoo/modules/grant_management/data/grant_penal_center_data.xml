@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- 14 centres penitenciaris de Catalunya (Dep. de Justícia) -->
+
+        <record id="cp_brians1" model="grant.penal.center">
+            <field name="name">Centre Penitenciari Brians 1</field>
+            <field name="code">BRIANS1</field>
+            <field name="province">Baix Llobregat</field>
+        </record>
+
+        <record id="cp_brians2" model="grant.penal.center">
+            <field name="name">Centre Penitenciari Brians 2</field>
+            <field name="code">BRIANS2</field>
+            <field name="province">Baix Llobregat</field>
+        </record>
+
+        <record id="cp_quatre_camins" model="grant.penal.center">
+            <field name="name">Centre Penitenciari Quatre Camins</field>
+            <field name="code">QUATRE_CAM</field>
+            <field name="province">Vallès Oriental</field>
+        </record>
+
+        <record id="cp_lledoners" model="grant.penal.center">
+            <field name="name">Centre Penitenciari Lledoners</field>
+            <field name="code">LLEDONERS</field>
+            <field name="province">Bages</field>
+        </record>
+
+        <record id="cp_puig_basses" model="grant.penal.center">
+            <field name="name">Centre Penitenciari Puig de les Basses</field>
+            <field name="code">PUIG_BASSES</field>
+            <field name="province">Alt Empordà</field>
+        </record>
+
+        <record id="cp_mas_enric" model="grant.penal.center">
+            <field name="name">Centre Penitenciari Mas d'Enric</field>
+            <field name="code">MAS_ENRIC</field>
+            <field name="province">Tarragonès</field>
+        </record>
+
+        <record id="cp_ponent" model="grant.penal.center">
+            <field name="name">Centre Penitenciari Ponent</field>
+            <field name="code">PONENT</field>
+            <field name="province">Segrià</field>
+        </record>
+
+        <record id="cp_tarragona" model="grant.penal.center">
+            <field name="name">Centre Penitenciari Tarragona</field>
+            <field name="code">TARRAGONA</field>
+            <field name="province">Tarragonès</field>
+        </record>
+
+        <record id="cp_girona" model="grant.penal.center">
+            <field name="name">Centre Penitenciari Girona</field>
+            <field name="code">GIRONA</field>
+            <field name="province">Gironès</field>
+        </record>
+
+        <record id="cp_wad_ras" model="grant.penal.center">
+            <field name="name">Centre Penitenciari de Dones (Wad-Ras)</field>
+            <field name="code">WAD_RAS</field>
+            <field name="province">Barcelonès</field>
+        </record>
+
+        <record id="cp_joves" model="grant.penal.center">
+            <field name="name">Centre Penitenciari de Joves</field>
+            <field name="code">JOVES</field>
+            <field name="province">Barcelonès</field>
+        </record>
+
+        <record id="co_terrassa" model="grant.penal.center">
+            <field name="name">Centre Obert de Terrassa</field>
+            <field name="code">CO_TERRASSA</field>
+            <field name="province">Vallès Occidental</field>
+        </record>
+
+        <record id="co_vic" model="grant.penal.center">
+            <field name="name">Centre Obert de Vic</field>
+            <field name="code">CO_VIC</field>
+            <field name="province">Osona</field>
+        </record>
+
+        <record id="co_manresa" model="grant.penal.center">
+            <field name="name">Centre Obert de Manresa</field>
+            <field name="code">CO_MANRESA</field>
+            <field name="province">Bages</field>
+        </record>
+
+    </data>
+</odoo>

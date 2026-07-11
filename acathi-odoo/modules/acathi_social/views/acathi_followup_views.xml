@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_acathi_followup_list" model="ir.ui.view">
+        <field name="name">acathi.followup.plan.list</field>
+        <field name="model">acathi.followup.plan</field>
+        <field name="arch" type="xml">
+            <list string="Planes de Seguimiento">
+                <field name="name"/>
+                <field name="person_id"/>
+                <field name="case_id"/>
+                <field name="responsible_id"/>
+                <field name="date_created"/>
+                <field name="date_review"/>
+                <field name="total_objectives"/>
+                <field name="achieved_objectives"/>
+                <field name="achievement_rate" widget="percentage"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'active'"
+                       decoration-muted="state == 'closed'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_acathi_followup_form" model="ir.ui.view">
+        <field name="name">acathi.followup.plan.form</field>
+        <field name="model">acathi.followup.plan</field>
+        <field name="arch" type="xml">
+            <form string="Plan de Seguimiento">
+                <header>
+                    <button name="action_activate" type="object" string="Activar"
+                            invisible="state != 'draft'" class="btn-primary"/>
+                    <button name="action_review" type="object" string="Marcar revisado"
+                            invisible="state != 'active'"/>
+                    <button name="action_close" type="object" string="Cerrar"
+                            invisible="state == 'closed'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="case_id"/>
+                            <field name="person_id" readonly="1"/>
+                            <field name="responsible_id"/>
+                        </group>
+                        <group>
+                            <field name="date_created"/>
+                            <field name="date_review"/>
+                            <field name="achievement_rate" widget="percentage" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Valoración inicial">
+                        <field name="initial_assessment" nolabel="1"/>
+                    </group>
+                    <group string="Recursos activados">
+                        <field name="activated_resources" nolabel="1"/>
+                    </group>
+                    <separator string="Objetivos"/>
+                    <field name="objective_ids">
+                        <list editable="bottom">
+                            <field name="area"/>
+                            <field name="description"/>
+                            <field name="indicator" optional="show"/>
+                            <field name="deadline"/>
+                            <field name="responsible_id" optional="show"/>
+                            <field name="priority" widget="priority"/>
+                            <field name="state" widget="badge"
+                                   decoration-success="state == 'achieved'"
+                                   decoration-danger="state == 'not_achieved'"
+                                   decoration-warning="state == 'in_progress'"/>
+                        </list>
+                    </field>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_acathi_followup" model="ir.actions.act_window">
+        <field name="name">Planes de Seguimiento</field>
+        <field name="res_model">acathi.followup.plan</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Menú arrel -->
+    <menuitem id="menu_grant_root"
+              name="Subvencions"
+              sequence="80"
+              web_icon="grant_management,static/description/icon.png"/>
+
+    <!-- Expedients -->
+    <menuitem id="menu_grant_applications"
+              name="Expedients"
+              parent="menu_grant_root"
+              action="action_grant_application"
+              sequence="10"/>
+
+    <menuitem id="menu_grant_kanban"
+              name="Tauler"
+              parent="menu_grant_root"
+              action="action_grant_application_kanban"
+              sequence="20"/>
+
+    <!-- Requeriments pendents -->
+    <menuitem id="menu_grant_requirements"
+              name="Requeriments d'esmena"
+              parent="menu_grant_root"
+              action="action_grant_requirement"
+              sequence="30"
+              groups="grant_management.group_grant_manager"/>
+
+    <!-- Dashboard d'indicadors -->
+    <menuitem id="menu_grant_indicators"
+              name="Dashboard d'indicadors"
+              parent="menu_grant_root"
+              action="action_grant_indicator_dashboard"
+              sequence="40"
+              groups="grant_management.group_grant_manager"/>
+
+    <!-- Anàlisi financera (pivot + graph) -->
+    <menuitem id="menu_grant_financial_analysis"
+              name="Anàlisi financera"
+              parent="menu_grant_root"
+              action="action_grant_financial_analysis"
+              sequence="50"
+              groups="grant_management.group_grant_manager"/>
+
+    <!-- Calendari de terminis -->
+    <menuitem id="menu_grant_calendar"
+              name="Calendari de terminis"
+              parent="menu_grant_root"
+              action="action_grant_deadline_calendar"
+              sequence="60"
+              groups="grant_management.group_grant_manager"/>
+
+    <!-- Exportació CSV d'indicadors -->
+    <menuitem id="menu_grant_indicator_export"
+              name="Exportar indicadors (CSV)"
+              parent="menu_grant_root"
+              action="action_grant_indicator_export_wizard"
+              sequence="70"
+              groups="grant_management.group_grant_manager"/>
+
+    <!-- Configuració (accessible des de la Fase 1) -->
+    <menuitem id="menu_grant_config"
+              name="Configuració"
+              parent="menu_grant_root"
+              sequence="90"
+              groups="grant_management.group_grant_admin"/>
+
+    <menuitem id="menu_grant_funders"
+              name="Finançadors"
+              parent="menu_grant_config"
+              action="action_grant_funder"
+              sequence="10"/>
+
+    <menuitem id="menu_grant_calls"
+              name="Convocatòries"
+              parent="menu_grant_config"
+              action="action_grant_call"
+              sequence="20"/>
+
+    <menuitem id="menu_grant_call_configs"
+              name="Configuracions de convocatòria"
+              parent="menu_grant_config"
+              action="action_grant_call_config"
+              sequence="30"/>
+
+    <menuitem id="menu_grant_budget_categories"
+              name="Categories de despesa"
+              parent="menu_grant_config"
+              action="action_grant_budget_category"
+              sequence="40"/>
+
+</odoo>

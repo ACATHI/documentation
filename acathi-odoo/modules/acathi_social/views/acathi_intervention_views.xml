@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_acathi_intervention_list" model="ir.ui.view">
+        <field name="name">acathi.intervention.list</field>
+        <field name="model">acathi.intervention</field>
+        <field name="arch" type="xml">
+            <list string="Intervenciones" default_order="date desc">
+                <field name="date"/>
+                <field name="name"/>
+                <field name="person_id"/>
+                <field name="case_id"/>
+                <field name="intervention_type"/>
+                <field name="modality"/>
+                <field name="professional_id"/>
+                <field name="duration"/>
+                <field name="next_date" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_acathi_intervention_form" model="ir.ui.view">
+        <field name="name">acathi.intervention.form</field>
+        <field name="model">acathi.intervention</field>
+        <field name="arch" type="xml">
+            <form string="Intervención">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Título de la intervención"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="case_id"/>
+                            <field name="person_id" readonly="1"/>
+                            <field name="date"/>
+                            <field name="duration"/>
+                        </group>
+                        <group>
+                            <field name="intervention_type"/>
+                            <field name="modality"/>
+                            <field name="professional_id"/>
+                        </group>
+                    </group>
+                    <group string="Descripción">
+                        <field name="description" nolabel="1"/>
+                    </group>
+                    <group string="Acuerdos y próximos pasos">
+                        <field name="agreements" nolabel="1"/>
+                        <field name="next_action"/>
+                        <field name="next_date"/>
+                    </group>
+                    <field name="attachment_ids" widget="many2many_binary"/>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_acathi_intervention_calendar" model="ir.ui.view">
+        <field name="name">acathi.intervention.calendar</field>
+        <field name="model">acathi.intervention</field>
+        <field name="arch" type="xml">
+            <calendar string="Intervenciones" date_start="date"
+                      color="professional_id" mode="month">
+                <field name="name"/>
+                <field name="person_id"/>
+                <field name="professional_id"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="action_acathi_intervention" model="ir.actions.act_window">
+        <field name="name">Intervenciones</field>
+        <field name="res_model">acathi.intervention</field>
+        <field name="view_mode">list,form,calendar</field>
+    </record>
+</odoo>

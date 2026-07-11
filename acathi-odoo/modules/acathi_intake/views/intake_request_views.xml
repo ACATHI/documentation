@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- LISTA -->
+    <record id="view_intake_request_tree" model="ir.ui.view">
+        <field name="name">acathi.intake.request.tree</field>
+        <field name="model">acathi.intake.request</field>
+        <field name="arch" type="xml">
+            <tree decoration-danger="risk_level == 'red'" decoration-warning="risk_level == 'orange'" decoration-bf="priority == 'urgent'">
+                <field name="name"/>
+                <field name="create_date"/>
+                <field name="partner_id"/>
+                <field name="source_channel"/>
+                <field name="request_type"/>
+                <field name="language"/>
+                <field name="priority"/>
+                <field name="risk_level"/>
+                <field name="team"/>
+                <field name="assigned_user_id"/>
+                <field name="state"/>
+                <field name="needs_human_review"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- FORMULARIO -->
+    <record id="view_intake_request_form" model="ir.ui.view">
+        <field name="name">acathi.intake.request.form</field>
+        <field name="model">acathi.intake.request</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_assign_me" type="object" string="Asignarme"
+                            invisible="state in ('closed','cancelled')"/>
+                    <button name="action_start_progress" type="object" string="En curso" class="btn-primary"
+                            invisible="state in ('in_progress','closed','cancelled')"/>
+                    <button name="action_create_or_link_person" type="object"
+                            string="Crear persona atendida" class="btn-secondary"
+                            invisible="person_id or state in ('closed','cancelled')"
+                            confirm="¿Crear una ficha de persona atendida en ACATHI Social a partir de esta solicitud?"/>
+                    <button name="action_view_person" type="object"
+                            string="Ver persona atendida" class="btn-secondary"
+                            invisible="not person_id"/>
+                    <button name="action_handoff_human" type="object" string="Derivar a humano"
+                            invisible="state in ('closed','cancelled')"/>
+                    <button name="action_close" type="object" string="Cerrar"
+                            invisible="state in ('closed','cancelled')"/>
+                    <button name="action_reopen" type="object" string="Reabrir"
+                            invisible="state not in ('closed','cancelled')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="new,triage,assigned,in_progress,closed"/>
+                </header>
+                <sheet>
+                    <div name="button_box" class="oe_button_box">
+                        <button name="action_view_person" type="object"
+                                class="oe_stat_button" icon="fa-user"
+                                invisible="not person_id">
+                            <span class="o_stat_text">Persona</span>
+                            <span class="o_stat_text">atendida</span>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Clasificación">
+                            <field name="request_type"/>
+                            <field name="request_subtype"/>
+                            <field name="priority"/>
+                            <field name="risk_level"/>
+                            <field name="risk_flags"/>
+                            <field name="needs_human_review"/>
+                        </group>
+                        <group string="Asignación">
+                            <field name="team"/>
+                            <field name="assigned_user_id"/>
+                            <field name="appointment_needed"/>
+                            <field name="suggested_appointment_type"/>
+                            <field name="appointment_id"/>
+                            <field name="human_confirmation_required"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Persona">
+                            <group>
+                                <field name="partner_id"/>
+                                <field name="partner_phone"/>
+                                <field name="person_id" options="{'no_create': True, 'no_quick_create': True}"/>
+                                <field name="source_channel"/>
+                                <field name="channel_external_id"/>
+                                <field name="language"/>
+                                <field name="needs_interpreter"/>
+                                <field name="interpreter_language"/>
+                                <field name="interpreter_available"/>
+                            </group>
+                        </page>
+                        <page string="Solicitud">
+                            <field name="summary"/>
+                            <field name="description" placeholder="Mensaje original (contenido sensible, restringido)"/>
+                        </page>
+                        <page string="IA" groups="acathi_intake.group_acathi_sensitive">
+                            <group>
+                                <field name="bot_status"/>
+                                <field name="bot_detected_intent"/>
+                                <field name="bot_confidence"/>
+                                <field name="human_decision"/>
+                                <field name="bot_model_version"/>
+                            </group>
+                            <field name="bot_safe_reply"/>
+                            <field name="bot_summary"/>
+                        </page>
+                        <page string="RGPD">
+                            <group>
+                                <field name="consent_ok"/>
+                                <field name="consent_date"/>
+                                <field name="consent_source"/>
+                                <field name="consent_text_version"/>
+                            </group>
+                        </page>
+                        <page string="Mensajes del canal">
+                            <field name="channel_message_ids">
+                                <tree>
+                                    <field name="timestamp"/>
+                                    <field name="direction"/>
+                                    <field name="channel"/>
+                                    <field name="body"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Auditoría">
+                            <group>
+                                <field name="document_received"/>
+                                <field name="last_inbound_message_date"/>
+                                <field name="last_outbound_message_date"/>
+                                <field name="first_response_seconds"/>
+                                <field name="closure_reason"/>
+                                <field name="closed_date"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- KANBAN por estado -->
+    <record id="view_intake_request_kanban" model="ir.ui.view">
+        <field name="name">acathi.intake.request.kanban</field>
+        <field name="model">acathi.intake.request</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" class="o_kanban_small_column">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="request_type"/>
+                <field name="priority"/>
+                <field name="risk_level"/>
+                <field name="language"/>
+                <field name="team"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="o_kanban_record_title"><strong><field name="name"/></strong></div>
+                            <div><field name="partner_id"/></div>
+                            <div><field name="request_type"/> · <field name="language"/></div>
+                            <div>
+                                <field name="priority" widget="label_selection"
+                                       options="{'classes': {'urgent': 'danger', 'high': 'warning'}}"/>
+                                <field name="risk_level" widget="label_selection"
+                                       options="{'classes': {'red': 'danger', 'orange': 'warning'}}"/>
+                            </div>
+                            <div><field name="team"/></div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- BÚSQUEDA -->
+    <record id="view_intake_request_search" model="ir.ui.view">
+        <field name="name">acathi.intake.request.search</field>
+        <field name="model">acathi.intake.request</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="request_type"/>
+                <filter name="mis_casos" string="Asignadas a mí" domain="[('assigned_user_id', '=', uid)]"/>
+                <separator/>
+                <filter name="urgentes" string="Urgentes" domain="[('priority', '=', 'urgent')]"/>
+                <filter name="riesgo_alto" string="Riesgo alto" domain="[('risk_level', 'in', ['orange', 'red'])]"/>
+                <filter name="sin_responsable" string="Sin responsable" domain="[('assigned_user_id', '=', False)]"/>
+                <filter name="revision_humana" string="Requiere revisión" domain="[('needs_human_review', '=', True)]"/>
+                <filter name="esperando" string="Esperando persona" domain="[('state', '=', 'waiting_user')]"/>
+                <separator/>
+                <filter name="abiertas" string="Abiertas" domain="[('state', 'not in', ['closed', 'cancelled'])]"/>
+                <group expand="0" string="Agrupar por">
+                    <filter name="g_assigned" string="Responsable" context="{'group_by': 'assigned_user_id'}"/>
+                    <filter name="g_state" string="Estado" context="{'group_by': 'state'}"/>
+                    <filter name="g_team" string="Equipo" context="{'group_by': 'team'}"/>
+                    <filter name="g_type" string="Tipo" context="{'group_by': 'request_type'}"/>
+                    <filter name="g_lang" string="Idioma" context="{'group_by': 'language'}"/>
+                    <filter name="g_channel" string="Canal" context="{'group_by': 'source_channel'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_intake_request" model="ir.actions.act_window">
+        <field name="name">Solicitudes de acogida</field>
+        <field name="res_model">acathi.intake.request</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="search_view_id" ref="view_intake_request_search"/>
+        <field name="context">{'search_default_abiertas': 1}</field>
+    </record>
+</odoo>

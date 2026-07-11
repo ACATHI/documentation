@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         PIVOT — Anàlisi financera global
+    ═══════════════════════════════════════════════════════════════════════ -->
+
+    <record id="view_grant_application_pivot" model="ir.ui.view">
+        <field name="name">grant.application.pivot</field>
+        <field name="model">grant.application</field>
+        <field name="arch" type="xml">
+            <pivot string="Anàlisi de subvencions" sample="1"
+                   disable_linking="0">
+                <field name="funder_id" type="row"/>
+                <field name="state" type="col"/>
+                <field name="amount_requested" type="measure"/>
+                <field name="amount_granted" type="measure"/>
+                <field name="amount_justified" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         GRAPH — Evolució per finançador
+    ═══════════════════════════════════════════════════════════════════════ -->
+
+    <record id="view_grant_application_graph" model="ir.ui.view">
+        <field name="name">grant.application.graph</field>
+        <field name="model">grant.application</field>
+        <field name="arch" type="xml">
+            <graph string="Distribució de subvencions" type="bar" sample="1"
+                   stacked="1">
+                <field name="funder_id" type="row"/>
+                <field name="amount_requested" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         CALENDAR — Calendari de terminis
+    ═══════════════════════════════════════════════════════════════════════ -->
+
+    <record id="view_grant_application_calendar" model="ir.ui.view">
+        <field name="name">grant.application.calendar</field>
+        <field name="model">grant.application</field>
+        <field name="arch" type="xml">
+            <calendar string="Calendari de terminis"
+                      date_start="deadline_submission"
+                      date_stop="deadline_justification"
+                      color="funder_id"
+                      mode="month"
+
+                <field name="name"/>
+                <field name="funder_id"/>
+                <field name="state"/>
+            </calendar>
+        </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         ACTIONS
+    ═══════════════════════════════════════════════════════════════════════ -->
+
+    <!-- Anàlisi financera: pivot + graph amb filtres de data per any -->
+    <record id="action_grant_financial_analysis" model="ir.actions.act_window">
+        <field name="name">Anàlisi financera</field>
+        <field name="res_model">grant.application</field>
+        <field name="view_mode">pivot,graph,tree</field>
+        <field name="search_view_id" ref="view_grant_application_search"/>
+        <field name="context">{
+            'search_default_group_funder': 1
+        }</field>
+    </record>
+
+    <record id="action_grant_financial_analysis_pivot_view" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="action_grant_financial_analysis"/>
+        <field name="view_id" ref="view_grant_application_pivot"/>
+        <field name="view_mode">pivot</field>
+        <field name="sequence">1</field>
+    </record>
+
+    <record id="action_grant_financial_analysis_graph_view" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="action_grant_financial_analysis"/>
+        <field name="view_id" ref="view_grant_application_graph"/>
+        <field name="view_mode">graph</field>
+        <field name="sequence">2</field>
+    </record>
+
+    <!-- Calendari de terminis -->
+    <record id="action_grant_deadline_calendar" model="ir.actions.act_window">
+        <field name="name">Calendari de terminis</field>
+        <field name="res_model">grant.application</field>
+        <field name="view_mode">calendar,tree</field>
+        <field name="search_view_id" ref="view_grant_application_search"/>
+        <field name="context">{}</field>
+    </record>
+
+    <record id="action_grant_deadline_calendar_view" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="action_grant_deadline_calendar"/>
+        <field name="view_id" ref="view_grant_application_calendar"/>
+        <field name="view_mode">calendar</field>
+        <field name="sequence">1</field>
+    </record>
+
+    <!-- Exportació d'indicadors (wizard) -->
+    <record id="view_grant_indicator_export_wizard_form" model="ir.ui.view">
+        <field name="name">grant.indicator.export.wizard.form</field>
+        <field name="model">grant.indicator.export.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Exportar indicadors">
+                <group string="Filtres (opcionals)">
+                    <field name="funder_id"
+                           options="{'no_create': True}"/>
+                    <field name="call_id"
+                           options="{'no_create': True}"
+                           domain="[('funder_id', '=', funder_id)]"/>
+                    <field name="only_with_results"/>
+                </group>
+                <group string="Contingut">
+                    <field name="include_historical"/>
+                </group>
+                <footer>
+                    <button name="action_export_csv" type="object"
+                            string="Descarregar CSV" class="btn-primary"/>
+                    <button string="Cancel·lar" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_grant_indicator_export_wizard" model="ir.actions.act_window">
+        <field name="name">Exportar indicadors</field>
+        <field name="res_model">grant.indicator.export.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

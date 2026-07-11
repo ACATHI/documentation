@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- J-SP2312A: Pressupost del projecte SMPRAV -->
+    <record id="action_report_smprav_sp2312a" model="ir.actions.report">
+        <field name="name">SMPRAV J-SP2312A — Pressupost del projecte</field>
+        <field name="model">grant.application</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">grant_management.report_smprav_sp2312a_document</field>
+        <field name="report_file">grant_management.report_smprav_sp2312a_document</field>
+        <field name="binding_model_id" ref="model_grant_application"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="base.paperformat_euro"/>
+    </record>
+
+    <template id="report_smprav_sp2312a_document">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+
+                        <div class="row mb-4" style="border-bottom:2px solid #1a4a2e; padding-bottom:12px;">
+                            <div class="col-8">
+                                <p style="margin:0; font-size:9pt; color:#666;">
+                                    DEPARTAMENT DE JUSTÍCIA — SERVEIS PENITENCIARIS
+                                </p>
+                                <h3 style="color:#1a4a2e; margin:4px 0;">
+                                    J-SP2312A — Pressupost del projecte
+                                </h3>
+                                <p style="margin:0; color:#666;">
+                                    <t t-esc="o.call_id.name or ''"/> · Any <t t-esc="o.call_id.year or ''"/>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- IDENTIFICACIÓ -->
+                        <div class="mb-3">
+                            <table class="table table-sm table-bordered">
+                                <tr>
+                                    <th style="width:25%; background:#e8f0eb;">Entitat</th>
+                                    <td><t t-esc="o.partner_id.name or ''"/></td>
+                                    <th style="background:#e8f0eb;">NIF</th>
+                                    <td><t t-esc="o.nif or ''"/></td>
+                                </tr>
+                                <tr>
+                                    <th style="background:#e8f0eb;">Projecte</th>
+                                    <td colspan="3"><strong><t t-esc="o.name or ''"/></strong></td>
+                                </tr>
+                                <tr>
+                                    <th style="background:#e8f0eb;">Medi</th>
+                                    <td>
+                                        <t t-esc="dict(o._fields.get('penal_medium', type('', (), {'selection': []})()).selection).get(o.penal_medium, '—') if o.penal_medium else '—'"/>
+                                    </td>
+                                    <th style="background:#e8f0eb;">Durada (mesos)</th>
+                                    <td><t t-esc="o.penal_duration or '—'"/></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <!-- CENTRES ON S'ACTUA -->
+                        <t t-if="o.penal_center_ids">
+                            <div class="mb-3">
+                                <p><strong>Centres penitenciaris on es durà a terme el projecte:</strong></p>
+                                <p>
+                                    <t t-foreach="o.penal_center_ids" t-as="c">
+                                        <span class="badge badge-secondary mr-1">
+                                            <t t-esc="c.name"/>
+                                        </span>
+                                    </t>
+                                </p>
+                            </div>
+                        </t>
+
+                        <!-- PRESSUPOST DE DESPESES -->
+                        <div class="mb-3">
+                            <h5 style="color:#1a4a2e;">Pressupost de despeses</h5>
+                            <table class="table table-sm table-bordered">
+                                <thead style="background:#1a4a2e; color:white;">
+                                    <tr>
+                                        <th style="width:5%">Nre.</th>
+                                        <th style="width:25%">Categoria</th>
+                                        <th style="width:40%">Descripció / detall</th>
+                                        <th class="text-right" style="width:15%">Import sol·l. (€)</th>
+                                        <th class="text-right" style="width:15%">%</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.budget_expense_ids" t-as="exp">
+                                        <tr>
+                                            <td class="text-center"><t t-esc="exp_index + 1"/></td>
+                                            <td><t t-esc="exp.category_id.name"/></td>
+                                            <td><t t-esc="exp.description or '—'"/></td>
+                                            <td class="text-right">
+                                                <t t-esc="'{:,.2f}'.format(exp.amount_requested or 0)"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <t t-if="o.total_expenses">
+                                                    <t t-esc="'{:.1f}%'.format((exp.amount_requested or 0) / o.total_expenses * 100)"/>
+                                                </t>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                                <tfoot style="background:#e8f0eb; font-weight:bold;">
+                                    <tr>
+                                        <td colspan="3">TOTAL DESPESES</td>
+                                        <td class="text-right">
+                                            <strong><t t-esc="'{:,.2f}'.format(o.total_expenses or 0)"/></strong>
+                                        </td>
+                                        <td class="text-right">100%</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+                        <!-- RESUM FINANÇAMENT -->
+                        <div class="mb-3">
+                            <h5 style="color:#1a4a2e;">Finançament del projecte</h5>
+                            <table class="table table-sm table-bordered">
+                                <thead style="background:#1a4a2e; color:white;">
+                                    <tr>
+                                        <th style="width:40%">Font de finançament</th>
+                                        <th style="width:35%">Descripció</th>
+                                        <th class="text-right" style="width:25%">Import (€)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.budget_income_ids" t-as="inc">
+                                        <tr>
+                                            <td>
+                                                <t t-esc="dict(inc._fields['source_type'].selection).get(inc.source_type, '')"/>
+                                            </td>
+                                            <td><t t-esc="inc.description or '—'"/></td>
+                                            <td class="text-right">
+                                                <t t-esc="'{:,.2f}'.format(inc.amount or 0)"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                                <tfoot style="background:#e8f0eb; font-weight:bold;">
+                                    <tr>
+                                        <td colspan="2">Import sol·licitat al Dep. de Justícia</td>
+                                        <td class="text-right" style="color:#1a4a2e;">
+                                            <strong>
+                                                <t t-esc="'{:,.2f}'.format(o.amount_requested or 0)"/>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">% sobre pressupost total</td>
+                                        <td class="text-right">
+                                            <t t-esc="'{:.1f}%'.format(o.grant_pct or 0)"/>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+                        <!-- PLANIFICACIÓ PER CENTRES (si existeix) -->
+                        <t t-if="o.penal_schedule_ids">
+                            <div class="mb-3">
+                                <h5 style="color:#1a4a2e;">Planificació per mes i centre</h5>
+                                <table class="table table-sm table-bordered">
+                                    <thead style="background:#1a4a2e; color:white;">
+                                        <tr>
+                                            <th>Mes</th>
+                                            <th>Centre</th>
+                                            <th>Activitat / intervenció</th>
+                                            <th class="text-right">Hores</th>
+                                            <th class="text-right">Participants</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="o.penal_schedule_ids" t-as="sch">
+                                            <tr>
+                                                <td>
+                                                    <t t-esc="dict(sch._fields['month'].selection).get(sch.month, '')"/>
+                                                </td>
+                                                <td><t t-esc="sch.center_id.name"/></td>
+                                                <td><t t-esc="sch.activity_description"/></td>
+                                                <td class="text-right"><t t-esc="sch.hours or '—'"/></td>
+                                                <td class="text-right"><t t-esc="sch.num_participants or '—'"/></td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </t>
+
+                        <div class="mt-4 pt-2" style="border-top:1px solid #ccc; font-size:9px; color:#888;">
+                            J-SP2312A · Ref: <t t-esc="o.name or ''"/> · Generat el
+                            <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y')"/>
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

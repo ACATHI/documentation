@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_intake_request_user,acathi.intake.request.user,model_acathi_intake_request,group_acathi_intake_user,1,1,1,0
+access_intake_request_manager,acathi.intake.request.manager,model_acathi_intake_request,group_acathi_intake_manager,1,1,1,1
+access_intake_message_user,acathi.intake.message.user,model_acathi_intake_message,group_acathi_intake_user,1,1,1,0
+access_intake_message_manager,acathi.intake.message.manager,model_acathi_intake_message,group_acathi_intake_manager,1,1,1,1

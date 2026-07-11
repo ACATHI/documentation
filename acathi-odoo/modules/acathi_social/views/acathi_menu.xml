@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Menú principal ACATHI Social -->
+    <menuitem id="menu_acathi_root"
+              name="ACATHI Social"
+              sequence="10"
+              web_icon="acathi_social,static/description/icon.png"
+              groups="acathi_social.group_acathi_user"/>
+
+    <!-- Personas -->
+    <menuitem id="menu_acathi_persons"
+              name="Personas Atendidas"
+              parent="menu_acathi_root"
+              sequence="10"
+              groups="acathi_social.group_acathi_user"/>
+
+    <menuitem id="menu_acathi_person_list"
+              name="Todas las personas"
+              parent="menu_acathi_persons"
+              action="action_acathi_person"
+              sequence="10"/>
+
+    <!-- Casos -->
+    <menuitem id="menu_acathi_cases"
+              name="Casos e Intervenciones"
+              parent="menu_acathi_root"
+              sequence="20"
+              groups="acathi_social.group_acathi_user"/>
+
+    <menuitem id="menu_acathi_case_list"
+              name="Casos"
+              parent="menu_acathi_cases"
+              action="action_acathi_case"
+              sequence="10"/>
+
+    <menuitem id="menu_acathi_intervention_list"
+              name="Intervenciones"
+              parent="menu_acathi_cases"
+              action="action_acathi_intervention"
+              sequence="20"/>
+
+    <menuitem id="menu_acathi_followup_list"
+              name="Planes de Seguimiento"
+              parent="menu_acathi_cases"
+              action="action_acathi_followup"
+              sequence="30"/>
+
+    <!-- Alojamiento -->
+    <menuitem id="menu_acathi_housing_root"
+              name="Alojamiento"
+              parent="menu_acathi_root"
+              sequence="30"
+              groups="acathi_social.group_acathi_professional"/>
+
+    <menuitem id="menu_acathi_housing_list"
+              name="Pisos de Acogida"
+              parent="menu_acathi_housing_root"
+              action="action_acathi_housing"
+              sequence="10"/>
+
+    <!-- Actividades y Proyectos -->
+    <menuitem id="menu_acathi_activities_root"
+              name="Actividades"
+              parent="menu_acathi_root"
+              sequence="40"
+              groups="acathi_social.group_acathi_professional"/>
+
+    <menuitem id="menu_acathi_activity_list"
+              name="Actividades / Servicios"
+              parent="menu_acathi_activities_root"
+              action="action_acathi_activity"
+              sequence="10"/>
+
+    <menuitem id="menu_acathi_project_list"
+              name="Proyectos"
+              parent="menu_acathi_activities_root"
+              action="action_acathi_project"
+              sequence="20"/>
+
+    <!-- Red y Aliados -->
+    <menuitem id="menu_acathi_network_root"
+              name="Red y Aliados"
+              parent="menu_acathi_root"
+              sequence="50"
+              groups="acathi_social.group_acathi_professional"/>
+
+    <menuitem id="menu_acathi_ally_list"
+              name="Entidades Aliadas"
+              parent="menu_acathi_network_root"
+              action="action_acathi_ally"
+              sequence="10"/>
+
+    <menuitem id="menu_acathi_volunteer_list"
+              name="Voluntariado"
+              parent="menu_acathi_network_root"
+              action="action_acathi_volunteer"
+              sequence="20"/>
+
+    <menuitem id="menu_acathi_donor_list"
+              name="Donantes"
+              parent="menu_acathi_network_root"
+              action="action_acathi_donor"
+              sequence="30"
+              groups="acathi_social.group_acathi_manager"/>
+
+    <!-- Impacto -->
+    <menuitem id="menu_acathi_impact_root"
+              name="Impacto Social"
+              parent="menu_acathi_root"
+              sequence="60"
+              groups="acathi_social.group_acathi_manager"/>
+
+    <menuitem id="menu_acathi_impact_list"
+              name="Indicadores de Impacto"
+              parent="menu_acathi_impact_root"
+              action="action_acathi_impact"
+              sequence="10"/>
+
+</odoo>

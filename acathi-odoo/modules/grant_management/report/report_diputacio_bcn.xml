@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_report_application_diba" model="ir.actions.report">
+        <field name="name">Sol·licitud Diputació de Barcelona (XFA)</field>
+        <field name="model">grant.application</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">grant_management.report_application_diba_document</field>
+        <field name="report_file">grant_management.report_application_diba_document</field>
+        <field name="binding_model_id" ref="model_grant_application"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="base.paperformat_euro"/>
+    </record>
+
+    <template id="report_application_diba_document">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+
+                        <div class="row mb-4" style="border-bottom:2px solid #c8102e; padding-bottom:12px;">
+                            <div class="col-8">
+                                <h2 style="color:#c8102e; margin:0;">SOL·LICITUD DE SUBVENCIÓ</h2>
+                                <h4 style="color:#333; margin-top:4px;">
+                                    <t t-esc="o.call_id.name or ''"/>
+                                </h4>
+                                <p style="margin:0; color:#666;">
+                                    Any <t t-esc="o.call_id.year or ''"/>
+                                    <t t-if="o.call_id.line_code"> · Línia: <t t-esc="o.call_id.line_code"/></t>
+                                    <t t-if="o.linia_diputacio"> · Àmbit: <t t-esc="o.linia_diputacio"/></t>
+                                </p>
+                            </div>
+                            <div class="col-4 text-right">
+                                <t t-if="o.funder_id.logo">
+                                    <img t-att-src="image_data_uri(o.funder_id.logo)"
+                                         style="max-height:70px; max-width:160px;"/>
+                                </t>
+                            </div>
+                        </div>
+
+                        <!-- 1. DADES DE L'ENTITAT -->
+                        <div class="mb-4">
+                            <h4 style="color:#c8102e; border-left:4px solid #c8102e; padding-left:8px;">
+                                1. Dades de l'entitat sol·licitant
+                            </h4>
+                            <table class="table table-sm table-bordered">
+                                <tr>
+                                    <th style="width:25%; background:#fdf0f1;">Nom de l'entitat</th>
+                                    <td colspan="3"><t t-esc="o.partner_id.name or ''"/></td>
+                                </tr>
+                                <tr>
+                                    <th style="background:#fdf0f1;">NIF / CIF</th>
+                                    <td><t t-esc="o.nif or ''"/></td>
+                                    <th style="background:#fdf0f1;">Persona de contacte</th>
+                                    <td><t t-esc="o.contact_person or ''"/></td>
+                                </tr>
+                                <tr>
+                                    <th style="background:#fdf0f1;">Telèfon</th>
+                                    <td><t t-esc="o.contact_phone or ''"/></td>
+                                    <th style="background:#fdf0f1;">Correu electrònic</th>
+                                    <td><t t-esc="o.contact_email or ''"/></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <!-- 2. DADES DEL PROJECTE -->
+                        <div class="mb-4">
+                            <h4 style="color:#c8102e; border-left:4px solid #c8102e; padding-left:8px;">
+                                2. Dades del projecte
+                            </h4>
+                            <table class="table table-sm table-bordered">
+                                <tr>
+                                    <th style="width:25%; background:#fdf0f1;">Nom del projecte</th>
+                                    <td colspan="3"><strong><t t-esc="o.name or ''"/></strong></td>
+                                </tr>
+                                <tr>
+                                    <th style="background:#fdf0f1;">Àmbit / Programa DIBA</th>
+                                    <td><t t-esc="o.linia_diputacio or '—'"/></td>
+                                    <th style="background:#fdf0f1;">Àmbit territorial</th>
+                                    <td><t t-esc="o.ambit or '—'"/></td>
+                                </tr>
+                                <tr>
+                                    <th style="background:#fdf0f1;">Import sol·licitat</th>
+                                    <td><strong><t t-esc="'{:,.2f} €'.format(o.amount_requested or 0)"/></strong></td>
+                                    <th style="background:#fdf0f1;">Total pressupost</th>
+                                    <td><t t-esc="'{:,.2f} €'.format(o.total_expenses or 0)"/></td>
+                                </tr>
+                                <tr>
+                                    <th style="background:#fdf0f1;">Data inici</th>
+                                    <td><t t-esc="o.date_start or '—'"/></td>
+                                    <th style="background:#fdf0f1;">Data fi</th>
+                                    <td><t t-esc="o.date_end or '—'"/></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <!-- 3. NECESSITAT SOCIAL -->
+                        <div class="mb-4">
+                            <h4 style="color:#c8102e; border-left:4px solid #c8102e; padding-left:8px;">
+                                3. Context i necessitat social
+                            </h4>
+                            <div><t t-raw="o.background_html or '&lt;p&gt;—&lt;/p&gt;'"/></div>
+                        </div>
+
+                        <!-- 4. DESCRIPCIÓ I OBJECTIUS -->
+                        <div class="mb-4">
+                            <h4 style="color:#c8102e; border-left:4px solid #c8102e; padding-left:8px;">
+                                4. Descripció del projecte i objectius
+                            </h4>
+                            <div><t t-raw="o.description_html or '&lt;p&gt;—&lt;/p&gt;'"/></div>
+                            <p><strong>Objectiu general:</strong> <t t-esc="o.general_objective or '—'"/></p>
+                            <t t-if="o.specific_objectives_html">
+                                <p><strong>Objectius específics:</strong></p>
+                                <div><t t-raw="o.specific_objectives_html"/></div>
+                            </t>
+                        </div>
+
+                        <!-- 5. ASPECTES ESPECÍFICS DIBA -->
+                        <t t-if="o.specific_aspect_ids">
+                            <div class="mb-4">
+                                <h4 style="color:#c8102e; border-left:4px solid #c8102e; padding-left:8px;">
+                                    5. Aspectes específics per àmbit
+                                </h4>
+                                <t t-foreach="o.specific_aspect_ids" t-as="asp">
+                                    <p><strong><t t-esc="dict(asp._fields['ambit_number'].selection).get(asp.ambit_number, '')"/>: <t t-esc="asp.aspect_name"/></strong></p>
+                                    <t t-if="asp.description_html">
+                                        <div><t t-raw="asp.description_html"/></div>
+                                    </t>
+                                </t>
+                            </div>
+                        </t>
+
+                        <!-- 6. ACTIVITATS I INDICADORS -->
+                        <div class="mb-4">
+                            <h4 style="color:#c8102e; border-left:4px solid #c8102e; padding-left:8px;">
+                                6. Pla d'execució
+                            </h4>
+                            <t t-if="o.grant_activity_ids">
+                                <table class="table table-sm table-bordered">
+                                    <thead style="background:#c8102e; color:white;">
+                                        <tr>
+                                            <th>Activitat</th>
+                                            <th>Inici</th>
+                                            <th>Fi</th>
+                                            <th>Responsable</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="o.grant_activity_ids" t-as="act">
+                                            <tr>
+                                                <td><t t-esc="act.name"/></td>
+                                                <td><t t-esc="act.date_start or '—'"/></td>
+                                                <td><t t-esc="act.date_end or '—'"/></td>
+                                                <td><t t-esc="act.responsible or '—'"/></td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </t>
+                        </div>
+
+                        <!-- 7. PRESSUPOST XFA (AP + EP + RP) -->
+                        <div class="mb-4">
+                            <h4 style="color:#c8102e; border-left:4px solid #c8102e; padding-left:8px;">
+                                7. Pressupost del projecte
+                            </h4>
+                            <table class="table table-sm table-bordered">
+                                <thead style="background:#c8102e; color:white;">
+                                    <tr>
+                                        <th style="width:30%">Categoria</th>
+                                        <th style="width:40%">Descripció</th>
+                                        <th class="text-right" style="width:15%">Import (€)</th>
+                                        <th class="text-right" style="width:15%">%</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.budget_expense_ids" t-as="exp">
+                                        <tr>
+                                            <td><t t-esc="exp.category_id.name"/></td>
+                                            <td><t t-esc="exp.description or '—'"/></td>
+                                            <td class="text-right"><t t-esc="'{:,.2f}'.format(exp.amount_requested or 0)"/></td>
+                                            <td class="text-right">
+                                                <t t-if="o.total_expenses">
+                                                    <t t-esc="'{:.1f}%'.format((exp.amount_requested or 0) / o.total_expenses * 100)"/>
+                                                </t>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                                <tfoot style="background:#fdf0f1; font-weight:bold;">
+                                    <tr>
+                                        <td colspan="2">TOTAL</td>
+                                        <td class="text-right"><t t-esc="'{:,.2f}'.format(o.total_expenses or 0)"/></td>
+                                        <td class="text-right">100%</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">Import sol·licitat a la DIBA</td>
+                                        <td class="text-right" style="color:#c8102e;">
+                                            <strong><t t-esc="'{:,.2f}'.format(o.amount_requested or 0)"/></strong>
+                                        </td>
+                                        <td class="text-right">
+                                            <t t-esc="'{:.1f}%'.format(o.grant_pct or 0)"/>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+                        <div class="mt-5 pt-2" style="border-top:1px solid #ccc; font-size:9px; color:#888;">
+                            Ref: <t t-esc="o.name or ''"/> · Generat el
+                            <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y')"/>
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

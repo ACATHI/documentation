@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_viaje_solicitud_user,acathi.viaje.solicitud.user,model_acathi_viaje_solicitud,group_viajes_user,1,1,1,0
+access_viaje_solicitud_pii,acathi.viaje.solicitud.pii,model_acathi_viaje_solicitud,group_viajes_pii,1,1,1,1
+access_viaje_opcion_user,acathi.viaje.opcion.user,model_acathi_viaje_opcion,group_viajes_user,1,1,1,1
