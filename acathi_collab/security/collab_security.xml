@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="module_category_acathi_collab" model="ir.module.category">
+        <field name="name">ACATHI Colaboraciones</field>
+        <field name="sequence">21</field>
+    </record>
+
+    <record id="group_acathi_collab_user" model="res.groups">
+        <field name="name">Colaboraciones: usuario</field>
+        <field name="category_id" ref="module_category_acathi_collab"/>
+    </record>
+
+    <record id="group_acathi_collab_manager" model="res.groups">
+        <field name="name">Colaboraciones: responsable</field>
+        <field name="category_id" ref="module_category_acathi_collab"/>
+        <field name="implied_ids" eval="[(4, ref('group_acathi_collab_user'))]"/>
+        <field name="users" eval="[(4, ref('base.user_admin'))]"/>
+    </record>
+</odoo>

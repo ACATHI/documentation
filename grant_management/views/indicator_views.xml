@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         INDICADORS — VISTES AUTÒNOMES (dashboard global)
+    ═══════════════════════════════════════════════════════════════════════ -->
+
+    <record id="view_grant_indicator_tree" model="ir.ui.view">
+        <field name="name">grant.indicator.tree.dashboard</field>
+        <field name="model">grant.indicator</field>
+        <field name="arch" type="xml">
+            <tree string="Indicadors de seguiment"
+                  decoration-success="traffic_light == 'verd'"
+                  decoration-warning="traffic_light == 'groc'"
+                  decoration-danger="traffic_light == 'vermell'">
+                <field name="application_id"/>
+                <field name="name"/>
+                <field name="indicator_type"/>
+                <field name="expected_value_num" string="Previst"/>
+                <field name="achieved_value_num" string="Assolit" optional="show"/>
+                <field name="achievement_pct" string="% assoliment" widget="progressbar"
+                       options="{'editable': False}"/>
+                <field name="traffic_light" widget="badge"
+                       decoration-success="traffic_light == 'verd'"
+                       decoration-warning="traffic_light == 'groc'"
+                       decoration-danger="traffic_light == 'vermell'"/>
+                <field name="source" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_grant_indicator_graph" model="ir.ui.view">
+        <field name="name">grant.indicator.graph</field>
+        <field name="model">grant.indicator</field>
+        <field name="arch" type="xml">
+            <graph string="Assoliment d'indicadors" type="bar" stacked="0">
+                <field name="application_id" type="row"/>
+                <field name="achievement_pct" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_grant_indicator_pivot" model="ir.ui.view">
+        <field name="name">grant.indicator.pivot</field>
+        <field name="model">grant.indicator</field>
+        <field name="arch" type="xml">
+            <pivot string="Indicadors — taula dinàmica">
+                <field name="application_id" type="row"/>
+                <field name="indicator_type" type="col"/>
+                <field name="achievement_pct" type="measure"/>
+                <field name="expected_value_num" type="measure"/>
+                <field name="achieved_value_num" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_grant_indicator_search" model="ir.ui.view">
+        <field name="name">grant.indicator.search</field>
+        <field name="model">grant.indicator</field>
+        <field name="arch" type="xml">
+            <search string="Cercar indicadors">
+                <field name="name"/>
+                <field name="application_id"/>
+                <separator/>
+                <filter name="filter_green" string="En verd (≥80%)"
+                        domain="[('traffic_light','=','verd')]"/>
+                <filter name="filter_yellow" string="En groc (50-79%)"
+                        domain="[('traffic_light','=','groc')]"/>
+                <filter name="filter_red" string="En vermell (&lt;50%)"
+                        domain="[('traffic_light','=','vermell')]"/>
+                <filter name="filter_no_achieved" string="Sense valor assolit"
+                        domain="[('achieved_value_num','=',0)]"/>
+                <separator/>
+                <filter name="filter_quantitative" string="Quantitatius"
+                        domain="[('indicator_type','=','quantitatiu')]"/>
+                <filter name="filter_qualitative" string="Qualitatius"
+                        domain="[('indicator_type','=','qualitatiu')]"/>
+                <group expand="0" string="Agrupar per">
+                    <filter name="group_application" string="Expedient"
+                            context="{'group_by': 'application_id'}"/>
+                    <filter name="group_traffic_light" string="Semàfor"
+                            context="{'group_by': 'traffic_light'}"/>
+                    <filter name="group_type" string="Tipus"
+                            context="{'group_by': 'indicator_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_grant_indicator_dashboard" model="ir.actions.act_window">
+        <field name="name">Dashboard d'indicadors</field>
+        <field name="res_model">grant.indicator</field>
+        <field name="view_mode">tree,graph,pivot</field>
+        <field name="search_view_id" ref="view_grant_indicator_search"/>
+        <field name="context">{'search_default_filter_no_achieved': 0}</field>
+    </record>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         PLA DE COMUNICACIÓ — ACCIÓ AUTÒNOMA
+    ═══════════════════════════════════════════════════════════════════════ -->
+
+    <record id="action_grant_communication_plan" model="ir.actions.act_window">
+        <field name="name">Plans de comunicació</field>
+        <field name="res_model">grant.communication.plan</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="view_grant_communication_plan_tree" model="ir.ui.view">
+        <field name="name">grant.communication.plan.tree</field>
+        <field name="model">grant.communication.plan</field>
+        <field name="arch" type="xml">
+            <tree string="Plans de comunicació">
+                <field name="application_id"/>
+                <field name="done_count" string="Realitzades"/>
+                <field name="total_count" string="Total"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>

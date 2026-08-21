@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- Afegeix botó de consentiments al formulari de persona atesa -->
+  <record id="view_acathi_person_consent_button" model="ir.ui.view">
+    <field name="name">acathi.person.form.consent.buttons</field>
+    <field name="model">acathi.person</field>
+    <field name="inherit_id" ref="acathi_social.view_acathi_person_form"/>
+    <field name="arch" type="xml">
+      <!-- Inserim botons dins el button_box existent -->
+      <xpath expr="//div[@name='button_box']" position="inside">
+        <button name="action_view_consent_requests" type="object"
+                class="oe_stat_button" icon="fa-check-square-o"
+                invisible="id == False">
+          <div class="o_field_widget o_stat_info">
+            <span class="o_stat_value">
+              <field name="consent_signed_count"/>/<field name="consent_request_count"/>
+            </span>
+            <span class="o_stat_text">Consentiments</span>
+          </div>
+        </button>
+        <button name="action_create_consent_request" type="object"
+                class="oe_stat_button" icon="fa-plus"
+                invisible="id == False"
+                string="Nou consentiment"/>
+      </xpath>
+    </field>
+  </record>
+
+</odoo>

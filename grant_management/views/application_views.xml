@@ -1,0 +1,770 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         VISTA TREE
+    ═══════════════════════════════════════════════════════════════════════ -->
+
+    <record id="view_grant_application_tree" model="ir.ui.view">
+        <field name="name">grant.application.tree</field>
+        <field name="model">grant.application</field>
+        <field name="arch" type="xml">
+            <tree string="Expedients de subvenció"
+                  decoration-muted="state == 'tancada'"
+                  decoration-danger="state == 'denegada'"
+                  decoration-success="state in ('concedida','en_execucio','justificada','tancada')"
+                  decoration-warning="state == 'en_reformulacio'">
+                <field name="name"/>
+                <field name="funder_id"/>
+                <field name="call_id"/>
+                <field name="partner_id"/>
+                <field name="date_submitted"/>
+                <field name="amount_requested" widget="monetary" optional="show"/>
+                <field name="amount_granted" widget="monetary" optional="show"/>
+                <field name="grant_pct" string="%" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state in ('concedida','en_execucio')"
+                       decoration-warning="state == 'en_reformulacio'"
+                       decoration-danger="state == 'denegada'"
+                       decoration-muted="state == 'tancada'"/>
+                <field name="currency_id" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         VISTA KANBAN
+    ═══════════════════════════════════════════════════════════════════════ -->
+
+    <record id="view_grant_application_kanban" model="ir.ui.view">
+        <field name="name">grant.application.kanban</field>
+        <field name="model">grant.application</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" class="o_kanban_small_column">
+                <field name="name"/>
+                <field name="funder_id"/>
+                <field name="partner_id"/>
+                <field name="amount_requested"/>
+                <field name="amount_granted"/>
+                <field name="state"/>
+                <field name="currency_id"/>
+                <field name="date_submitted"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <strong class="o_kanban_record_title">
+                                            <field name="name"/>
+                                        </strong>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_body">
+                                    <span class="text-muted">
+                                        <field name="funder_id"/>
+                                    </span>
+                                    <br/>
+                                    <span>
+                                        <field name="partner_id"/>
+                                    </span>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left">
+                                        <t t-if="record.amount_requested.raw_value">
+                                            <span class="badge badge-pill badge-secondary">
+                                                <field name="amount_requested" widget="monetary"/>
+                                            </span>
+                                        </t>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <field name="state" widget="label_selection"
+                                               options="{'classes': {
+                                                   'esborrany': 'default',
+                                                   'presentada': 'info',
+                                                   'concedida': 'success',
+                                                   'en_reformulacio': 'warning',
+                                                   'denegada': 'danger',
+                                                   'en_execucio': 'primary',
+                                                   'justificada': 'success',
+                                                   'tancada': 'default'
+                                               }}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         VISTA SEARCH
+    ═══════════════════════════════════════════════════════════════════════ -->
+
+    <record id="view_grant_application_search" model="ir.ui.view">
+        <field name="name">grant.application.search</field>
+        <field name="model">grant.application</field>
+        <field name="arch" type="xml">
+            <search string="Cercar expedients">
+                <field name="name" string="Referència"/>
+                <field name="funder_id"/>
+                <field name="call_id"/>
+                <field name="partner_id" string="Entitat"/>
+                <separator/>
+                <filter name="filter_draft" string="Esborranys"
+                        domain="[('state','=','esborrany')]"/>
+                <filter name="filter_submitted" string="Presentades"
+                        domain="[('state','=','presentada')]"/>
+                <filter name="filter_granted" string="Concedides"
+                        domain="[('state','in',('concedida','en_execucio'))]"/>
+                <filter name="filter_justified" string="Justificades"
+                        domain="[('state','=','justificada')]"/>
+                <filter name="filter_closed" string="Tancades"
+                        domain="[('state','=','tancada')]"/>
+                <separator/>
+                <filter name="filter_denied" string="Denegades"
+                        domain="[('state','=','denegada')]"/>
+                <separator/>
+                <group expand="0" string="Agrupar per">
+                    <filter name="group_funder" string="Finançador"
+                            context="{'group_by': 'funder_id'}"/>
+                    <filter name="group_state" string="Estat"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_call" string="Convocatòria"
+                            context="{'group_by': 'call_id'}"/>
+                    <filter name="group_partner" string="Entitat"
+                            context="{'group_by': 'partner_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         VISTA FORM
+    ═══════════════════════════════════════════════════════════════════════ -->
+
+    <record id="view_grant_application_form" model="ir.ui.view">
+        <field name="name">grant.application.form</field>
+        <field name="model">grant.application</field>
+        <field name="arch" type="xml">
+            <form string="Expedient de subvenció">
+                <header>
+                    <button name="action_submit" type="object" string="Presentar sol·licitud"
+                            class="btn-primary"
+                            invisible="state != 'esborrany'"/>
+                    <button name="action_grant" type="object" string="Registrar concessió"
+                            class="btn-primary"
+                            invisible="state not in ['presentada']"/>
+                    <button name="action_start_reformulation" type="object" string="Iniciar reformulació"
+                            invisible="state != 'presentada'"/>
+                    <button name="action_deny" type="object" string="Registrar denegació"
+                            invisible="state not in ['presentada', 'en_reformulacio']"/>
+                    <button name="action_start_execution" type="object" string="Iniciar execució"
+                            class="btn-primary"
+                            invisible="state != 'concedida'"/>
+                    <button name="action_start_justification" type="object" string="Iniciar justificació"
+                            class="btn-primary"
+                            invisible="state != 'en_execucio'"/>
+                    <button name="action_close" type="object" string="Tancar expedient"
+                            invisible="state != 'justificada'"/>
+                    <button name="action_reset_draft" type="object" string="Tornar a esborrany"
+                            invisible="state not in ['presentada', 'denegada']"/>
+                    <button name="action_open_duplicate_wizard" type="object"
+                            string="Duplicar expedient"
+                            invisible="state not in ['tancada', 'justificada', 'denegada']"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="esborrany,presentada,concedida,en_execucio,justificada,tancada"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_reformulations" type="object"
+                                class="oe_stat_button" icon="fa-refresh"
+                                invisible="reformulation_count == 0">
+                            <field name="reformulation_count" widget="statinfo"
+                                   string="Reformulació"/>
+                        </button>
+                        <button name="action_view_justifications" type="object"
+                                class="oe_stat_button" icon="fa-file-text-o"
+                                invisible="justification_count == 0">
+                            <field name="justification_count" widget="statinfo"
+                                   string="Justificació"/>
+                        </button>
+                        <button name="action_view_requirements" type="object"
+                                class="oe_stat_button" icon="fa-exclamation-circle"
+                                invisible="requirement_count == 0">
+                            <field name="requirement_pending_count" widget="statinfo"
+                                   string="Requeriments"/>
+                        </button>
+                        <button name="action_view_communication_plan" type="object"
+                                class="oe_stat_button" icon="fa-bullhorn">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Comunicació</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" string="Referència"/>
+                        <h1>
+                            <field name="name" placeholder="Referència de l'expedient"/>
+                        </h1>
+                    </div>
+
+                    <!-- Comptadors per smart buttons -->
+                    <field name="reformulation_count" invisible="1"/>
+                    <field name="justification_count" invisible="1"/>
+                    <field name="requirement_count" invisible="1"/>
+                    <field name="requirement_pending_count" invisible="1"/>
+                    <field name="communication_plan_count" invisible="1"/>
+
+                    <!-- Camps de visibilitat (invisibles a la vista) -->
+                    <field name="show_revaluation_plan" invisible="1"/>
+                    <field name="show_penal_fields" invisible="1"/>
+                    <field name="show_counting_units" invisible="1"/>
+                    <field name="show_volunteer_table" invisible="1"/>
+                    <field name="show_device_table" invisible="1"/>
+                    <field name="show_sai_network" invisible="1"/>
+                    <field name="show_law_19_2020" invisible="1"/>
+                    <field name="show_gender_table" invisible="1"/>
+                    <field name="show_objectives_table" invisible="1"/>
+                    <field name="show_ambit_selector" invisible="1"/>
+                    <field name="show_social_clauses" invisible="1"/>
+                    <field name="show_catalan_policy" invisible="1"/>
+                    <field name="show_ecosocial" invisible="1"/>
+                    <field name="show_intercultural" invisible="1"/>
+                    <field name="is_pluriannual" invisible="1"/>
+
+                    <!-- Identificació bàsica (sempre visible) -->
+                    <group>
+                        <group string="Identificació">
+                            <field name="call_id"
+                                   options="{'no_create': True}"/>
+                            <field name="funder_id" readonly="1"/>
+                            <field name="partner_id"/>
+                            <field name="nif"/>
+                        </group>
+                        <group string="Terminis del projecte">
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                            <field name="date_submitted"
+                                   invisible="state == 'esborrany'"/>
+                            <field name="deadline_submission"/>
+                            <field name="deadline_justification"/>
+                        </group>
+                    </group>
+
+                    <!-- Resum econòmic (visible un cop hi ha imports) -->
+                    <group string="Imports" name="amounts_summary"
+                           invisible="state == 'esborrany'">
+                        <group>
+                            <field name="amount_requested" widget="monetary"/>
+                            <field name="amount_granted" widget="monetary"
+                                   invisible="state not in ['concedida', 'en_reformulacio', 'en_execucio', 'justificada', 'tancada']"/>
+                            <field name="amount_reformulated" widget="monetary"
+                                   invisible="state not in ['en_reformulacio', 'concedida', 'en_execucio', 'justificada', 'tancada']"/>
+                        </group>
+                        <group>
+                            <field name="total_expenses" widget="monetary"/>
+                            <field name="grant_pct" string="% sobre despeses"/>
+                            <field name="amount_justified" widget="monetary"
+                                   invisible="state not in ['justificada', 'tancada']"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+
+                        <!-- ── 1. ENTITAT I CONTACTES ──────────────────────────────── -->
+                        <page string="Entitat i contactes" name="entity">
+                            <group string="Contacte del projecte">
+                                <group>
+                                    <field name="contact_person"/>
+                                    <field name="contact_phone" widget="phone"/>
+                                    <field name="contact_email" widget="email"/>
+                                </group>
+                                <group>
+                                    <field name="notification_email" widget="email"/>
+                                </group>
+                            </group>
+                            <group string="Dades de l'entitat">
+                                <group>
+                                    <field name="entity_years_activity"/>
+                                    <field name="federation_member"/>
+                                    <field name="federation_names"
+                                           invisible="not federation_member"/>
+                                </group>
+                            </group>
+                            <group string="Trajectòria de l'entitat">
+                                <field name="entity_feminist_trajectory_html" widget="html"
+                                       nolabel="1"/>
+                            </group>
+                        </page>
+
+                        <!-- ── 2. NECESSITAT SOCIAL ────────────────────────────────── -->
+                        <page string="Necessitat social" name="background">
+                            <group string="Context i justificació">
+                                <field name="background_html" widget="html" nolabel="1"/>
+                            </group>
+                        </page>
+
+                        <!-- ── 3. DESCRIPCIÓ DEL PROJECTE ─────────────────────────── -->
+                        <page string="Descripció del projecte" name="description">
+                            <group string="Àmbit i programa">
+                                <group>
+                                    <field name="call_line"/>
+                                    <field name="call_subline"/>
+                                    <field name="program"/>
+                                    <field name="ambit"/>
+                                    <field name="linia_diputacio"
+                                           invisible="not show_ambit_selector"/>
+                                </group>
+                            </group>
+                            <group string="Descripció general">
+                                <field name="description_html" widget="html" nolabel="1"/>
+                            </group>
+                        </page>
+
+                        <!-- ── 4. OBJECTIUS I GRUP DESTINATARI ────────────────────── -->
+                        <page string="Objectius i grup destinatari" name="objectives">
+                            <group string="Grup destinatari">
+                                <field name="num_participants"/>
+                                <field name="target_group_html" widget="html" nolabel="1"/>
+                            </group>
+                            <group string="Objectius">
+                                <field name="general_objective"/>
+                                <field name="specific_objectives_html" widget="html"
+                                       nolabel="1"/>
+                            </group>
+                        </page>
+
+                        <!-- ── 5. PLA D'EXECUCIÓ ───────────────────────────────────── -->
+                        <page string="Pla d'execució" name="execution">
+                            <group string="Metodologia">
+                                <field name="methodology_html" widget="html" nolabel="1"/>
+                            </group>
+                            <separator string="Activitats"/>
+                            <field name="grant_activity_ids" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="responsible"/>
+                                    <field name="date_start"/>
+                                    <field name="date_end"/>
+                                    <field name="execution_months"/>
+                                    <field name="target_group"/>
+                                </tree>
+                            </field>
+                            <separator string="Indicadors"/>
+                            <field name="indicator_ids" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="indicator_type"/>
+                                    <field name="expected_value"/>
+                                    <field name="expected_value_num"/>
+                                    <field name="achieved_value"
+                                           invisible="achievement_pct == 0.0"/>
+                                    <field name="achieved_value_num"
+                                           invisible="achievement_pct == 0.0"/>
+                                    <field name="achievement_pct"/>
+                                    <field name="traffic_light" widget="badge"
+                                           decoration-success="traffic_light == 'verd'"
+                                           decoration-warning="traffic_light == 'groc'"
+                                           decoration-danger="traffic_light == 'vermell'"/>
+                                    <field name="source"/>
+                                </tree>
+                            </field>
+
+                            <!-- Línies i unitats de recompte (Generalitat DS) -->
+                            <div invisible="not show_counting_units">
+                                <separator string="Línies i unitats de recompte"/>
+                                <group>
+                                    <group>
+                                        <field name="counting_unit"/>
+                                        <field name="counting_unit_2025"/>
+                                        <field name="counting_unit_2026"
+                                               invisible="not is_pluriannual"/>
+                                    </group>
+                                </group>
+                                <field name="line_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="line_code" optional="show"/>
+                                        <field name="name"/>
+                                        <field name="counting_unit"/>
+                                        <field name="planned_units_y1"/>
+                                        <field name="planned_units_y2"
+                                               optional="hide"/>
+                                    </tree>
+                                </field>
+                            </div>
+
+                            <!-- Taula OG×OE (COSIFE) -->
+                            <div invisible="not show_objectives_table">
+                                <separator string="Vinculació objectius generals / específics"/>
+                                <field name="objective_link_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="general_objective"/>
+                                        <field name="specific_objective"/>
+                                        <field name="justification" optional="show"/>
+                                    </tree>
+                                </field>
+                            </div>
+                        </page>
+
+                        <!-- ── 6. PERSPECTIVES TRANSVERSALS ───────────────────────── -->
+                        <page string="Perspectives transversals" name="perspectives">
+                            <group string="Perspectiva de gènere">
+                                <field name="gender_perspective_html" widget="html" nolabel="1"/>
+                            </group>
+                            <group string="Perspectiva ecosocial"
+                                   invisible="not show_ecosocial">
+                                <field name="ecosocial_perspective_html" widget="html"
+                                       nolabel="1"/>
+                            </group>
+                            <group string="Perspectiva intercultural"
+                                   invisible="not show_intercultural">
+                                <field name="intercultural_perspective_html" widget="html"
+                                       nolabel="1"/>
+                            </group>
+                            <group string="Desigualtats LGBTI"
+                                   invisible="not show_gender_table">
+                                <field name="lgbti_inequalities_html" widget="html"
+                                       nolabel="1"/>
+                            </group>
+                        </page>
+
+                        <!-- ── 7. COMUNICACIÓ ──────────────────────────────────────── -->
+                        <page string="Comunicació" name="communication">
+                            <group>
+                                <field name="communication_products"/>
+                                <field name="communication_message"/>
+                            </group>
+                            <group string="Pla de comunicació">
+                                <field name="communication_plan_html" widget="html"
+                                       nolabel="1"/>
+                            </group>
+                        </page>
+
+                        <!-- ── 8. PRESSUPOST ───────────────────────────────────────── -->
+                        <page string="Pressupost" name="budget">
+                            <notebook>
+                                <page string="Despeses" name="expenses">
+                                    <field name="budget_expense_ids" nolabel="1">
+                                        <tree editable="bottom">
+                                            <field name="sequence" widget="handle"/>
+                                            <field name="category_id"
+                                                   options="{'no_create': True}"/>
+                                            <field name="description"/>
+                                            <field name="amount_requested" widget="monetary"/>
+                                            <field name="amount_granted" widget="monetary"
+                                                   optional="hide"/>
+                                            <field name="amount_executed" widget="monetary"
+                                                   optional="hide"/>
+                                            <field name="amount_justified" widget="monetary"
+                                                   optional="hide"/>
+                                            <field name="notes" optional="hide"/>
+                                            <field name="currency_id" invisible="1"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                                <page string="Ingressos" name="income">
+                                    <field name="budget_income_ids" nolabel="1">
+                                        <tree editable="bottom">
+                                            <field name="sequence" widget="handle"/>
+                                            <field name="source_type"/>
+                                            <field name="funder_id"
+                                                   invisible="source_type != 'grant_other'" required="source_type == 'grant_other'"/>
+                                            <field name="description"/>
+                                            <field name="amount" widget="monetary"/>
+                                            <field name="currency_id" invisible="1"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                            </notebook>
+                            <group string="Resum pressupostari" name="budget_summary">
+                                <group>
+                                    <field name="total_expenses" widget="monetary"/>
+                                    <field name="amount_requested" widget="monetary"/>
+                                    <field name="grant_pct"/>
+                                </group>
+                                <group>
+                                    <field name="total_income" widget="monetary"/>
+                                    <field name="balance" widget="monetary"
+                                           decoration-danger="balance != 0"
+                                           decoration-success="balance == 0"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <!-- ── 9. VIABILITAT ECONÒMICA ────────────────────────────── -->
+                        <page string="Viabilitat econòmica" name="viability">
+                            <group>
+                                <group>
+                                    <field name="own_funding_pct"/>
+                                    <field name="project_budget_pct_entity"/>
+                                </group>
+                            </group>
+                            <separator string="Cofinançament"/>
+                            <field name="cofunding_ids" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="administration"/>
+                                    <field name="concept"/>
+                                    <field name="amount" widget="monetary"/>
+                                    <field name="cofunding_state"/>
+                                    <field name="currency_id" invisible="1"/>
+                                </tree>
+                            </field>
+                            <separator string="Entitats col·laboradores"/>
+                            <field name="collaborator_ids" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="partner_id"/>
+                                    <field name="name"/>
+                                    <field name="role"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                        <!-- ── 10. AVALUACIÓ ───────────────────────────────────────── -->
+                        <page string="Avaluació" name="evaluation">
+                            <group string="Pla d'avaluació">
+                                <field name="evaluation_plan" nolabel="1"/>
+                            </group>
+                            <group string="Sistema de qualitat">
+                                <field name="quality_system_html" widget="html" nolabel="1"/>
+                            </group>
+                        </page>
+
+                        <!-- ── 11. PLA DE REVALORACIÓ (Ajuntament BCN sec.14) ─────── -->
+                        <page string="Pla de Revaloració" name="revaluation"
+                              invisible="not show_revaluation_plan">
+                            <field name="revaluation_plan_html" widget="html" nolabel="1"/>
+                        </page>
+
+                        <!-- ── 12. CLÀUSULES SOCIALS ───────────────────────────────── -->
+                        <page string="Clàusules socials" name="social_clauses"
+                              invisible="not show_social_clauses">
+                            <group>
+                                <group>
+                                    <field name="vulnerable_staff_count"/>
+                                    <field name="permanent_staff_pct"/>
+                                </group>
+                            </group>
+                            <group string="Mesures de conciliació">
+                                <field name="reconciliation_measures_html" widget="html"
+                                       nolabel="1"/>
+                            </group>
+                            <group string="Protocol d'assetjament">
+                                <field name="harassment_protocol_html" widget="html"
+                                       nolabel="1"/>
+                            </group>
+                        </page>
+
+                        <!-- ── 13. COSIFE — LLEI 19/2020 ──────────────────────────── -->
+                        <page string="Llei 19/2020" name="law_19_2020"
+                              invisible="not show_law_19_2020">
+                            <group>
+                                <group>
+                                    <field name="equality_plan_date"/>
+                                    <field name="discrimination_axes_count"/>
+                                </group>
+                            </group>
+                            <group string="Vinculació amb la Llei 19/2020">
+                                <field name="law_19_2020_link_html" widget="html" nolabel="1"/>
+                            </group>
+                            <group string="Accions positives">
+                                <field name="positive_actions_html" widget="html" nolabel="1"/>
+                            </group>
+                            <div invisible="not show_gender_table">
+                                <separator string="Activitats amb perspectiva de gènere"/>
+                                <field name="activity_gender_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="activity_name"/>
+                                        <field name="methodology"/>
+                                        <field name="gender_indicator"/>
+                                        <field name="target_value"/>
+                                        <field name="verification_source" optional="show"/>
+                                    </tree>
+                                </field>
+                            </div>
+                        </page>
+
+                        <!-- ── 14. COSIFE — XARXA SAI LGBTI ───────────────────────── -->
+                        <page string="Xarxa SAI LGBTI" name="sai_network"
+                              invisible="not show_sai_network">
+                            <group string="Prevenció de l'homofòbia">
+                                <field name="homophobia_prevention_html" widget="html"
+                                       nolabel="1"/>
+                            </group>
+                            <group string="Formació a professionals">
+                                <field name="adult_training_html" widget="html" nolabel="1"/>
+                            </group>
+                            <separator string="Accions coordinades amb Xarxa SAI"/>
+                            <field name="sai_action_ids" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="action_name"/>
+                                    <field name="sai_entity"/>
+                                    <field name="description"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                        <!-- ── 15. POLÍTICA LINGÜÍSTICA (COSIFE sec.5) ───────────── -->
+                        <page string="Política lingüística" name="catalan_policy"
+                              invisible="not show_catalan_policy">
+                            <group string="Ús del català">
+                                <field name="catalan_policy_html" widget="html" nolabel="1"/>
+                            </group>
+                        </page>
+
+                        <!-- ── (old 15→16) PERSONAL I DISPOSITIUS (Generalitat DS) ── -->
+                        <page string="Personal i dispositius" name="staff_devices"
+                              invisible="not show_volunteer_table and not show_device_table">
+                            <!-- Taula de personal -->
+                            <div invisible="not show_volunteer_table">
+                                <separator string="Personal del projecte"/>
+                                <group>
+                                    <group>
+                                        <field name="direct_staff_employed"/>
+                                        <field name="direct_staff_total"/>
+                                    </group>
+                                </group>
+                                <field name="staff_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="name"/>
+                                        <field name="role"/>
+                                        <field name="staff_type"/>
+                                        <field name="professional_category"
+                                               optional="show"/>
+                                        <field name="dedication_pct"/>
+                                        <field name="hours_year" optional="show"/>
+                                        <field name="cost_requested"
+                                               widget="monetary"/>
+                                        <field name="cost_total" widget="monetary"
+                                               optional="show"/>
+                                        <field name="currency_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </div>
+                            <!-- Taula de dispositius -->
+                            <div invisible="not show_device_table">
+                                <separator string="Dispositius i serveis"/>
+                                <field name="device_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="name"/>
+                                        <field name="device_type"/>
+                                        <field name="municipality"/>
+                                        <field name="schedule" optional="show"/>
+                                        <field name="capacity" optional="show"/>
+                                        <field name="current_users" optional="show"/>
+                                    </tree>
+                                </field>
+                            </div>
+                        </page>
+
+                        <!-- ── 16. ASPECTES ESPECÍFICS DIBA ───────────────────────── -->
+                        <page string="Aspectes específics DIBA" name="diba_aspects"
+                              invisible="not show_ambit_selector">
+                            <field name="specific_aspect_ids" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="ambit_number"/>
+                                    <field name="aspect_name"/>
+                                    <field name="link_to_diba_program" optional="show"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <field name="ambit_number"/>
+                                            <field name="aspect_name"/>
+                                            <field name="link_to_diba_program"/>
+                                        </group>
+                                    </group>
+                                    <field name="description_html" widget="html"/>
+                                </form>
+                            </field>
+                        </page>
+
+                        <!-- ── 17. CONTEXT PENITENCIARI (SMPRAV) ──────────────────── -->
+                        <page string="Context penitenciari" name="penal"
+                              invisible="not show_penal_fields">
+                            <group>
+                                <group>
+                                    <field name="penal_medium"/>
+                                    <field name="penal_duration"/>
+                                    <field name="contribution_type"/>
+                                    <field name="num_internal_beneficiaries"/>
+                                    <field name="hours_direct_intervention"/>
+                                </group>
+                            </group>
+                            <group string="Centres penitenciaris">
+                                <field name="penal_center_ids" widget="many2many_tags"
+                                       nolabel="1"
+                                       options="{'no_create': True}"/>
+                            </group>
+                            <group string="Enfocament centrat en la persona">
+                                <field name="person_centered_html" widget="html" nolabel="1"/>
+                            </group>
+                            <separator string="Planificació per mes i centre"/>
+                            <field name="penal_schedule_ids" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="month"/>
+                                    <field name="center_id"
+                                           options="{'no_create': True}"/>
+                                    <field name="activity_description"/>
+                                    <field name="hours"/>
+                                    <field name="num_participants"/>
+                                    <field name="notes" optional="show"/>
+                                </tree>
+                            </field>
+                            <separator string="Contactes de referència als centres"/>
+                            <field name="device_contact_ids" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="center_id"
+                                           options="{'no_create': True}"/>
+                                    <field name="contact_name"/>
+                                    <field name="contact_role"/>
+                                    <field name="contact_phone" widget="phone"
+                                           optional="show"/>
+                                    <field name="contact_email" widget="email"
+                                           optional="show"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         ACTION
+    ═══════════════════════════════════════════════════════════════════════ -->
+
+    <record id="action_grant_application" model="ir.actions.act_window">
+        <field name="name">Expedients de subvenció</field>
+        <field name="res_model">grant.application</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="search_view_id" ref="view_grant_application_search"/>
+        <field name="context">{}</field>
+    </record>
+
+    <record id="action_grant_application_kanban" model="ir.actions.act_window">
+        <field name="name">Tauler d'expedients</field>
+        <field name="res_model">grant.application</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="context">{'search_default_group_state': 1}</field>
+    </record>
+
+</odoo>

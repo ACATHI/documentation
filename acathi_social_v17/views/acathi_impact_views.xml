@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- ── LLISTA ────────────────────────────────────────────── -->
+  <record id="view_acathi_impact_list" model="ir.ui.view">
+    <field name="name">acathi.impact.list</field>
+    <field name="model">acathi.impact</field>
+    <field name="arch" type="xml">
+      <tree string="Indicadores de impacto" default_order="year desc, period">
+        <field name="year"/>
+        <field name="period"/>
+        <field name="area" widget="badge"/>
+        <field name="name"/>
+        <field name="expected_value" string="Esperat"/>
+        <field name="actual_value" string="Real"/>
+        <field name="achievement_rate" string="% Assoliment"
+               widget="progressbar"/>
+      </tree>
+    </field>
+  </record>
+
+  <!-- ── FORMULARI ─────────────────────────────────────────── -->
+  <record id="view_acathi_impact_form" model="ir.ui.view">
+    <field name="name">acathi.impact.form</field>
+    <field name="model">acathi.impact</field>
+    <field name="arch" type="xml">
+      <form string="Indicador d'impacte">
+        <sheet>
+          <div class="oe_title">
+            <label for="name"/>
+            <h1>
+              <field name="name" placeholder="Nom de l'indicador..."/>
+            </h1>
+          </div>
+
+          <group>
+            <group string="Classificació">
+              <field name="area"/>
+              <field name="year"/>
+              <field name="period"/>
+            </group>
+            <group string="Valors">
+              <field name="expected_value"/>
+              <field name="actual_value"/>
+              <field name="achievement_rate" readonly="1"/>
+            </group>
+          </group>
+
+          <separator string="Observacions"/>
+          <field name="notes" nolabel="1"
+                 placeholder="Notes o context d'aquest indicador..."
+                 style="width:100%;" rows="4"/>
+        </sheet>
+        <div class="oe_chatter">
+          <field name="message_follower_ids"/>
+          <field name="message_ids"/>
+        </div>
+      </form>
+    </field>
+  </record>
+
+  <!-- ── ACCIÓ ──────────────────────────────────────────────── -->
+  <record id="action_acathi_impact" model="ir.actions.act_window">
+    <field name="name">Indicadores de impacto</field>
+    <field name="res_model">acathi.impact</field>
+    <field name="view_mode">list,form</field>
+  </record>
+
+</odoo>

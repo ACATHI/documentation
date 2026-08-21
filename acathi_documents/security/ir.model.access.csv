@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_document_template_user,acathi.document.template user,model_acathi_document_template,acathi_social.group_acathi_user,1,0,0,0
+access_document_template_professional,acathi.document.template professional,model_acathi_document_template,acathi_social.group_acathi_professional,1,0,0,0
+access_document_template_manager,acathi.document.template manager,model_acathi_document_template,acathi_social.group_acathi_manager,1,1,1,1
+access_donation_user,acathi.donation user,model_acathi_donation,acathi_social.group_acathi_user,1,0,0,0
+access_donation_professional,acathi.donation professional,model_acathi_donation,acathi_social.group_acathi_professional,1,1,1,0
+access_donation_manager,acathi.donation manager,model_acathi_donation,acathi_social.group_acathi_manager,1,1,1,1
+access_generate_wizard_user,acathi.generate.document.wizard user,model_acathi_generate_document_wizard,acathi_social.group_acathi_user,1,1,1,1
+access_generate_wizard_professional,acathi.generate.document.wizard professional,model_acathi_generate_document_wizard,acathi_social.group_acathi_professional,1,1,1,1
+access_generate_wizard_manager,acathi.generate.document.wizard manager,model_acathi_generate_document_wizard,acathi_social.group_acathi_manager,1,1,1,1

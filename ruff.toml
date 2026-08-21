@@ -1,0 +1,28 @@
+target-version = "py310"
+line-length = 120
+
+[lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "B",   # flake8-bugbear
+    "I",   # isort
+    "UP",  # pyupgrade
+]
+ignore = [
+    "E501",   # line too long (handled by formatter)
+    "B006",   # mutable default argument — Odoo usa [] i {} en fields
+    "B007",   # loop variable not used in body
+    "B904",   # raise within except — Odoo ho fa sovint
+    "UP007",  # use X | Y — Odoo 17 suporta però no sempre
+    "F401",   # unused import — __init__.py d'Odoo en té molts intencionals
+]
+
+[lint.per-file-ignores]
+"*/__init__.py" = ["F401"]  # imports d'Odoo sempre "unused" per al linter
+"*/migrations/*.py" = ["E", "W", "F"]
+
+[format]
+quote-style = "double"
+indent-style = "space"

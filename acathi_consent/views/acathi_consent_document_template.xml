@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <template id="consent_document" name="Plantilla document de consentiment RGPD">
+    <html t-att-lang="s.get('lang', 'ca')" t-att-dir="s.get('dir', 'ltr')">
+      <head>
+        <meta charset="UTF-8"/>
+        <title t-out="s.get('title', 'ACATHI — Consentiment RGPD')"/>
+        <style>
+          body { font-family: Arial, sans-serif; max-width: 720px; margin: 40px auto; padding: 20px; color: #222; line-height: 1.6; }
+          h1 { color: #5B2D8E; border-bottom: 2px solid #5B2D8E; padding-bottom: 10px; margin-bottom: 6px; font-size: 20px; }
+          .subtitle { color: #888; font-size: 13px; margin-bottom: 24px; }
+          .section { margin: 20px 0; padding: 16px; border: 1px solid #ddd; border-radius: 6px; }
+          .section h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: #5B2D8E; margin: 0 0 12px; }
+          .label { font-weight: bold; color: #666; font-size: 11px; text-transform: uppercase; letter-spacing: .04em; }
+          .value { font-size: 15px; margin: 3px 0 12px; }
+          ul { padding-left: 20px; margin: 6px 0; }
+          li { margin: 4px 0; font-size: 14px; }
+          .consented { color: #1E7A4A; }
+          .not-consented { color: #999; }
+          .footer { margin-top: 40px; font-size: 11px; color: #999; border-top: 1px solid #eee; padding-top: 16px; }
+          .rights-section { background: #f9f6ff; border-color: #d4c4eb; }
+          /* RTL support for Arabic */
+          [dir="rtl"] ul { padding-left: 0; padding-right: 20px; }
+        </style>
+      </head>
+      <body>
+        <h1 t-out="s.get('title', 'ACATHI — Consentiment RGPD')"/>
+        <div class="subtitle">
+          <t t-out="s.get('org', 'ACATHI')"/><br/>
+          <t t-out="s.get('signed_on', 'Document signat el')"/>&#32;
+          <strong t-out="consent_date"/>&#32;
+          <t t-out="s.get('at', 'a')"/>&#32;
+          <strong t-out="consent_place"/>
+        </div>
+
+        <!-- Responsable -->
+        <div class="section">
+          <h2 t-out="s.get('sec_responsible', 'Responsable del tractament')"/>
+          <p style="font-size:14px" t-out="s.get('responsible_text', '')"/>
+        </div>
+
+        <!-- Dades de la persona -->
+        <div class="section">
+          <h2 t-out="s.get('sec_person', 'Dades de la persona')"/>
+          <div class="label" t-out="s.get('lbl_name', 'Nom complet')"/>
+          <div class="value" t-out="signer_name"/>
+          <div class="label" t-out="s.get('lbl_doc', 'Document')"/>
+          <div class="value" t-out="signer_doc or '—'"/>
+          <div class="label" t-out="s.get('lbl_dob', 'Data de naixement')"/>
+          <div class="value" t-out="dob or '—'"/>
+          <div class="label" t-out="s.get('lbl_email', 'Correu electrònic')"/>
+          <div class="value" t-out="email or '—'"/>
+        </div>
+
+        <!-- Categories consentides -->
+        <div class="section">
+          <h2 t-out="s.get('sec_categories', 'Categories de dades consentides')"/>
+          <ul>
+            <t t-foreach="consented_categories" t-as="cat">
+              <li class="consented">&#10003; <t t-out="cat"/></li>
+            </t>
+            <t t-foreach="not_consented_categories" t-as="cat">
+              <li class="not-consented">&#10007; <t t-out="cat"/> (<t t-out="s.get('not_consented', 'no consentit')"/>)</li>
+            </t>
+          </ul>
+        </div>
+
+        <!-- Base legal -->
+        <div class="section">
+          <h2 t-out="s.get('sec_legal', 'Base legal i finalitat')"/>
+          <p style="font-size:14px" t-out="s.get('legal_text', '')"/>
+        </div>
+
+        <!-- Drets -->
+        <div class="section rights-section">
+          <h2 t-out="s.get('sec_rights', 'Els teus drets')"/>
+          <p style="font-size:14px" t-out="s.get('rights_text', '')"/>
+        </div>
+
+        <!-- Signatura -->
+        <div class="section">
+          <h2 t-out="s.get('sec_signature', 'Signatura de la persona')"/>
+          <t t-if="signature_image">
+            <img t-att-src="signature_image" style="max-width:320px; border:1px solid #ccc; border-radius:6px; display:block; margin-top:6px;"/>
+          </t>
+          <t t-else="">
+            <p style="color:#999; font-style:italic" t-out="s.get('no_sig', '(signatura no capturada)')"/>
+          </t>
+        </div>
+
+        <div class="footer" t-out="s.get('footer', 'RGPD · acathi.org')"/>
+      </body>
+    </html>
+  </template>
+
+</odoo>

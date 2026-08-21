@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_acathi_housing_list" model="ir.ui.view">
+        <field name="name">acathi.housing.list</field>
+        <field name="model">acathi.housing</field>
+        <field name="arch" type="xml">
+            <tree string="Pisos de Acogida">
+                <field name="name"/>
+                <field name="city"/>
+                <field name="total_capacity"/>
+                <field name="current_occupancy"/>
+                <field name="available_places"/>
+                <field name="waiting_count"/>
+                <field name="responsible_id"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'available'"
+                       decoration-warning="state == 'full'"
+                       decoration-muted="state in ('maintenance', 'closed')"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_acathi_housing_form" model="ir.ui.view">
+        <field name="name">acathi.housing.form</field>
+        <field name="model">acathi.housing</field>
+        <field name="arch" type="xml">
+            <form string="Piso de Acogida">
+                <header>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="available,full,maintenance,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" icon="fa-users" type="object" name="action_view_occupants">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_value"><field name="current_occupancy"/></span>
+                                <span class="o_stat_text">Ocupantes</span>
+                            </div>
+                        </button>
+                        <button class="oe_stat_button" icon="fa-clock-o" type="object" name="action_view_waiting">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_value"><field name="waiting_count"/></span>
+                                <span class="o_stat_text">En espera</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                        <h3><field name="reference"/></h3>
+                    </div>
+                    <group>
+                        <group string="Ubicación">
+                            <field name="street"/>
+                            <field name="city"/>
+                            <field name="zip_code"/>
+                            <field name="province"/>
+                        </group>
+                        <group string="Capacidad">
+                            <field name="total_capacity"/>
+                            <field name="room_count"/>
+                            <field name="current_occupancy" readonly="1"/>
+                            <field name="available_places" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Gestión">
+                            <field name="responsible_id"/>
+                            <field name="phone"/>
+                            <field name="rent"/>
+                            <field name="contract_end"/>
+                            <field name="landlord"/>
+                            <field name="landlord_phone"/>
+                        </group>
+                        <group string="Equipamiento">
+                            <field name="has_wifi"/>
+                            <field name="has_washing_machine"/>
+                            <field name="has_elevator"/>
+                            <field name="accessibility"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Ocupantes Actuales">
+                            <field name="occupant_ids">
+                                <tree editable="bottom">
+                                    <field name="person_id"/>
+                                    <field name="room"/>
+                                    <field name="date_in"/>
+                                    <field name="date_out_planned"/>
+                                    <field name="signed_rules"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Lista de Espera">
+                            <field name="waiting_list_ids">
+                                <tree editable="bottom">
+                                    <field name="person_id"/>
+                                    <field name="request_date"/>
+                                    <field name="priority" widget="priority"/>
+                                    <field name="notes"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Incidencias">
+                            <field name="incident_ids">
+                                <tree editable="bottom">
+                                    <field name="date"/>
+                                    <field name="incident_type"/>
+                                    <field name="description"/>
+                                    <field name="responsible_id"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Historial">
+                            <field name="occupant_history_ids" readonly="1">
+                                <tree>
+                                    <field name="person_id"/>
+                                    <field name="room"/>
+                                    <field name="date_in"/>
+                                    <field name="date_out"/>
+                                    <field name="exit_reason"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <separator string="Observaciones"/>
+                    <field name="notes" nolabel="1"
+                           style="width:100%;" rows="4"/>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_acathi_housing" model="ir.actions.act_window">
+        <field name="name">Pisos de Acogida</field>
+        <field name="res_model">acathi.housing</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

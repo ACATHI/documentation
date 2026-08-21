@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ── PERSONA ATENDIDA ─────────────────────────────────────── -->
+
+    <record id="view_acathi_person_list" model="ir.ui.view">
+        <field name="name">acathi.person.list</field>
+        <field name="model">acathi.person</field>
+        <field name="arch" type="xml">
+            <tree string="Personas Atendidas" decoration-muted="state == 'closed'"
+                  decoration-warning="state == 'referred'">
+                <field name="reference"/>
+                <field name="name"/>
+                <field name="preferred_name" optional="show"/>
+                <field name="gender_identity" optional="show"/>
+                <field name="nationality_id" optional="show"/>
+                <field name="legal_status" optional="show"/>
+                <field name="responsible_id" optional="show"/>
+                <field name="entry_date" optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'active'"
+                       decoration-warning="state == 'followup'"
+                       decoration-info="state == 'referred'"
+                       decoration-muted="state == 'closed'"/>
+                <field name="case_count" string="Casos"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_acathi_person_form" model="ir.ui.view">
+        <field name="name">acathi.person.form</field>
+        <field name="model">acathi.person</field>
+        <field name="arch" type="xml">
+            <form string="Persona Atendida">
+                <header>
+                    <button name="action_view_cases" type="object"
+                            string="Ver Casos" class="btn-secondary"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="active,followup,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_cases" type="object"
+                                class="oe_stat_button" icon="fa-folder">
+                            <field name="case_count" widget="statinfo" string="Casos"/>
+                        </button>
+                    </div>
+                    <field name="photo" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Nombre completo"/></h1>
+                        <label for="preferred_name"/>
+                        <h2><field name="preferred_name" placeholder="Nombre preferido"/></h2>
+                        <field name="reference" readonly="1"/>
+                    </div>
+
+                    <notebook>
+                        <page string="Datos Personales" name="personal">
+                            <group>
+                                <group string="Identidad">
+                                    <field name="birth_date"/>
+                                    <field name="age" readonly="1"/>
+                                    <field name="gender_identity"/>
+                                    <field name="sexual_orientation"
+                                           groups="acathi_social.group_acathi_professional"/>
+                                </group>
+                                <group string="Contacto">
+                                    <field name="phone"/>
+                                    <field name="mobile"/>
+                                    <field name="email"/>
+                                    <field name="emergency_contact"/>
+                                    <field name="emergency_phone"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Migración y Legal" name="migration">
+                            <group>
+                                <group string="Origen">
+                                    <field name="nationality_id"/>
+                                    <field name="origin_country_id"/>
+                                    <field name="migration_reason"/>
+                                    <field name="arrival_date"/>
+                                    <field name="arrival_city"/>
+                                    <field name="transit_countries"/>
+                                </group>
+                                <group string="Situación Legal">
+                                    <field name="legal_status"/>
+                                    <field name="asylum_number"/>
+                                    <field name="asylum_date"/>
+                                    <field name="nie_number"
+                                           groups="acathi_social.group_acathi_professional"/>
+                                    <field name="nie_expiry"
+                                           groups="acathi_social.group_acathi_professional"/>
+                                    <field name="passport_number"
+                                           groups="acathi_social.group_acathi_professional"/>
+                                    <field name="passport_expiry"
+                                           groups="acathi_social.group_acathi_professional"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Formación y Empleo" name="education">
+                            <group>
+                                <group string="Estudios">
+                                    <field name="education_level"/>
+                                    <field name="education_homologated"/>
+                                    <field name="education_homologation_state"/>
+                                </group>
+                                <group string="Situación Laboral">
+                                    <field name="employment_status"/>
+                                    <field name="work_permit"/>
+                                    <field name="work_permit_expiry"/>
+                                    <field name="profession"/>
+                                </group>
+                            </group>
+                            <separator string="Idiomas"/>
+                            <field name="spanish_level"/>
+                            <field name="language_ids">
+                                <tree editable="bottom">
+                                    <field name="language"/>
+                                    <field name="level"/>
+                                    <field name="can_speak"/>
+                                    <field name="can_read"/>
+                                    <field name="can_write"/>
+                                </tree>
+                            </field>
+                            <separator string="Historial Formativo"/>
+                            <field name="education_ids">
+                                <tree editable="bottom">
+                                    <field name="title"/>
+                                    <field name="institution"/>
+                                    <field name="country_id"/>
+                                    <field name="year_start"/>
+                                    <field name="year_end"/>
+                                    <field name="completed"/>
+                                    <field name="homologated"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                        <page string="Alojamiento y Familia" name="housing">
+                            <group>
+                                <group string="Alojamiento">
+                                    <field name="housing_type"/>
+                                    <field name="housing_id"
+                                           invisible="housing_type != 'acathi_house'"/>
+                                    <field name="housing_address"/>
+                                </group>
+                                <group string="Familia">
+                                    <field name="family_status"/>
+                                    <field name="children_count"/>
+                                    <field name="children_in_spain"/>
+                                    <field name="children_origin"/>
+                                    <field name="family_reunification"/>
+                                </group>
+                            </group>
+                            <group string="Situación Económica">
+                                <field name="income_source"/>
+                                <field name="monthly_income"
+                                       groups="acathi_social.group_acathi_professional"/>
+                                <field name="economic_aids"/>
+                            </group>
+                        </page>
+
+                        <page string="Salud" name="health"
+                              groups="acathi_social.group_acathi_professional">
+                            <group>
+                                <group string="Salud General">
+                                    <field name="health_card"/>
+                                    <field name="health_card_pending"/>
+                                </group>
+                                <group string="VIH">
+                                    <field name="hiv_status"/>
+                                    <field name="hiv_treatment"/>
+                                    <field name="hiv_followup_center"/>
+                                    <field name="last_hiv_test"/>
+                                </group>
+                            </group>
+                            <separator string="Notas de salud general"/>
+                            <field name="health_notes" nolabel="1"
+                                   style="width:100%;" rows="3"/>
+                            <group string="Salud Mental">
+                                <field name="mental_health_followup"/>
+                                <field name="mental_health_type"/>
+                                <field name="mental_health_center"/>
+                            </group>
+                            <separator string="Notas de salud mental"/>
+                            <field name="mental_health_notes" nolabel="1"
+                                   style="width:100%;" rows="3"/>
+                            <group string="Situaciones de Riesgo">
+                                <field name="trafficking_risk"/>
+                                <field name="exploitation_risk"/>
+                                <field name="violence_risk"/>
+                            </group>
+                            <separator string="Notas de riesgo"/>
+                            <field name="risk_notes" nolabel="1"
+                                   style="width:100%;" rows="3"/>
+                        </page>
+
+                        <page string="Prisión" name="prison"
+                              invisible="not prison_followup">
+                            <group>
+                                <field name="prison_followup"/>
+                                <field name="prison_name"/>
+                                <field name="prison_entry_date"/>
+                                <field name="prison_exit_date"/>
+                            </group>
+                            <separator string="Notas"
+                                       groups="acathi_social.group_acathi_professional"/>
+                            <field name="prison_notes" nolabel="1"
+                                   style="width:100%;" rows="4"
+                                   groups="acathi_social.group_acathi_professional"/>
+                        </page>
+
+                        <page string="Gestión ACATHI" name="management">
+                            <group>
+                                <group>
+                                    <field name="responsible_id"/>
+                                    <field name="entry_date"/>
+                                    <field name="exit_date"/>
+                                    <field name="exit_reason"/>
+                                    <field name="referral_entity"/>
+                                </group>
+                                <group>
+                                    <field name="gdpr_consent"/>
+                                    <field name="gdpr_consent_date"/>
+                                    <field name="partner_id" options="{'no_create': True, 'no_quick_create': True}"/>
+                                    <field name="category_ids" widget="many2many_tags"/>
+                                </group>
+                            </group>
+                            <separator string="Notas Confidenciales"
+                                       groups="acathi_social.group_acathi_professional"/>
+                            <field name="confidential_notes" nolabel="1"
+                                   style="width:100%;" rows="4"
+                                   groups="acathi_social.group_acathi_professional"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_acathi_person_search" model="ir.ui.view">
+        <field name="name">acathi.person.search</field>
+        <field name="model">acathi.person</field>
+        <field name="arch" type="xml">
+            <search string="Buscar personas">
+                <field name="name"/>
+                <field name="reference"/>
+                <field name="nationality_id"/>
+                <field name="responsible_id"/>
+                <separator/>
+                <filter name="active" string="Activas/os" domain="[('state','=','active')]"/>
+                <filter name="followup" string="En seguimiento" domain="[('state','=','followup')]"/>
+                <filter name="closed" string="Cerradas/os" domain="[('state','=','closed')]"/>
+                <separator/>
+                <filter name="asylum" string="Solicitantes asilo"
+                        domain="[('legal_status','=','asylum_seeker')]"/>
+                <filter name="refugee" string="Refugiadas/os"
+                        domain="[('legal_status','=','refugee')]"/>
+                <filter name="prison" string="Seguimiento prisión"
+                        domain="[('prison_followup','=',True)]"/>
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_state" string="Estado"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_responsible" string="Profesional"
+                            context="{'group_by': 'responsible_id'}"/>
+                    <filter name="group_nationality" string="Nacionalidad"
+                            context="{'group_by': 'nationality_id'}"/>
+                    <filter name="group_legal" string="Situación legal"
+                            context="{'group_by': 'legal_status'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_acathi_person" model="ir.actions.act_window">
+        <field name="name">Personas Atendidas</field>
+        <field name="res_model">acathi.person</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_acathi_person_search"/>
+        <field name="context">{'search_default_active': 1}</field>
+    </record>
+
+</odoo>

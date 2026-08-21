@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- ═══════════════════════════════════════════════════════════════
+             FINANÇADORS
+        ═══════════════════════════════════════════════════════════════════ -->
+
+        <record id="funder_ajuntament_bcn" model="grant.funder">
+            <field name="name">Ajuntament de Barcelona</field>
+            <field name="short_name">BCN_AJ</field>
+            <field name="funder_type">administracio_local</field>
+            <field name="requires_entity_report">False</field>
+            <field name="single_project_per_call">False</field>
+            <field name="has_penal_context">False</field>
+        </record>
+
+        <record id="funder_diputacio_bcn" model="grant.funder">
+            <field name="name">Diputació de Barcelona</field>
+            <field name="short_name">DIBA</field>
+            <field name="funder_type">diputacio</field>
+            <field name="requires_entity_report">False</field>
+            <field name="single_project_per_call">False</field>
+            <field name="has_penal_context">False</field>
+        </record>
+
+        <record id="funder_generalitat_ds" model="grant.funder">
+            <field name="name">Generalitat de Catalunya — Departament de Drets Socials</field>
+            <field name="short_name">GEN_DS</field>
+            <field name="funder_type">generalitat</field>
+            <field name="requires_entity_report">False</field>
+            <field name="single_project_per_call">False</field>
+            <field name="has_penal_context">False</field>
+        </record>
+
+        <record id="funder_cosife" model="grant.funder">
+            <field name="name">COSIFE — Consorci de Serveis a les Persones i Igualtat</field>
+            <field name="short_name">COSIFE</field>
+            <field name="funder_type">administracio_local</field>
+            <field name="requires_entity_report">False</field>
+            <field name="single_project_per_call">True</field>
+            <field name="has_penal_context">False</field>
+        </record>
+
+        <record id="funder_smprav" model="grant.funder">
+            <field name="name">SMPRAV — Departament de Justícia (Serveis Penitenciaris)</field>
+            <field name="short_name">SMPRAV</field>
+            <field name="funder_type">generalitat</field>
+            <field name="requires_entity_report">True</field>
+            <field name="single_project_per_call">False</field>
+            <field name="has_penal_context">True</field>
+        </record>
+
+        <!-- ═══════════════════════════════════════════════════════════════
+             CONFIGURACIÓ AJUNTAMENT BCN 2026
+        ═══════════════════════════════════════════════════════════════════ -->
+
+        <record id="config_ajuntament_bcn_2026" model="grant.call.config">
+            <field name="name">Ajuntament de Barcelona 2026 — Doc Bàsic</field>
+            <field name="funder_id" ref="funder_ajuntament_bcn"/>
+
+            <!-- Seccions visibles -->
+            <field name="show_revaluation_plan">True</field>
+            <field name="show_penal_fields">False</field>
+            <field name="show_counting_units">False</field>
+            <field name="show_volunteer_table">False</field>
+            <field name="show_device_table">False</field>
+            <field name="show_sai_network">False</field>
+            <field name="show_law_19_2020">False</field>
+            <field name="show_gender_table">False</field>
+            <field name="show_objectives_table">False</field>
+            <field name="show_ambit_selector">False</field>
+            <field name="show_xfa_budget">False</field>
+            <field name="show_social_clauses">True</field>
+            <field name="show_catalan_policy">False</field>
+            <field name="show_ecosocial">True</field>
+            <field name="show_intercultural">True</field>
+
+            <!-- Límits de camp (0 = sense límit) -->
+            <field name="social_interest_max_chars">0</field>
+            <field name="brief_description_max_chars">0</field>
+            <field name="communication_message_max_chars">0</field>
+            <field name="max_general_objectives">0</field>
+            <field name="max_specific_objectives">0</field>
+
+            <!-- Pressupost -->
+            <field name="budget_template">ajuntament_bcn</field>
+            <field name="budget_must_balance">True</field>
+            <field name="budget_category_ids" eval="[(6, 0, [
+                ref('grant_management.cat_rrhh'),
+                ref('grant_management.cat_lloguer'),
+                ref('grant_management.cat_submin'),
+                ref('grant_management.cat_comunic'),
+                ref('grant_management.cat_mat_fung'),
+                ref('grant_management.cat_transp'),
+                ref('grant_management.cat_public'),
+                ref('grant_management.cat_asseg'),
+                ref('grant_management.cat_dietes'),
+                ref('grant_management.cat_viatges'),
+                ref('grant_management.cat_treb_ext'),
+                ref('grant_management.cat_altres'),
+            ])]"/>
+
+            <!-- Justificació -->
+            <field name="justification_template">ajuntament_bcn</field>
+            <field name="requires_monthly_execution">False</field>
+            <field name="requires_user_age_breakdown">False</field>
+        </record>
+
+        <!-- ═══════════════════════════════════════════════════════════════
+             CONFIGURACIÓ DIPUTACIÓ BCN 2026
+        ═══════════════════════════════════════════════════════════════════ -->
+
+        <record id="config_diputacio_bcn_2026" model="grant.call.config">
+            <field name="name">Diputació de Barcelona 2026 — Programa XFA</field>
+            <field name="funder_id" ref="funder_diputacio_bcn"/>
+            <field name="show_ambit_selector">True</field>
+            <field name="show_xfa_budget">True</field>
+            <field name="show_social_clauses">False</field>
+            <field name="show_ecosocial">False</field>
+            <field name="show_intercultural">False</field>
+            <field name="budget_template">diputacio_bcn</field>
+            <field name="budget_must_balance">True</field>
+            <field name="justification_template">diputacio_bcn</field>
+            <field name="budget_category_ids" eval="[(6, 0, [
+                ref('grant_management.cat_rrhh'),
+                ref('grant_management.cat_cont_ext'),
+                ref('grant_management.cat_mat_fung'),
+                ref('grant_management.cat_indir'),
+                ref('grant_management.cat_altres'),
+            ])]"/>
+        </record>
+
+        <!-- ═══════════════════════════════════════════════════════════════
+             CONFIGURACIÓ GENERALITAT DS 2026
+        ═══════════════════════════════════════════════════════════════════ -->
+
+        <record id="config_generalitat_ds_2026" model="grant.call.config">
+            <field name="name">Generalitat DS 2026 — Annex grup 1</field>
+            <field name="funder_id" ref="funder_generalitat_ds"/>
+            <field name="show_counting_units">True</field>
+            <field name="show_volunteer_table">True</field>
+            <field name="show_device_table">True</field>
+            <field name="show_ecosocial">False</field>
+            <field name="show_intercultural">False</field>
+            <field name="social_interest_max_chars">800</field>
+            <field name="max_general_objectives">2</field>
+            <field name="budget_template">generalitat_ds</field>
+            <field name="budget_must_balance">True</field>
+            <field name="justification_template">generalitat_ds</field>
+            <field name="requires_user_age_breakdown">True</field>
+            <field name="budget_category_ids" eval="[(6, 0, [
+                ref('grant_management.cat_rrhh'),
+                ref('grant_management.cat_cont_ext'),
+                ref('grant_management.cat_bens_serv'),
+                ref('grant_management.cat_altres'),
+            ])]"/>
+        </record>
+
+        <!-- ═══════════════════════════════════════════════════════════════
+             CONFIGURACIÓ COSIFE LÍNIA B 2026
+        ═══════════════════════════════════════════════════════════════════ -->
+
+        <record id="config_cosife_linia_b_2026" model="grant.call.config">
+            <field name="name">COSIFE 2026 — Línia B (Violències masclistes)</field>
+            <field name="funder_id" ref="funder_cosife"/>
+            <field name="show_gender_table">True</field>
+            <field name="show_social_clauses">True</field>
+            <field name="show_catalan_policy">True</field>
+            <field name="communication_message_max_chars">400</field>
+            <field name="budget_template">cosife</field>
+            <field name="budget_must_balance">True</field>
+            <field name="justification_template">cosife_b</field>
+            <field name="requires_monthly_execution">True</field>
+            <field name="requires_user_age_breakdown">True</field>
+            <field name="budget_category_ids" eval="[(6, 0, [
+                ref('grant_management.cat_rrhh'),
+                ref('grant_management.cat_cont_ext'),
+                ref('grant_management.cat_mat_fung'),
+                ref('grant_management.cat_altres'),
+            ])]"/>
+        </record>
+
+        <!-- ═══════════════════════════════════════════════════════════════
+             CONFIGURACIÓ SMPRAV 2026
+        ═══════════════════════════════════════════════════════════════════ -->
+
+        <record id="config_smprav_2026" model="grant.call.config">
+            <field name="name">SMPRAV 2026 — Serveis penitenciaris</field>
+            <field name="funder_id" ref="funder_smprav"/>
+            <field name="show_penal_fields">True</field>
+            <field name="show_social_clauses">True</field>
+            <field name="show_volunteer_table">True</field>
+            <field name="max_specific_objectives">5</field>
+            <field name="budget_template">smprav</field>
+            <field name="budget_must_balance">True</field>
+            <field name="justification_template">smprav</field>
+            <field name="budget_category_ids" eval="[(6, 0, [
+                ref('grant_management.cat_rrhh'),
+                ref('grant_management.cat_cont_ext'),
+                ref('grant_management.cat_bens_serv'),
+                ref('grant_management.cat_asseg'),
+                ref('grant_management.cat_dietes'),
+                ref('grant_management.cat_altres'),
+                ref('grant_management.cat_invers'),
+            ])]"/>
+        </record>
+
+    </data>
+</odoo>

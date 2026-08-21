@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- ── DESPESES CORRENTS ─────────────────────────────────────────── -->
+
+        <record id="cat_rrhh" model="grant.budget.category">
+            <field name="name">Recursos humans (nòmina + SS)</field>
+            <field name="code">RRHH</field>
+            <field name="category_type">corrents</field>
+            <field name="sequence">10</field>
+            <field name="description">Personal propi de l'entitat: salaris bruts i quotes de Seguretat Social</field>
+        </record>
+
+        <record id="cat_cont_ext" model="grant.budget.category">
+            <field name="name">Contractació externa</field>
+            <field name="code">CONT_EXT</field>
+            <field name="category_type">corrents</field>
+            <field name="sequence">20</field>
+            <field name="description">Serveis de professionals externs, autònoms o empreses especialitzades</field>
+        </record>
+
+        <record id="cat_bens_serv" model="grant.budget.category">
+            <field name="name">Béns i serveis</field>
+            <field name="code">BENS_SERV</field>
+            <field name="category_type">corrents</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="cat_lloguer" model="grant.budget.category">
+            <field name="name">Lloguer (materials, locals)</field>
+            <field name="code">LLOGUER</field>
+            <field name="category_type">corrents</field>
+            <field name="sequence">40</field>
+            <field name="description">Ajuntament BCN categoria B</field>
+        </record>
+
+        <record id="cat_submin" model="grant.budget.category">
+            <field name="name">Subministraments</field>
+            <field name="code">SUBMIN</field>
+            <field name="category_type">corrents</field>
+            <field name="sequence">50</field>
+            <field name="description">Ajuntament BCN categoria C: electricitat, gas, aigua, telèfon</field>
+        </record>
+
+        <record id="cat_comunic" model="grant.budget.category">
+            <field name="name">Comunicacions</field>
+            <field name="code">COMUNIC</field>
+            <field name="category_type">corrents</field>
+            <field name="sequence">60</field>
+            <field name="description">Ajuntament BCN categoria D: correu postal, missatgeria, comunicació digital</field>
+        </record>
+
+        <record id="cat_mat_fung" model="grant.budget.category">
+            <field name="name">Material fungible</field>
+            <field name="code">MAT_FUNG</field>
+            <field name="category_type">corrents</field>
+            <field name="sequence">70</field>
+            <field name="description">Ajuntament BCN categoria F + Diputació (Material)</field>
+        </record>
+
+        <record id="cat_transp" model="grant.budget.category">
+            <field name="name">Transport i missatgeria</field>
+            <field name="code">TRANSP</field>
+            <field name="category_type">corrents</field>
+            <field name="sequence">80</field>
+            <field name="description">Ajuntament BCN categoria G</field>
+        </record>
+
+        <record id="cat_public" model="grant.budget.category">
+            <field name="name">Publicitat i propaganda</field>
+            <field name="code">PUBLIC</field>
+            <field name="category_type">corrents</field>
+            <field name="sequence">90</field>
+            <field name="description">Ajuntament BCN categoria H: difusió, comunicació externa del projecte</field>
+        </record>
+
+        <record id="cat_asseg" model="grant.budget.category">
+            <field name="name">Assegurances</field>
+            <field name="code">ASSEG</field>
+            <field name="category_type">corrents</field>
+            <field name="sequence">100</field>
+            <field name="description">Ajuntament BCN categoria I + SMPRAV</field>
+        </record>
+
+        <record id="cat_dietes" model="grant.budget.category">
+            <field name="name">Allotjament i dietes</field>
+            <field name="code">DIETES</field>
+            <field name="category_type">corrents</field>
+            <field name="sequence">110</field>
+            <field name="description">Ajuntament BCN categoria J + SMPRAV (Dietes i desplaçaments)</field>
+        </record>
+
+        <record id="cat_viatges" model="grant.budget.category">
+            <field name="name">Viatges i desplaçaments</field>
+            <field name="code">VIATGES</field>
+            <field name="category_type">corrents</field>
+            <field name="sequence">120</field>
+            <field name="description">Ajuntament BCN categoria K</field>
+        </record>
+
+        <record id="cat_treb_ext" model="grant.budget.category">
+            <field name="name">Treballs d'empreses externes</field>
+            <field name="code">TREB_EXT</field>
+            <field name="category_type">corrents</field>
+            <field name="sequence">130</field>
+            <field name="description">Ajuntament BCN categoria L: empreses de serveis, assessories, auditories</field>
+        </record>
+
+        <record id="cat_indir" model="grant.budget.category">
+            <field name="name">Despeses indirectes</field>
+            <field name="code">INDIR</field>
+            <field name="category_type">corrents</field>
+            <field name="sequence">140</field>
+            <field name="description">Diputació BCN: overhead estructural de l'entitat imputable al projecte</field>
+        </record>
+
+        <record id="cat_altres" model="grant.budget.category">
+            <field name="name">Altres despeses</field>
+            <field name="code">ALTRES</field>
+            <field name="category_type">corrents</field>
+            <field name="sequence">150</field>
+            <field name="description">Camp lliure de descripció, aplicable a tots els finançadors</field>
+        </record>
+
+        <!-- ── INVERSIONS ────────────────────────────────────────────────── -->
+
+        <record id="cat_invers" model="grant.budget.category">
+            <field name="name">Inversions</field>
+            <field name="code">INVERS</field>
+            <field name="category_type">inversions</field>
+            <field name="sequence">200</field>
+            <field name="description">SMPRAV: implementació de pisos d'acollida i equipament durador</field>
+        </record>
+
+    </data>
+</odoo>

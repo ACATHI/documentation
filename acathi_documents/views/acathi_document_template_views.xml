@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="view_acathi_document_template_list" model="ir.ui.view">
+    <field name="name">acathi.document.template.list</field>
+    <field name="model">acathi.document.template</field>
+    <field name="arch" type="xml">
+      <tree string="Plantilles de documents">
+        <field name="name"/>
+        <field name="template_type" widget="badge"/>
+        <field name="template_filename"/>
+        <field name="active" widget="boolean_toggle"/>
+      </tree>
+    </field>
+  </record>
+
+  <record id="view_acathi_document_template_form" model="ir.ui.view">
+    <field name="name">acathi.document.template.form</field>
+    <field name="model">acathi.document.template</field>
+    <field name="arch" type="xml">
+      <form string="Plantilla de document">
+        <sheet>
+          <div class="oe_title">
+            <h1><field name="name" placeholder="Nom de la plantilla"/></h1>
+          </div>
+          <group>
+            <group>
+              <field name="template_type"/>
+              <field name="active"/>
+            </group>
+            <group>
+              <field name="template_file" widget="binary" filename="template_filename"/>
+              <field name="template_filename" invisible="1"/>
+            </group>
+          </group>
+          <separator string="Notes internes"/>
+          <field name="description" nolabel="1" placeholder="Descripció o instruccions d'ús..."
+                 style="width:100%;min-height:80px;"/>
+          <separator string="Variables disponibles"/>
+          <field name="variable_help" nolabel="1" readonly="1" widget="text"
+                 style="width:100%;min-height:260px;font-family:monospace;font-size:12px;"/>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="action_acathi_document_template" model="ir.actions.act_window">
+    <field name="name">Plantilles de documents</field>
+    <field name="res_model">acathi.document.template</field>
+    <field name="view_mode">list,form</field>
+  </record>
+
+  <menuitem id="menu_acathi_documents_root"
+            name="Documents"
+            parent="acathi_social.menu_acathi_root"
+            sequence="80"/>
+
+  <menuitem id="menu_acathi_document_templates"
+            name="Plantilles"
+            parent="menu_acathi_documents_root"
+            action="action_acathi_document_template"
+            sequence="10"/>
+
+</odoo>

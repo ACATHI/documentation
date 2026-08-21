@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         REFORMULACIÓ
+    ═══════════════════════════════════════════════════════════════════════ -->
+
+    <record id="view_grant_reformulation_form" model="ir.ui.view">
+        <field name="name">grant.reformulation.form</field>
+        <field name="model">grant.reformulation</field>
+        <field name="arch" type="xml">
+            <form string="Reformulació">
+                <header>
+                    <button name="action_accept" type="object"
+                            string="Acceptar reformulació" class="btn-success"
+                            confirm="Confirmeu que accepteu la reformulació i el projecte passa a Concedit?"
+                            invisible="state != 'pendent'"/>
+                    <button name="action_renounce" type="object"
+                            string="Renunciar a la subvenció" class="btn-danger"
+                            confirm="Confirmeu que renuncieu? L'expedient passarà a Denegat."
+                            invisible="state != 'pendent'"/>
+                    <button name="action_populate_expenses" type="object"
+                            string="Copiar despeses originals"
+                            invisible="state != 'pendent'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="pendent,acceptada,renunciada"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Imports">
+                            <field name="original_amount" widget="monetary"/>
+                            <field name="resolution_amount" widget="monetary"
+                                   readonly="state != 'pendent'"/>
+                            <field name="reduction_amount" widget="monetary"/>
+                            <field name="reduction_pct"/>
+                        </group>
+                        <group string="Decisió">
+                            <field name="decision" readonly="state != 'pendent'"/>
+                            <field name="decision_date"/>
+                            <field name="total_reformulated" widget="monetary"/>
+                        </group>
+                    </group>
+                    <group string="Justificació dels canvis">
+                        <field name="justification_html" widget="html" nolabel="1"
+                               readonly="state != 'pendent'"/>
+                    </group>
+                    <separator string="Pressupost reformulat"/>
+                    <field name="expense_ids" readonly="state != 'pendent'">
+                        <tree editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="category_id" options="{'no_create': True}"/>
+                            <field name="description"/>
+                            <field name="amount_original" widget="monetary"/>
+                            <field name="amount_reformulated" widget="monetary"/>
+                            <field name="difference" widget="monetary"
+                                   decoration-danger="difference &lt; 0"
+                                   decoration-success="difference == 0"/>
+                            <field name="justification"/>
+                            <field name="currency_id" invisible="1"/>
+                        </tree>
+                    </field>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_grant_reformulation_tree" model="ir.ui.view">
+        <field name="name">grant.reformulation.tree</field>
+        <field name="model">grant.reformulation</field>
+        <field name="arch" type="xml">
+            <tree string="Reformulacions"
+                  decoration-success="state == 'acceptada'"
+                  decoration-danger="state == 'renunciada'">
+                <field name="name"/>
+                <field name="application_id"/>
+                <field name="original_amount" widget="monetary"/>
+                <field name="resolution_amount" widget="monetary"/>
+                <field name="reduction_pct"/>
+                <field name="decision_date"/>
+                <field name="state" widget="badge"
+                       decoration-warning="state == 'pendent'"
+                       decoration-success="state == 'acceptada'"
+                       decoration-danger="state == 'renunciada'"/>
+                <field name="currency_id" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Wizard reformulació -->
+    <record id="view_reformulation_wizard_form" model="ir.ui.view">
+        <field name="name">grant.reformulation.wizard.form</field>
+        <field name="model">grant.reformulation.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Iniciar reformulació">
+                <group>
+                    <group string="Expedient">
+                        <field name="application_id" readonly="1"/>
+                        <field name="original_amount" widget="monetary"/>
+                    </group>
+                    <group string="Resolució del finançador">
+                        <field name="resolution_amount" widget="monetary"/>
+                        <field name="reduction_pct" widget="percentage"/>
+                    </group>
+                </group>
+                <group>
+                    <field name="copy_expenses"/>
+                    <field name="notes" placeholder="Notes inicials per a la reformulació..."/>
+                </group>
+                <footer>
+                    <button name="action_confirm" type="object"
+                            string="Iniciar reformulació" class="btn-primary"/>
+                    <button special="cancel" string="Cancel·lar"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_reformulation_wizard" model="ir.actions.act_window">
+        <field name="name">Iniciar reformulació</field>
+        <field name="res_model">grant.reformulation.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_application_id': active_id}</field>
+    </record>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         JUSTIFICACIÓ NARRATIVA
+    ═══════════════════════════════════════════════════════════════════════ -->
+
+    <record id="view_grant_justification_form" model="ir.ui.view">
+        <field name="name">grant.justification.form</field>
+        <field name="model">grant.justification</field>
+        <field name="arch" type="xml">
+            <form string="Memòria de justificació">
+                <header>
+                    <button name="action_submit" type="object"
+                            string="Marcar com presentada" class="btn-primary"
+                            invisible="state != 'esborrany'"/>
+                    <button name="action_close" type="object"
+                            string="Tancar" invisible="state != 'presentada'"/>
+                    <button name="action_reset_draft" type="object"
+                            string="Tornar a esborrany"
+                            invisible="state == 'tancada'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="esborrany,presentada,tancada"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="application_id" readonly="1"/>
+                            <field name="justification_template" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="date_presented" readonly="state != 'esborrany'"/>
+                            <field name="num_participants_actual"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Activitats executades" name="activities">
+                            <field name="activities_report_html" widget="html" nolabel="1"/>
+                        </page>
+                        <page string="Desviacions i incidències" name="deviations">
+                            <field name="deviations_html" widget="html" nolabel="1"/>
+                        </page>
+                        <page string="Grup destinatari real" name="target_group">
+                            <group>
+                                <field name="target_group_actual_html" widget="html" nolabel="1"/>
+                            </group>
+                        </page>
+                        <page string="Avaluació" name="evaluation">
+                            <group string="Avaluació dels resultats">
+                                <field name="evaluation_actual_html" widget="html" nolabel="1"/>
+                            </group>
+                            <group string="Aprenentatges i millores">
+                                <field name="lessons_learned_html" widget="html" nolabel="1"/>
+                            </group>
+                        </page>
+                        <page string="Perspectiva de gènere" name="gender">
+                            <field name="gender_actual_html" widget="html" nolabel="1"/>
+                        </page>
+                        <page string="Comunicació" name="communication">
+                            <field name="communication_evidence_html" widget="html" nolabel="1"/>
+                        </page>
+                        <page string="Clàusules socials" name="social">
+                            <field name="social_clauses_report_html" widget="html" nolabel="1"/>
+                        </page>
+                        <page string="Notes internes" name="notes">
+                            <field name="internal_notes" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_grant_justification_tree" model="ir.ui.view">
+        <field name="name">grant.justification.tree</field>
+        <field name="model">grant.justification</field>
+        <field name="arch" type="xml">
+            <tree string="Memòries de justificació">
+                <field name="name"/>
+                <field name="application_id"/>
+                <field name="date_presented"/>
+                <field name="state" widget="badge"
+                       decoration-warning="state == 'esborrany'"
+                       decoration-success="state == 'tancada'"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         JUSTIFICACIÓ ECONÒMICA
+    ═══════════════════════════════════════════════════════════════════════ -->
+
+    <record id="view_grant_economic_justification_form" model="ir.ui.view">
+        <field name="name">grant.economic.justification.form</field>
+        <field name="model">grant.economic.justification</field>
+        <field name="arch" type="xml">
+            <form string="Justificació econòmica">
+                <header>
+                    <button name="action_sync_from_budget" type="object"
+                            string="Sincronitzar des del pressupost"
+                            invisible="state == 'presentada'"/>
+                    <button name="action_submit" type="object"
+                            string="Presentar justificació econòmica" class="btn-primary"
+                            invisible="state != 'completa'"
+                            confirm="Un cop presentada, s'actualitzarà l'import justificat de l'expedient. Continuar?"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="esborrany,completa,presentada"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Resum">
+                            <field name="total_granted" widget="monetary"/>
+                            <field name="total_executed" widget="monetary"/>
+                            <field name="total_justified" widget="monetary"/>
+                            <field name="amount_to_return" widget="monetary"
+                                   decoration-danger="amount_to_return &gt; 0"/>
+                        </group>
+                    </group>
+                    <separator string="Detall per categoria"/>
+                    <field name="line_ids" readonly="state == 'presentada'">
+                        <tree editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="category_id" options="{'no_create': True}"/>
+                            <field name="amount_requested" widget="monetary"/>
+                            <field name="amount_reformulated" widget="monetary" optional="hide"/>
+                            <field name="amount_executed" widget="monetary"/>
+                            <field name="amount_justified" widget="monetary"/>
+                            <field name="difference" widget="monetary"
+                                   decoration-danger="difference &gt; 0"
+                                   decoration-success="difference == 0"/>
+                            <field name="num_docs"/>
+                            <field name="currency_id" invisible="1"/>
+                        </tree>
+                    </field>
+                    <group string="Observacions">
+                        <field name="notes" widget="html" nolabel="1"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_grant_economic_justification_tree" model="ir.ui.view">
+        <field name="name">grant.economic.justification.tree</field>
+        <field name="model">grant.economic.justification</field>
+        <field name="arch" type="xml">
+            <tree string="Justificacions econòmiques">
+                <field name="name"/>
+                <field name="application_id"/>
+                <field name="total_granted" widget="monetary"/>
+                <field name="total_justified" widget="monetary"/>
+                <field name="amount_to_return" widget="monetary"
+                       decoration-danger="amount_to_return &gt; 0"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'presentada'"
+                       decoration-warning="state in ('esborrany','completa')"/>
+                <field name="currency_id" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         REQUERIMENTS D'ESMENA
+    ═══════════════════════════════════════════════════════════════════════ -->
+
+    <record id="view_grant_requirement_form" model="ir.ui.view">
+        <field name="name">grant.requirement.form</field>
+        <field name="model">grant.requirement</field>
+        <field name="arch" type="xml">
+            <form string="Requeriment d'esmena">
+                <header>
+                    <button name="action_mark_responded" type="object"
+                            string="Marcar com respost" class="btn-primary"
+                            invisible="state != 'pendent'"/>
+                    <button name="action_close" type="object"
+                            string="Tancar" invisible="state != 'respost'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="pendent,respost,tancat"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="application_id"/>
+                            <field name="concept"/>
+                            <field name="date_requirement"/>
+                        </group>
+                        <group>
+                            <field name="date_response"/>
+                            <field name="date_responded" invisible="state == 'pendent'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Requeriment del finançador" name="requirement">
+                            <field name="description_html" widget="html" nolabel="1"/>
+                        </page>
+                        <page string="Resposta de l'entitat" name="response">
+                            <field name="response_html" widget="html" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_grant_requirement_tree" model="ir.ui.view">
+        <field name="name">grant.requirement.tree</field>
+        <field name="model">grant.requirement</field>
+        <field name="arch" type="xml">
+            <tree string="Requeriments d'esmena"
+                  decoration-danger="state == 'pendent' and date_response and date_response &lt; current_date">
+                <field name="application_id"/>
+                <field name="date_requirement"/>
+                <field name="concept"/>
+                <field name="date_response"/>
+                <field name="date_responded" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-danger="state == 'pendent'"
+                       decoration-warning="state == 'respost'"
+                       decoration-success="state == 'tancat'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_grant_requirement" model="ir.actions.act_window">
+        <field name="name">Requeriments d'esmena</field>
+        <field name="res_model">grant.requirement</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         PLA DE COMUNICACIÓ
+    ═══════════════════════════════════════════════════════════════════════ -->
+
+    <record id="view_grant_communication_plan_form" model="ir.ui.view">
+        <field name="name">grant.communication.plan.form</field>
+        <field name="model">grant.communication.plan</field>
+        <field name="arch" type="xml">
+            <form string="Pla de comunicació">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object" icon="fa-check-circle"
+                                name="action_view_done" readonly="1">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_value">
+                                    <field name="done_count"/> /
+                                    <field name="total_count"/>
+                                </span>
+                                <span class="o_stat_text">Realitzades</span>
+                            </div>
+                        </button>
+                    </div>
+                    <group>
+                        <field name="application_id" options="{'no_create': True}"/>
+                    </group>
+                    <group string="Estratègia de comunicació">
+                        <field name="notes" widget="html" nolabel="1"/>
+                    </group>
+                    <separator string="Accions de comunicació"/>
+                    <field name="action_ids">
+                        <tree editable="bottom">
+                            <field name="name"/>
+                            <field name="channel"/>
+                            <field name="date"/>
+                            <field name="description"/>
+                            <field name="done" widget="boolean_toggle"/>
+                            <field name="evidence_notes" optional="hide"/>
+                        </tree>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         WIZARD JUSTIFICACIÓ
+    ═══════════════════════════════════════════════════════════════════════ -->
+
+    <record id="view_justification_wizard_form" model="ir.ui.view">
+        <field name="name">grant.justification.wizard.form</field>
+        <field name="model">grant.justification.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Iniciar justificació">
+                <group>
+                    <field name="application_id" readonly="1"/>
+                    <field name="sync_budget"/>
+                    <field name="notes" placeholder="Notes inicials..."/>
+                </group>
+                <footer>
+                    <button name="action_confirm" type="object"
+                            string="Iniciar justificació" class="btn-primary"/>
+                    <button special="cancel" string="Cancel·lar"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_justification_wizard" model="ir.actions.act_window">
+        <field name="name">Iniciar justificació</field>
+        <field name="res_model">grant.justification.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_application_id': active_id}</field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         WIZARD DUPLICACIÓ D'EXPEDIENT
+    ═══════════════════════════════════════════════════════════════════════ -->
+
+    <record id="view_grant_duplicate_wizard_form" model="ir.ui.view">
+        <field name="name">grant.duplicate.wizard.form</field>
+        <field name="model">grant.duplicate.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Duplicar expedient">
+                <group string="Expedient d'origen">
+                    <field name="application_id" readonly="1"/>
+                </group>
+                <group string="Nova convocatòria">
+                    <field name="call_id" options="{'no_create': True}"/>
+                </group>
+                <group string="Contingut a copiar">
+                    <group>
+                        <field name="copy_budget"/>
+                        <field name="copy_activities"/>
+                    </group>
+                    <group>
+                        <field name="copy_staff"/>
+                        <field name="copy_specific"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_duplicate" type="object"
+                            string="Crear còpia" class="btn-primary"/>
+                    <button string="Cancel·lar" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_duplicate_wizard" model="ir.actions.act_window">
+        <field name="name">Duplicar expedient</field>
+        <field name="res_model">grant.duplicate.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_application_id': active_id}</field>
+    </record>
+
+</odoo>

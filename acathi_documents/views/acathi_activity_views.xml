@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- Afegeix botó "Generar document" al formulari d'activitat -->
+  <record id="view_acathi_activity_form_documents" model="ir.ui.view">
+    <field name="name">acathi.activity.form.documents</field>
+    <field name="model">acathi.activity</field>
+    <field name="inherit_id" ref="acathi_social.view_acathi_activity_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//header" position="inside">
+        <button name="%(acathi_documents.action_generate_document_wizard)d"
+                string="Generar document" type="action"
+                class="btn-secondary" icon="fa-file-word-o"/>
+      </xpath>
+    </field>
+  </record>
+
+</odoo>

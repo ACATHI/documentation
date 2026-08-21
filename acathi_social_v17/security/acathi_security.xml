@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Grups de seguretat -->
+        <record id="group_acathi_user" model="res.groups">
+            <field name="name">Usuario ACATHI</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+
+        <record id="group_acathi_professional" model="res.groups">
+            <field name="name">Profesional ACATHI</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+            <field name="implied_ids" eval="[(4, ref('group_acathi_user'))]"/>
+        </record>
+
+        <record id="group_acathi_manager" model="res.groups">
+            <field name="name">Coordinador/a ACATHI</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+            <field name="implied_ids" eval="[(4, ref('group_acathi_professional'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+    </data>
+</odoo>

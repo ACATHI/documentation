@@ -1,0 +1,43 @@
+[MASTER]
+load-plugins = pylint_odoo
+jobs = 1
+
+[ODOO]
+# Odoo versió objectiu
+odoo_config_file =
+
+[FORMAT]
+max-line-length = 120
+
+[MESSAGES CONTROL]
+disable =
+    missing-module-docstring,
+    missing-class-docstring,
+    missing-function-docstring,
+    too-few-public-methods,
+    too-many-arguments,
+    too-many-instance-attributes,
+    too-many-public-methods,
+    too-many-lines,
+    fixme,
+    consider-using-f-string,
+    duplicate-code
+
+[DESIGN]
+max-args = 10
+max-attributes = 20
+max-bool-expr = 10
+max-branches = 20
+max-locals = 25
+max-returns = 8
+max-statements = 60
+
+[SIMILARITIES]
+min-similarity-lines = 10
+ignore-comments = yes
+ignore-docstrings = yes
+ignore-imports = yes
+
+[REPORTS]
+output-format = colorized
+score = no

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- ── LLISTA ────────────────────────────────────────────── -->
+  <record id="view_acathi_project_list" model="ir.ui.view">
+    <field name="name">acathi.project.list</field>
+    <field name="model">acathi.project</field>
+    <field name="arch" type="xml">
+      <tree string="Projectes" default_order="name">
+        <field name="name"/>
+        <field name="funder"/>
+        <field name="responsible_id"/>
+        <field name="date_start"/>
+        <field name="date_end"/>
+        <field name="budget" string="Pressupost (€)"/>
+        <field name="state" widget="badge"
+               decoration-info="state == 'draft'"
+               decoration-success="state == 'active'"
+               decoration-danger="state == 'closed'"/>
+      </tree>
+    </field>
+  </record>
+
+  <!-- ── FORMULARI ─────────────────────────────────────────── -->
+  <record id="view_acathi_project_form" model="ir.ui.view">
+    <field name="name">acathi.project.form</field>
+    <field name="model">acathi.project</field>
+    <field name="arch" type="xml">
+      <form string="Projecte">
+        <header>
+          <field name="state" widget="statusbar"
+                 statusbar_visible="draft,active,closed"/>
+        </header>
+        <sheet>
+          <div class="oe_button_box" name="button_box">
+            <button name="toggle_active" type="object"
+                    class="oe_stat_button" icon="fa-archive"
+                    groups="acathi_social.group_acathi_manager">
+              <field name="active" widget="boolean_button"
+                     options="{'terminology': 'archive'}"/>
+            </button>
+          </div>
+
+          <div class="oe_title">
+            <label for="name"/>
+            <h1>
+              <field name="name" placeholder="Nom del projecte..."/>
+            </h1>
+          </div>
+
+          <group>
+            <group string="Identificació">
+              <field name="funder"/>
+              <field name="responsible_id" options="{'no_create': True}"/>
+              <field name="budget"/>
+            </group>
+            <group string="Dates">
+              <field name="date_start"/>
+              <field name="date_end"/>
+            </group>
+          </group>
+
+          <separator string="Descripció"/>
+          <field name="description" nolabel="1"
+                 placeholder="Descripció dels objectius i abast del projecte..."
+                 style="width:100%;" rows="4"/>
+
+          <separator string="Observacions"/>
+          <field name="notes" nolabel="1"
+                 placeholder="Notes internes..."
+                 style="width:100%;" rows="3"/>
+        </sheet>
+        <div class="oe_chatter">
+          <field name="message_follower_ids"/>
+          <field name="activity_ids"/>
+          <field name="message_ids"/>
+        </div>
+      </form>
+    </field>
+  </record>
+
+  <!-- ── ACCIÓ ──────────────────────────────────────────────── -->
+  <record id="action_acathi_project" model="ir.actions.act_window">
+    <field name="name">Proyectos</field>
+    <field name="res_model">acathi.project</field>
+    <field name="view_mode">list,form</field>
+  </record>
+
+</odoo>

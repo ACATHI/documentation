@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_acathi_case_list" model="ir.ui.view">
+        <field name="name">acathi.case.list</field>
+        <field name="model">acathi.case</field>
+        <field name="arch" type="xml">
+            <tree string="Casos" decoration-danger="priority == '2'"
+                  decoration-warning="priority == '1'">
+                <field name="reference"/>
+                <field name="name"/>
+                <field name="person_id"/>
+                <field name="case_type"/>
+                <field name="priority" widget="priority"/>
+                <field name="responsible_id" optional="show"/>
+                <field name="date_open"/>
+                <field name="intervention_count" string="Intervenciones"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'new'"
+                       decoration-success="state == 'active'"
+                       decoration-warning="state == 'followup'"
+                       decoration-muted="state in ('referred', 'closed')"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_acathi_case_form" model="ir.ui.view">
+        <field name="name">acathi.case.form</field>
+        <field name="model">acathi.case</field>
+        <field name="arch" type="xml">
+            <form string="Caso / Expediente">
+                <header>
+                    <button name="action_activate" type="object"
+                            string="Activar" class="btn-primary"
+                            invisible="state != 'new'"/>
+                    <button name="action_followup" type="object"
+                            string="Poner en seguimiento"
+                            invisible="state not in ('new', 'active')"/>
+                    <button name="action_close" type="object"
+                            string="Cerrar caso"
+                            invisible="state == 'closed'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="new,active,followup,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_interventions" type="object"
+                                class="oe_stat_button" icon="fa-comments">
+                            <field name="intervention_count" widget="statinfo"
+                                   string="Intervenciones"/>
+                        </button>
+                        <button name="action_view_followup" type="object"
+                                class="oe_stat_button" icon="fa-tasks">
+                            <field name="followup_count" widget="statinfo"
+                                   string="Planes"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="reference"/>
+                        <h1><field name="reference" readonly="1"/></h1>
+                        <label for="name"/>
+                        <h2><field name="name" placeholder="Título del caso"/></h2>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="person_id"/>
+                            <field name="case_type"/>
+                            <field name="priority" widget="priority"/>
+                            <field name="confidential"/>
+                        </group>
+                        <group>
+                            <field name="responsible_id"/>
+                            <field name="co_professional_ids" widget="many2many_tags"/>
+                            <field name="date_open"/>
+                            <field name="date_close" invisible="state != 'closed'"/>
+                        </group>
+                    </group>
+                    <separator string="Motivo de consulta"/>
+                    <field name="description" nolabel="1"
+                           style="width:100%;" rows="4"/>
+                    <separator string="Observaciones"/>
+                    <field name="notes" nolabel="1"
+                           style="width:100%;" rows="3"/>
+                    <group string="Cierre" invisible="state != 'closed'">
+                        <field name="close_reason"/>
+                        <field name="referral_entity_id"
+                               invisible="close_reason != 'referred'"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_acathi_case_kanban" model="ir.ui.view">
+        <field name="name">acathi.case.kanban</field>
+        <field name="model">acathi.case</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" class="o_kanban_small_column">
+                <field name="name"/>
+                <field name="person_id"/>
+                <field name="case_type"/>
+                <field name="priority"/>
+                <field name="responsible_id"/>
+                <field name="state"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div class="o_kanban_record_title">
+                                    <strong><field name="name"/></strong>
+                                </div>
+                                <div class="o_kanban_record_subtitle">
+                                    <field name="person_id"/>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left">
+                                        <field name="priority" widget="priority"/>
+                                        <span class="badge"><field name="case_type"/></span>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <field name="responsible_id" widget="many2one_avatar_user"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_acathi_case_search" model="ir.ui.view">
+        <field name="name">acathi.case.search</field>
+        <field name="model">acathi.case</field>
+        <field name="arch" type="xml">
+            <search string="Buscar casos">
+                <field name="name"/>
+                <field name="reference"/>
+                <field name="person_id"/>
+                <field name="responsible_id"/>
+                <separator/>
+                <filter name="new" string="Nuevos" domain="[('state','=','new')]"/>
+                <filter name="active" string="Activos" domain="[('state','=','active')]"/>
+                <filter name="followup" string="En seguimiento" domain="[('state','=','followup')]"/>
+                <filter name="urgent" string="Urgentes" domain="[('priority','=','2')]"/>
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_state" string="Estado"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_type" string="Tipo"
+                            context="{'group_by': 'case_type'}"/>
+                    <filter name="group_responsible" string="Profesional"
+                            context="{'group_by': 'responsible_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_acathi_case" model="ir.actions.act_window">
+        <field name="name">Casos</field>
+        <field name="res_model">acathi.case</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="search_view_id" ref="view_acathi_case_search"/>
+        <field name="context">{'search_default_active': 1}</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- ── LLISTA ────────────────────────────────────────────── -->
+  <record id="view_acathi_donor_list" model="ir.ui.view">
+    <field name="name">acathi.donor.list</field>
+    <field name="model">acathi.donor</field>
+    <field name="arch" type="xml">
+      <tree string="Donantes" default_order="name">
+        <field name="name"/>
+        <field name="donor_type" widget="badge"/>
+        <field name="donation_type"/>
+        <field name="email"/>
+        <field name="phone"/>
+        <field name="first_donation_date"/>
+        <field name="last_donation_date"/>
+        <field name="total_donated" string="Total (€)"/>
+        <field name="gdpr_consent" widget="boolean_toggle"/>
+      </tree>
+    </field>
+  </record>
+
+  <!-- ── FORMULARI ─────────────────────────────────────────── -->
+  <record id="view_acathi_donor_form" model="ir.ui.view">
+    <field name="name">acathi.donor.form</field>
+    <field name="model">acathi.donor</field>
+    <field name="arch" type="xml">
+      <form string="Donante">
+        <sheet>
+          <div class="oe_button_box" name="button_box">
+            <button name="toggle_active" type="object"
+                    class="oe_stat_button" icon="fa-archive"
+                    groups="acathi_social.group_acathi_manager">
+              <field name="active" widget="boolean_button"
+                     options="{'terminology': 'archive'}"/>
+            </button>
+          </div>
+
+          <div class="oe_title">
+            <label for="name"/>
+            <h1>
+              <field name="name" placeholder="Nom del donant..."/>
+            </h1>
+          </div>
+
+          <group>
+            <group string="Identificació">
+              <field name="donor_type"/>
+              <field name="email"/>
+              <field name="phone"/>
+              <field name="partner_id" options="{'no_create': True}"/>
+              <field name="gdpr_consent"/>
+            </group>
+            <group string="Donacions">
+              <field name="donation_type"/>
+              <field name="first_donation_date"/>
+              <field name="last_donation_date"/>
+              <field name="total_donated"/>
+            </group>
+          </group>
+
+          <separator string="Observacions"/>
+          <field name="notes" nolabel="1"
+                 placeholder="Observacions internes sobre el donant..."
+                 style="width:100%;" rows="4"/>
+        </sheet>
+        <div class="oe_chatter">
+          <field name="message_follower_ids"/>
+          <field name="activity_ids"/>
+          <field name="message_ids"/>
+        </div>
+      </form>
+    </field>
+  </record>
+
+  <!-- ── ACCIÓ ──────────────────────────────────────────────── -->
+  <record id="action_acathi_donor" model="ir.actions.act_window">
+    <field name="name">Donantes</field>
+    <field name="res_model">acathi.donor</field>
+    <field name="view_mode">list,form</field>
+  </record>
+
+</odoo>

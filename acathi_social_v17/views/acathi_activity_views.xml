@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- ── LLISTA ────────────────────────────────────────────── -->
+  <record id="view_acathi_activity_list" model="ir.ui.view">
+    <field name="name">acathi.activity.list</field>
+    <field name="model">acathi.activity</field>
+    <field name="arch" type="xml">
+      <tree string="Actividades / Servicios" default_order="date desc">
+        <field name="date"/>
+        <field name="name"/>
+        <field name="activity_type" widget="badge"/>
+        <field name="project_id" optional="show"/>
+        <field name="location" optional="hide"/>
+        <field name="responsible_id"/>
+        <field name="participant_count" string="Pers. ateses"/>
+        <field name="total_participants" string="Total part."/>
+        <field name="state" widget="badge"
+               decoration-success="state == 'done'"
+               decoration-warning="state == 'planned'"
+               decoration-danger="state == 'cancelled'"/>
+      </tree>
+    </field>
+  </record>
+
+  <!-- ── FORMULARI ─────────────────────────────────────────── -->
+  <record id="view_acathi_activity_form" model="ir.ui.view">
+    <field name="name">acathi.activity.form</field>
+    <field name="model">acathi.activity</field>
+    <field name="arch" type="xml">
+      <form string="Activitat / Servei">
+        <header>
+          <field name="state" widget="statusbar"
+                 statusbar_visible="planned,done,cancelled"/>
+        </header>
+        <sheet>
+          <div class="oe_button_box" name="button_box">
+            <button name="toggle_active" type="object"
+                    class="oe_stat_button" icon="fa-archive"
+                    groups="acathi_social.group_acathi_manager">
+              <field name="active" widget="boolean_button"
+                     options="{'terminology': 'archive'}"/>
+            </button>
+          </div>
+
+          <div class="oe_title">
+            <label for="name"/>
+            <h1>
+              <field name="name" placeholder="Nom de l'activitat..."/>
+            </h1>
+          </div>
+
+          <group>
+            <group string="Classificació">
+              <field name="project_id" options="{'no_create': True}"/>
+              <field name="activity_type"/>
+              <field name="responsible_id" options="{'no_create': True}"/>
+            </group>
+            <group string="Quan i on">
+              <field name="date"/>
+              <field name="time_start" widget="float_time"/>
+              <field name="time_end" widget="float_time"/>
+              <field name="duration" widget="float_time" readonly="1"/>
+              <field name="location"/>
+              <field name="online"/>
+            </group>
+          </group>
+
+          <notebook>
+
+            <page string="Participants" name="participants">
+              <group>
+                <field name="facilitator_ids" widget="many2many_tags"
+                       options="{'no_create': True}"
+                       style="width:100%"/>
+              </group>
+              <separator string="Persones ateses participants"/>
+              <field name="participant_ids" nolabel="1"
+                     options="{'no_create': True}">
+                <tree>
+                  <field name="display_name" string="Nom complet"/>
+                </tree>
+              </field>
+              <group>
+                <group>
+                  <field name="participant_count" readonly="1"/>
+                  <field name="external_participants"/>
+                  <field name="total_participants" readonly="1"/>
+                </group>
+              </group>
+              <separator string="Perfil de les persones participants"/>
+              <field name="profile_notes" nolabel="1"
+                     placeholder="Breu descripció del perfil de les persones participants..."
+                     style="width:100%;" rows="3"/>
+            </page>
+
+            <page string="Contingut" name="contingut">
+              <separator string="Descripció de l'activitat"/>
+              <field name="description" nolabel="1"
+                     placeholder="Descriu els objectius i el desenvolupament de l'activitat..."
+                     style="width:100%;" rows="4"/>
+              <separator string="Resultats obtinguts"/>
+              <field name="results" nolabel="1"
+                     placeholder="Resultats i impacte observat..."
+                     style="width:100%;" rows="4"/>
+              <separator string="Incidències o aprenentatges"/>
+              <field name="incidents" nolabel="1"
+                     placeholder="Incidències rellevants, dificultats o aprenentatges..."
+                     style="width:100%;" rows="3"/>
+              <group>
+                <group>
+                  <field name="satisfaction_score"/>
+                  <field name="materials"
+                         placeholder="Materials i recursos emprats..."/>
+                </group>
+              </group>
+            </page>
+
+            <page string="Tancament" name="tancament">
+              <group>
+                <group>
+                  <field name="attendance_list"/>
+                  <field name="report_done"/>
+                  <field name="photos_authorized"/>
+                </group>
+              </group>
+            </page>
+
+          </notebook>
+        </sheet>
+        <div class="oe_chatter">
+          <field name="message_follower_ids"/>
+          <field name="activity_ids"/>
+          <field name="message_ids"/>
+        </div>
+      </form>
+    </field>
+  </record>
+
+  <!-- ── ACCIÓ ──────────────────────────────────────────────── -->
+  <record id="action_acathi_activity" model="ir.actions.act_window">
+    <field name="name">Actividades / Servicios</field>
+    <field name="res_model">acathi.activity</field>
+    <field name="view_mode">list,form</field>
+  </record>
+
+</odoo>

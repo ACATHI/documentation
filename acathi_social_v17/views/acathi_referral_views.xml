@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- =====================================================================
+         VISTES acathi.ally.referral  (SOC-06)
+         ===================================================================== -->
+
+    <record id="view_acathi_ally_referral_tree" model="ir.ui.view">
+        <field name="name">acathi.ally.referral.tree</field>
+        <field name="model">acathi.ally.referral</field>
+        <field name="arch" type="xml">
+            <tree string="Derivacions"
+                  decoration-success="state == 'completed'"
+                  decoration-danger="state == 'rejected'"
+                  decoration-muted="state == 'waiting'">
+                <field name="date"/>
+                <field name="person_id"/>
+                <field name="ally_id"/>
+                <field name="service"/>
+                <field name="professional_id"/>
+                <field name="follow_up_date"/>
+                <field name="state" widget="badge"
+                       decoration-primary="state == 'sent'"
+                       decoration-info="state == 'accepted'"
+                       decoration-warning="state == 'waiting'"
+                       decoration-danger="state == 'rejected'"
+                       decoration-success="state == 'completed'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_acathi_ally_referral_form" model="ir.ui.view">
+        <field name="name">acathi.ally.referral.form</field>
+        <field name="model">acathi.ally.referral</field>
+        <field name="arch" type="xml">
+            <form string="Derivació">
+                <header>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="sent,accepted,completed"
+                           options="{'clickable': '1'}"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group string="Persona i cas">
+                            <field name="person_id"/>
+                            <field name="case_id"
+                                   domain="[('person_id', '=', person_id)]"
+                                   context="{'default_person_id': person_id}"/>
+                            <field name="professional_id"/>
+                        </group>
+                        <group string="Entitat destinatària">
+                            <field name="ally_id"/>
+                            <field name="service"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Dates">
+                            <field name="date"/>
+                            <field name="follow_up_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Motiu">
+                            <field name="reason"
+                                   placeholder="Descriu el motiu de la derivació i el servei concret sol·licitat..."/>
+                        </page>
+                        <page string="Resultat">
+                            <field name="result"
+                                   placeholder="Resultat obtingut un cop realitzada la derivació..."/>
+                        </page>
+                        <page string="Observacions">
+                            <field name="notes"
+                                   placeholder="Notes internes (no visibles per la persona atesa)..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_acathi_ally_referral_search" model="ir.ui.view">
+        <field name="name">acathi.ally.referral.search</field>
+        <field name="model">acathi.ally.referral</field>
+        <field name="arch" type="xml">
+            <search string="Cercar derivacions">
+                <field name="person_id"/>
+                <field name="ally_id"/>
+                <field name="service"/>
+                <field name="professional_id"/>
+                <filter name="sent" string="Enviades" domain="[('state','=','sent')]"/>
+                <filter name="accepted" string="Acceptades" domain="[('state','=','accepted')]"/>
+                <filter name="waiting" string="En espera" domain="[('state','=','waiting')]"/>
+                <filter name="completed" string="Completades" domain="[('state','=','completed')]"/>
+                <filter name="rejected" string="No acceptades" domain="[('state','=','rejected')]"/>
+                <separator/>
+                <filter name="pending_followup" string="Seguiment pendent"
+                        domain="[('follow_up_date','&lt;=', context_today()), ('state','not in',['completed','rejected'])]"/>
+                <group expand="0" string="Agrupar per">
+                    <filter name="group_ally" string="Entitat"
+                            context="{'group_by': 'ally_id'}"/>
+                    <filter name="group_state" string="Estat"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_professional" string="Professional"
+                            context="{'group_by': 'professional_id'}"/>
+                    <filter name="group_month" string="Mes"
+                            context="{'group_by': 'date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_acathi_referral" model="ir.actions.act_window">
+        <field name="name">Derivacions</field>
+        <field name="res_model">acathi.ally.referral</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_acathi_ally_referral_search"/>
+    </record>
+
+    <!-- =====================================================================
+         SMART BUTTON a la fitxa de Persona
+         ===================================================================== -->
+
+    <record id="view_acathi_person_form_soc06" model="ir.ui.view">
+        <field name="name">acathi.person.form.soc06</field>
+        <field name="model">acathi.person</field>
+        <field name="inherit_id" ref="acathi_social.view_acathi_person_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_view_person_referrals"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-exchange"
+                        invisible="referral_count == 0">
+                    <field name="referral_count" widget="statinfo" string="Derivacions"/>
+                </button>
+            </div>
+        </field>
+    </record>
+
+    <!-- =====================================================================
+         SMART BUTTON al formulari de Cas
+         ===================================================================== -->
+
+    <record id="view_acathi_case_form_soc06" model="ir.ui.view">
+        <field name="name">acathi.case.form.soc06</field>
+        <field name="model">acathi.case</field>
+        <field name="inherit_id" ref="acathi_social.view_acathi_case_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_view_case_referrals"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-exchange"
+                        invisible="referral_count == 0">
+                    <field name="referral_count" widget="statinfo" string="Derivacions"/>
+                </button>
+            </div>
+        </field>
+    </record>
+
+    <!-- Menú Derivacions sota Casos -->
+    <menuitem id="menu_acathi_referral_list"
+              name="Derivacions"
+              parent="acathi_social.menu_acathi_cases"
+              action="action_acathi_referral"
+              sequence="20"
+              groups="acathi_social.group_acathi_professional"/>
+
+</odoo>

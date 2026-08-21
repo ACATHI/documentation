@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ================= SOLICITUD: formulario ================= -->
+    <record id="view_viaje_solicitud_form" model="ir.ui.view">
+        <field name="name">acathi.viaje.solicitud.form</field>
+        <field name="model">acathi.viaje.solicitud</field>
+        <field name="arch" type="xml">
+            <form string="Solicitud de viaje">
+                <header>
+                    <button name="action_buscar_opciones" type="object"
+                            string="Buscar opciones" class="btn-primary"
+                            invisible="estado in ('buscando','decidido')"/>
+                    <button name="action_ver_informe" type="object"
+                            string="Ver informe" class="btn-secondary"
+                            invisible="not informe_url"/>
+                    <field name="estado" widget="statusbar"
+                           statusbar_visible="borrador,enviado,buscando,opciones_listas,informe_listo,decidido"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Datos personales (PII)" groups="acathi_viajes.group_viajes_pii">
+                            <field name="persona_viajera"/>
+                            <field name="contacto"/>
+                            <field name="motivo_viaje"/>
+                        </group>
+                        <group string="Solicitud">
+                            <field name="solicitante"/>
+                            <field name="perfil"/>
+                            <field name="tipo_busqueda"/>
+                            <field name="proyecto_id"/>
+                            <field name="subvencion_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Ruta y fechas">
+                            <field name="origen"/>
+                            <field name="destino"/>
+                            <field name="fecha_ida"/>
+                            <field name="fecha_vuelta"/>
+                            <field name="flexibilidad_dias"/>
+                            <field name="personas"/>
+                        </group>
+                        <group string="Preferencias">
+                            <field name="equipaje"/>
+                            <field name="presupuesto_maximo"/>
+                            <field name="necesita_factura"/>
+                            <field name="necesita_cancelacion"/>
+                            <field name="informe_url" widget="url" readonly="1"/>
+                            <field name="opcion_recomendada_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Opciones" name="opciones">
+                            <field name="opcion_ids" readonly="1">
+                                <tree decoration-success="categoria == 'recomendada'"
+                                      decoration-muted="categoria == 'descartada'">
+                                    <field name="categoria"/>
+                                    <field name="aerolinea"/>
+                                    <field name="nombre_alojamiento"/>
+                                    <field name="coste_total" sum="Total"/>
+                                    <field name="score_total"/>
+                                    <field name="aviso_factura"/>
+                                    <field name="seleccionada"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Informe" name="informe" invisible="not informe_html">
+                            <field name="informe_html" widget="html" readonly="1" nolabel="1" options="{'safe': True}"/>
+                        </page>
+                        <page string="Observaciones" name="obs" groups="acathi_viajes.group_viajes_pii">
+                            <field name="observaciones"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- ================= SOLICITUD: lista ================= -->
+    <record id="view_viaje_solicitud_tree" model="ir.ui.view">
+        <field name="name">acathi.viaje.solicitud.tree</field>
+        <field name="model">acathi.viaje.solicitud</field>
+        <field name="arch" type="xml">
+            <tree string="Solicitudes de viaje">
+                <field name="name"/>
+                <field name="origen"/>
+                <field name="destino"/>
+                <field name="fecha_ida"/>
+                <field name="perfil"/>
+                <field name="opciones_count"/>
+                <field name="estado" widget="badge"
+                       decoration-info="estado in ('enviado','buscando')"
+                       decoration-success="estado in ('opciones_listas','informe_listo','decidido')"
+                       decoration-danger="estado == 'error'"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ================= SOLICITUD: búsqueda ================= -->
+    <record id="view_viaje_solicitud_search" model="ir.ui.view">
+        <field name="name">acathi.viaje.solicitud.search</field>
+        <field name="model">acathi.viaje.solicitud</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="origen"/>
+                <field name="destino"/>
+                <filter name="f_subvencionado" string="Subvencionado"
+                        domain="[('perfil','=','subvencionado')]"/>
+                <filter name="f_pendientes" string="Pendientes"
+                        domain="[('estado','in',('borrador','enviado','buscando'))]"/>
+                <group expand="0" string="Agrupar por">
+                    <filter name="g_estado" string="Estado" context="{'group_by':'estado'}"/>
+                    <filter name="g_perfil" string="Perfil" context="{'group_by':'perfil'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_viaje_solicitud" model="ir.actions.act_window">
+        <field name="name">Solicitudes de viaje</field>
+        <field name="res_model">acathi.viaje.solicitud</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Crea la primera solicitud de viaje</p>
+            <p>Rellena la solicitud y pulsa <b>Buscar opciones</b>: el motor calculará
+               vuelos, estadías y la opción más adecuada, y devolverá el informe.</p>
+        </field>
+    </record>
+
+    <!-- ================= Menús ================= -->
+    <menuitem id="menu_viajes_root" name="Viajes" sequence="55"
+              groups="acathi_viajes.group_viajes_user"/>
+    <menuitem id="menu_viajes_solicitudes" name="Solicitudes"
+              parent="menu_viajes_root" action="action_viaje_solicitud" sequence="10"/>
+
+</odoo>

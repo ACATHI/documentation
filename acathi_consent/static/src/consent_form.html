@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="ca" dir="ltr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+  <meta name="robots" content="noindex,nofollow"/>
+  <title>ACATHI — Consentiment RGPD</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    :root {
+      --purple: #5B2D8E;
+      --purple-light: #f3eeff;
+      --green: #1E7A4A;
+      --red: #c0392b;
+      --border: #ddd;
+      --text: #222;
+      --muted: #666;
+      --bg: #fff;
+      --section-bg: #fafafa;
+    }
+    html, body { margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; background: var(--bg); color: var(--text); font-size: 16px; }
+    body { padding-bottom: 60px; }
+
+    .lang-bar {
+      background: var(--purple);
+      padding: 8px 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      align-items: center;
+    }
+    .lang-btn {
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 4px;
+      padding: 4px 10px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .lang-btn:hover, .lang-btn.active { background: rgba(255,255,255,0.35); }
+
+    header {
+      background: var(--purple);
+      color: #fff;
+      padding: 20px 16px 16px;
+      text-align: center;
+    }
+    header h1 { margin: 0 0 4px; font-size: 18px; font-weight: 700; }
+    header p { margin: 0; font-size: 13px; opacity: .85; }
+
+    .container { max-width: 640px; margin: 0 auto; padding: 0 16px; }
+
+    .section {
+      background: var(--section-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      margin: 16px 0;
+    }
+    .section h2 {
+      margin: 0 0 12px;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      color: var(--purple);
+    }
+
+    label { display: block; font-size: 14px; color: var(--muted); margin-bottom: 4px; }
+    input[type="text"], input[type="email"], input[type="date"] {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 16px;
+      background: #fff;
+      color: var(--text);
+      margin-bottom: 14px;
+      -webkit-appearance: none;
+    }
+    input:focus { outline: 2px solid var(--purple); border-color: var(--purple); }
+
+    .consent-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .consent-item:last-child { border-bottom: none; }
+    .consent-item input[type="checkbox"] {
+      width: 22px; height: 22px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      accent-color: var(--purple);
+      cursor: pointer;
+    }
+    .consent-label { font-size: 15px; line-height: 1.4; }
+    .consent-label strong { display: block; margin-bottom: 2px; }
+    .consent-label small { color: var(--muted); font-size: 13px; }
+    .required-badge {
+      background: #fee;
+      color: var(--red);
+      border-radius: 3px;
+      font-size: 11px;
+      padding: 1px 5px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    /* Signature pad */
+    .sig-container {
+      border: 2px dashed var(--border);
+      border-radius: 8px;
+      background: #fff;
+      overflow: hidden;
+      touch-action: none;
+      position: relative;
+    }
+    .sig-container canvas { display: block; width: 100%; height: 200px; cursor: crosshair; }
+    .sig-hint {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #ccc;
+      font-size: 14px;
+      pointer-events: none;
+      text-align: center;
+    }
+    .sig-actions { display: flex; gap: 8px; margin-top: 8px; }
+    .btn-clear {
+      background: #fff;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 16px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .btn-clear:hover { background: #f5f5f5; }
+
+    .btn-submit {
+      display: block;
+      width: 100%;
+      max-width: 640px;
+      margin: 20px auto 0;
+      padding: 16px;
+      background: var(--green);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .btn-submit:hover { background: #166038; }
+    .btn-submit:disabled { background: #aaa; cursor: not-allowed; }
+
+    .error-msg {
+      background: #fee;
+      color: var(--red);
+      border: 1px solid #f5c6c6;
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: 14px;
+      margin: 12px 0;
+      display: none;
+    }
+
+    /* Status screens */
+    #status-screen {
+      display: none;
+      text-align: center;
+      padding: 60px 20px;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    #status-screen .icon { font-size: 64px; margin-bottom: 16px; }
+    #status-screen h2 { color: var(--green); margin-bottom: 8px; }
+    #status-screen p { color: var(--muted); font-size: 15px; }
+
+    /* RTL */
+    [dir="rtl"] .consent-item { flex-direction: row-reverse; }
+    [dir="rtl"] .required-badge { margin-left: 0; margin-right: 6px; }
+    [dir="rtl"] label, [dir="rtl"] .consent-label { text-align: right; }
+    [dir="rtl"] input[type="text"],
+    [dir="rtl"] input[type="email"],
+    [dir="rtl"] input[type="date"] { direction: rtl; }
+
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #1a1a2e; --section-bg: #16213e; --text: #eee; --muted: #aaa; --border: #333; }
+      input[type="text"], input[type="email"], input[type="date"] { background: #0f3460; color: #eee; border-color: #444; }
+      .sig-container { background: #0f3460; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="lang-bar" id="lang-bar" role="navigation" aria-label="Language selector">
+  <button class="lang-btn active" data-lang="ca">CA</button>
+  <button class="lang-btn" data-lang="es">ES</button>
+  <button class="lang-btn" data-lang="fr">FR</button>
+  <button class="lang-btn" data-lang="en">EN</button>
+  <button class="lang-btn" data-lang="ar">AR</button>
+  <button class="lang-btn" data-lang="ru">RU</button>
+  <button class="lang-btn" data-lang="uk">UK</button>
+</div>
+
+<header>
+  <h1 id="hdr-title"></h1>
+  <p id="hdr-org"></p>
+</header>
+
+<div class="container" id="form-container">
+
+  <div class="section">
+    <h2 id="sec-personal"></h2>
+    <label for="firstName" id="lbl-firstname"></label>
+    <input type="text" id="firstName" autocomplete="given-name" required/>
+    <label for="lastName" id="lbl-lastname"></label>
+    <input type="text" id="lastName" autocomplete="family-name" required/>
+    <label for="docNum" id="lbl-doc"></label>
+    <input type="text" id="docNum" placeholder="NIE / Passport / —" autocomplete="off"/>
+    <label for="dob" id="lbl-dob"></label>
+    <input type="date" id="dob"/>
+    <label for="email" id="lbl-email"></label>
+    <input type="email" id="email" autocomplete="email"/>
+    <label for="place" id="lbl-place"></label>
+    <input type="text" id="place" value="Barcelona"/>
+  </div>
+
+  <div class="section">
+    <h2 id="sec-consents"></h2>
+    <div class="consent-item">
+      <input type="checkbox" id="cb-basic" required/>
+      <div class="consent-label">
+        <strong id="cat-basic-label"></strong>
+        <small id="cat-basic-desc"></small>
+        <span class="required-badge" id="lbl-required"></span>
+      </div>
+    </div>
+    <div class="consent-item">
+      <input type="checkbox" id="cb-legal"/>
+      <div class="consent-label">
+        <strong id="cat-legal-label"></strong>
+        <small id="cat-legal-desc"></small>
+      </div>
+    </div>
+    <div class="consent-item">
+      <input type="checkbox" id="cb-identity"/>
+      <div class="consent-label">
+        <strong id="cat-identity-label"></strong>
+        <small id="cat-identity-desc"></small>
+      </div>
+    </div>
+    <div class="consent-item">
+      <input type="checkbox" id="cb-health"/>
+      <div class="consent-label">
+        <strong id="cat-health-label"></strong>
+        <small id="cat-health-desc"></small>
+      </div>
+    </div>
+    <div class="consent-item">
+      <input type="checkbox" id="cb-economic"/>
+      <div class="consent-label">
+        <strong id="cat-economic-label"></strong>
+        <small id="cat-economic-desc"></small>
+      </div>
+    </div>
+    <div class="consent-item">
+      <input type="checkbox" id="cb-risk"/>
+      <div class="consent-label">
+        <strong id="cat-risk-label"></strong>
+        <small id="cat-risk-desc"></small>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 id="sec-signature"></h2>
+    <p id="sig-instruction" style="font-size:14px;color:var(--muted);margin-bottom:12px;"></p>
+    <div class="sig-container" id="sig-container">
+      <canvas id="sig-canvas"></canvas>
+      <div class="sig-hint" id="sig-hint"></div>
+    </div>
+    <div class="sig-actions">
+      <button class="btn-clear" id="btn-clear" type="button"></button>
+    </div>
+  </div>
+
+  <div class="section" style="background:var(--purple-light); border-color:#d4c4eb;">
+    <h2 id="sec-legal"></h2>
+    <p id="legal-text" style="font-size:13px;color:var(--muted);margin:0;"></p>
+  </div>
+
+  <div class="error-msg" id="error-msg"></div>
+
+  <button class="btn-submit" id="btn-submit" type="button"></button>
+</div>
+
+<!-- Success / error screens -->
+<div id="status-screen">
+  <div class="icon" id="status-icon"></div>
+  <h2 id="status-title"></h2>
+  <p id="status-msg"></p>
+</div>
+
+<script>
+// ── Token injected by server ──────────────────────────────────────────────
+var TOKEN = '__TOKEN__';
+var DEFAULT_LANG = '__LANG__';
+
+// ── Translations ──────────────────────────────────────────────────────────
+var T = {
+  ca: {
+    dir: 'ltr',
+    hdr_title: 'Consentiment Informat RGPD',
+    hdr_org: "Associació Catalana per la Integració d'Homosexuals, Bisexuals i Transsexuals Immigrants",
+    sec_personal: 'Les teves dades',
+    lbl_firstname: 'Nom *',
+    lbl_lastname: 'Cognoms *',
+    lbl_doc: 'Document (NIE / Passaport)',
+    lbl_dob: 'Data de naixement',
+    lbl_email: 'Correu electrònic',
+    lbl_place: 'Lloc de signatura',
+    sec_consents: 'Dades que consentes compartir',
+    lbl_required: 'Obligatori',
+    cat_basic_label: 'Dades personals bàsiques',
+    cat_basic_desc: 'Nom, cognoms, data de naixement, contacte, document d\'identitat.',
+    cat_legal_label: 'Situació migratòria i legal',
+    cat_legal_desc: 'Estat del permís de residència, procediments administratius, documentació legal.',
+    cat_identity_label: 'Identitat de gènere i orientació sexual',
+    cat_identity_desc: 'Dades especialment sensibles (art. 9.2.a RGPD). Consentiment explícit necessari.',
+    cat_health_label: 'Dades de salut',
+    cat_health_desc: 'Dades mèdiques rellevants per a l\'atenció (art. 9.2.a RGPD).',
+    cat_economic_label: 'Situació econòmica i habitatge',
+    cat_economic_desc: 'Situació laboral, ingressos aproximats, condicions d\'habitatge.',
+    cat_risk_label: 'Situació de vulnerabilitat i risc',
+    cat_risk_desc: 'Situacions de risc personal, de seguretat o violència.',
+    sec_signature: 'Signatura',
+    sig_instruction: 'Signa amb el dit o l\'estilet al requadre de sota:',
+    sig_hint: 'Signa aquí',
+    btn_clear: 'Esborrar signatura',
+    sec_legal: 'Base legal',
+    legal_text: 'El tractament es basa en el teu consentiment explícit (art. 6.1.a i 9.2.a RGPD). Pots revocar-lo en qualsevol moment contactant info@acathi.org. Dades conservades 5 anys des del tancament de l\'expedient.',
+    btn_submit: '✓  Signar i enviar el consentiment',
+    err_firstname: 'El nom és obligatori.',
+    err_lastname: 'Els cognoms són obligatoris.',
+    err_basic: 'Cal acceptar les dades personals bàsiques per continuar.',
+    err_server: 'Error en enviar. Torna-ho a intentar o contacta info@acathi.org.',
+    ok_title: 'Consentiment signat',
+    ok_msg: 'Gràcies. El document s\'ha guardat. Pots tancar aquesta finestra.',
+    ok_icon: '✅',
+  },
+  es: {
+    dir: 'ltr',
+    hdr_title: 'Consentimiento Informado RGPD',
+    hdr_org: 'Asociación Catalana para la Integración de Homosexuales, Bisexuales y Transexuales Inmigrantes',
+    sec_personal: 'Tus datos',
+    lbl_firstname: 'Nombre *',
+    lbl_lastname: 'Apellidos *',
+    lbl_doc: 'Documento (NIE / Pasaporte)',
+    lbl_dob: 'Fecha de nacimiento',
+    lbl_email: 'Correo electrónico',
+    lbl_place: 'Lugar de firma',
+    sec_consents: 'Datos que consientes compartir',
+    lbl_required: 'Obligatorio',
+    cat_basic_label: 'Datos personales básicos',
+    cat_basic_desc: 'Nombre, apellidos, fecha de nacimiento, contacto, documento de identidad.',
+    cat_legal_label: 'Situación migratoria y legal',
+    cat_legal_desc: 'Estado del permiso de residencia, procedimientos administrativos, documentación legal.',
+    cat_identity_label: 'Identidad de género y orientación sexual',
+    cat_identity_desc: 'Datos especialmente sensibles (art. 9.2.a RGPD). Consentimiento explícito necesario.',
+    cat_health_label: 'Datos de salud',
+    cat_health_desc: 'Datos médicos relevantes para la atención (art. 9.2.a RGPD).',
+    cat_economic_label: 'Situación económica y vivienda',
+    cat_economic_desc: 'Situación laboral, ingresos aproximados, condiciones de vivienda.',
+    cat_risk_label: 'Situación de vulnerabilidad y riesgo',
+    cat_risk_desc: 'Situaciones de riesgo personal, de seguridad o violencia.',
+    sec_signature: 'Firma',
+    sig_instruction: 'Firma con el dedo o el lápiz en el recuadro de abajo:',
+    sig_hint: 'Firma aquí',
+    btn_clear: 'Borrar firma',
+    sec_legal: 'Base legal',
+    legal_text: 'El tratamiento se basa en tu consentimiento explícito (art. 6.1.a y 9.2.a RGPD). Puedes revocarlo en cualquier momento contactando info@acathi.org. Datos conservados 5 años desde el cierre del expediente.',
+    btn_submit: '✓  Firmar y enviar el consentimiento',
+    err_firstname: 'El nombre es obligatorio.',
+    err_lastname: 'Los apellidos son obligatorios.',
+    err_basic: 'Debes aceptar los datos personales básicos para continuar.',
+    err_server: 'Error al enviar. Inténtalo de nuevo o contacta info@acathi.org.',
+    ok_title: 'Consentimiento firmado',
+    ok_msg: 'Gracias. El documento ha sido guardado. Puedes cerrar esta ventana.',
+    ok_icon: '✅',
+  },
+  fr: {
+    dir: 'ltr',
+    hdr_title: 'Consentement éclairé RGPD',
+    hdr_org: "Association Catalane pour l'Intégration des Homosexuels, Bisexuels et Transsexuels Immigrants",
+    sec_personal: 'Vos données',
+    lbl_firstname: 'Prénom *',
+    lbl_lastname: 'Nom de famille *',
+    lbl_doc: 'Document (NIE / Passeport)',
+    lbl_dob: 'Date de naissance',
+    lbl_email: 'Adresse e-mail',
+    lbl_place: 'Lieu de signature',
+    sec_consents: 'Données que vous consentez à partager',
+    lbl_required: 'Obligatoire',
+    cat_basic_label: 'Données personnelles de base',
+    cat_basic_desc: "Nom, prénom, date de naissance, contact, document d'identité.",
+    cat_legal_label: 'Situation migratoire et juridique',
+    cat_legal_desc: "État du permis de séjour, procédures administratives, documentation légale.",
+    cat_identity_label: 'Identité de genre et orientation sexuelle',
+    cat_identity_desc: 'Données particulièrement sensibles (art. 9.2.a RGPD). Consentement explicite nécessaire.',
+    cat_health_label: 'Données de santé',
+    cat_health_desc: "Données médicales pertinentes pour l'accompagnement (art. 9.2.a RGPD).",
+    cat_economic_label: 'Situation économique et logement',
+    cat_economic_desc: 'Situation professionnelle, revenus approximatifs, conditions de logement.',
+    cat_risk_label: 'Situation de vulnérabilité et risque',
+    cat_risk_desc: 'Situations de risque personnel, de sécurité ou de violence.',
+    sec_signature: 'Signature',
+    sig_instruction: 'Signez avec le doigt ou le stylet dans le cadre ci-dessous:',
+    sig_hint: 'Signez ici',
+    btn_clear: 'Effacer la signature',
+    sec_legal: 'Base légale',
+    legal_text: "Le traitement repose sur votre consentement explicite (art. 6.1.a et 9.2.a RGPD). Vous pouvez le révoquer à tout moment en contactant info@acathi.org. Données conservées 5 ans après la clôture du dossier.",
+    btn_submit: '✓  Signer et envoyer le consentement',
+    err_firstname: 'Le prénom est obligatoire.',
+    err_lastname: 'Le nom de famille est obligatoire.',
+    err_basic: 'Vous devez accepter les données personnelles de base pour continuer.',
+    err_server: "Erreur lors de l'envoi. Réessayez ou contactez info@acathi.org.",
+    ok_title: 'Consentement signé',
+    ok_msg: 'Merci. Le document a été enregistré. Vous pouvez fermer cette fenêtre.',
+    ok_icon: '✅',
+  },
+  en: {
+    dir: 'ltr',
+    hdr_title: 'Informed Consent GDPR',
+    hdr_org: 'Catalan Association for the Integration of Homosexual, Bisexual and Transgender Immigrants',
+    sec_personal: 'Your data',
+    lbl_firstname: 'First name *',
+    lbl_lastname: 'Last name *',
+    lbl_doc: 'Document (NIE / Passport)',
+    lbl_dob: 'Date of birth',
+    lbl_email: 'Email address',
+    lbl_place: 'Place of signature',
+    sec_consents: 'Data you consent to share',
+    lbl_required: 'Required',
+    cat_basic_label: 'Basic personal data',
+    cat_basic_desc: 'Full name, date of birth, contact, identity document.',
+    cat_legal_label: 'Migration and legal status',
+    cat_legal_desc: 'Residence permit status, administrative processes, legal documentation.',
+    cat_identity_label: 'Gender identity and sexual orientation',
+    cat_identity_desc: 'Especially sensitive data (art. 9.2.a GDPR). Explicit consent required.',
+    cat_health_label: 'Health data',
+    cat_health_desc: 'Medical data relevant to support (art. 9.2.a GDPR).',
+    cat_economic_label: 'Economic situation and housing',
+    cat_economic_desc: 'Employment status, approximate income, housing conditions.',
+    cat_risk_label: 'Vulnerability and risk situation',
+    cat_risk_desc: 'Personal risk, safety, or violence situations.',
+    sec_signature: 'Signature',
+    sig_instruction: 'Sign with your finger or stylus in the box below:',
+    sig_hint: 'Sign here',
+    btn_clear: 'Clear signature',
+    sec_legal: 'Legal basis',
+    legal_text: 'Processing is based on your explicit consent (art. 6.1.a and 9.2.a GDPR). You may revoke it at any time by contacting info@acathi.org. Data retained for 5 years after case closure.',
+    btn_submit: '✓  Sign and submit consent',
+    err_firstname: 'First name is required.',
+    err_lastname: 'Last name is required.',
+    err_basic: 'You must accept the basic personal data to continue.',
+    err_server: 'Submission error. Please try again or contact info@acathi.org.',
+    ok_title: 'Consent signed',
+    ok_msg: 'Thank you. The document has been saved. You may close this window.',
+    ok_icon: '✅',
+  },
+  ar: {
+    dir: 'rtl',
+    hdr_title: 'موافقة مستنيرة على حماية البيانات',
+    hdr_org: 'الجمعية الكتالونية لدمج المهاجرين واللاجئين من مجتمع الميم',
+    sec_personal: 'بياناتك',
+    lbl_firstname: 'الاسم الأول *',
+    lbl_lastname: 'اسم العائلة *',
+    lbl_doc: 'وثيقة الهوية (NIE / جواز السفر)',
+    lbl_dob: 'تاريخ الميلاد',
+    lbl_email: 'البريد الإلكتروني',
+    lbl_place: 'مكان التوقيع',
+    sec_consents: 'البيانات التي توافق على مشاركتها',
+    lbl_required: 'إلزامي',
+    cat_basic_label: 'البيانات الشخصية الأساسية',
+    cat_basic_desc: 'الاسم الكامل، تاريخ الميلاد، وسائل الاتصال، وثيقة الهوية.',
+    cat_legal_label: 'الوضع الهجرة والقانوني',
+    cat_legal_desc: 'حالة تصريح الإقامة، الإجراءات الإدارية، الوثائق القانونية.',
+    cat_identity_label: 'الهوية الجنسية والميل الجنسي',
+    cat_identity_desc: 'بيانات حساسة بشكل خاص (المادة 9.2.أ من اللائحة الأوروبية). موافقة صريحة ضرورية.',
+    cat_health_label: 'البيانات الصحية',
+    cat_health_desc: 'البيانات الطبية ذات الصلة بالرعاية المقدمة (المادة 9.2.أ).',
+    cat_economic_label: 'الوضع الاقتصادي والسكن',
+    cat_economic_desc: 'الوضع المهني، الدخل التقريبي، ظروف السكن.',
+    cat_risk_label: 'الضعف والخطر',
+    cat_risk_desc: 'حالات الخطر الشخصي أو الأمني أو العنف.',
+    sec_signature: 'التوقيع',
+    sig_instruction: 'وقّع بإصبعك أو القلم في المربع أدناه:',
+    sig_hint: 'وقّع هنا',
+    btn_clear: 'مسح التوقيع',
+    sec_legal: 'الأساس القانوني',
+    legal_text: 'تستند المعالجة إلى موافقتك الصريحة (المادة 6.1.أ و9.2.أ من اللائحة الأوروبية). يمكنك سحب موافقتك في أي وقت عبر info@acathi.org. تُحفظ البيانات 5 سنوات بعد إغلاق الملف.',
+    btn_submit: '✓  التوقيع وإرسال الموافقة',
+    err_firstname: 'الاسم الأول مطلوب.',
+    err_lastname: 'اسم العائلة مطلوب.',
+    err_basic: 'يجب قبول البيانات الشخصية الأساسية للمتابعة.',
+    err_server: 'خطأ في الإرسال. حاول مرة أخرى أو تواصل مع info@acathi.org.',
+    ok_title: 'تم التوقيع على الموافقة',
+    ok_msg: 'شكراً لك. تم حفظ الوثيقة. يمكنك إغلاق هذه النافذة.',
+    ok_icon: '✅',
+  },
+  ru: {
+    dir: 'ltr',
+    hdr_title: 'Информированное согласие GDPR',
+    hdr_org: 'Каталонская ассоциация по интеграции ЛГБТИК+ мигрантов и беженцев',
+    sec_personal: 'Ваши данные',
+    lbl_firstname: 'Имя *',
+    lbl_lastname: 'Фамилия *',
+    lbl_doc: 'Документ (NIE / Паспорт)',
+    lbl_dob: 'Дата рождения',
+    lbl_email: 'Электронная почта',
+    lbl_place: 'Место подписания',
+    sec_consents: 'Данные, на обработку которых вы даёте согласие',
+    lbl_required: 'Обязательно',
+    cat_basic_label: 'Основные персональные данные',
+    cat_basic_desc: 'Имя, фамилия, дата рождения, контактные данные, документ удостоверяющий личность.',
+    cat_legal_label: 'Миграционный и правовой статус',
+    cat_legal_desc: 'Статус вида на жительство, административные процедуры, юридические документы.',
+    cat_identity_label: 'Гендерная идентичность и сексуальная ориентация',
+    cat_identity_desc: 'Особо чувствительные данные (ст. 9.2.а GDPR). Требуется явное согласие.',
+    cat_health_label: 'Данные о здоровье',
+    cat_health_desc: 'Медицинские данные, необходимые для оказания помощи (ст. 9.2.а GDPR).',
+    cat_economic_label: 'Экономическое положение и жильё',
+    cat_economic_desc: 'Занятость, приблизительный доход, жилищные условия.',
+    cat_risk_label: 'Уязвимость и риск',
+    cat_risk_desc: 'Ситуации личной опасности, безопасности или насилия.',
+    sec_signature: 'Подпись',
+    sig_instruction: 'Подпишитесь пальцем или стилусом в поле ниже:',
+    sig_hint: 'Подпишите здесь',
+    btn_clear: 'Очистить подпись',
+    sec_legal: 'Правовая основа',
+    legal_text: 'Обработка данных основана на вашем явном согласии (ст. 6.1.а и 9.2.а GDPR). Вы можете отозвать его в любое время, обратившись по адресу info@acathi.org. Данные хранятся 5 лет после закрытия дела.',
+    btn_submit: '✓  Подписать и отправить согласие',
+    err_firstname: 'Имя обязательно.',
+    err_lastname: 'Фамилия обязательна.',
+    err_basic: 'Для продолжения необходимо принять основные персональные данные.',
+    err_server: 'Ошибка отправки. Попробуйте снова или напишите на info@acathi.org.',
+    ok_title: 'Согласие подписано',
+    ok_msg: 'Спасибо. Документ сохранён. Вы можете закрыть это окно.',
+    ok_icon: '✅',
+  },
+  uk: {
+    dir: 'ltr',
+    hdr_title: 'Інформована згода GDPR',
+    hdr_org: 'Каталонська асоціація з інтеграції ЛГБТІК+ мігрантів та біженців',
+    sec_personal: 'Ваші дані',
+    lbl_firstname: "Ім'я *",
+    lbl_lastname: 'Прізвище *',
+    lbl_doc: 'Документ (NIE / Паспорт)',
+    lbl_dob: 'Дата народження',
+    lbl_email: 'Електронна пошта',
+    lbl_place: 'Місце підписання',
+    sec_consents: 'Дані, на обробку яких ви надаєте згоду',
+    lbl_required: 'Обов\'язково',
+    cat_basic_label: 'Основні персональні дані',
+    cat_basic_desc: "Ім'я, прізвище, дата народження, контактні дані, документ, що посвідчує особу.",
+    cat_legal_label: 'Міграційний та правовий статус',
+    cat_legal_desc: 'Статус виду на проживання, адміністративні процедури, юридичні документи.',
+    cat_identity_label: 'Гендерна ідентичність та сексуальна орієнтація',
+    cat_identity_desc: 'Особливо чутливі дані (ст. 9.2.а GDPR). Потрібна явна згода.',
+    cat_health_label: 'Дані про здоров\'я',
+    cat_health_desc: 'Медичні дані, необхідні для надання допомоги (ст. 9.2.а GDPR).',
+    cat_economic_label: 'Економічне становище та житло',
+    cat_economic_desc: 'Зайнятість, приблизний дохід, житлові умови.',
+    cat_risk_label: 'Вразливість і ризик',
+    cat_risk_desc: 'Ситуації особистої небезпеки, безпеки або насильства.',
+    sec_signature: 'Підпис',
+    sig_instruction: 'Підпишіться пальцем або стилусом у полі нижче:',
+    sig_hint: 'Підпишіть тут',
+    btn_clear: 'Очистити підпис',
+    sec_legal: 'Правова підстава',
+    legal_text: "Обробка ґрунтується на вашій явній згоді (ст. 6.1.а та 9.2.а GDPR). Ви можете відкликати її в будь-який час, звернувшись до info@acathi.org. Дані зберігаються 5 років після закриття справи.",
+    btn_submit: '✓  Підписати та надіслати згоду',
+    err_firstname: "Ім'я обов'язкове.",
+    err_lastname: "Прізвище обов'язкове.",
+    err_basic: 'Необхідно прийняти основні персональні дані для продовження.',
+    err_server: 'Помилка відправлення. Спробуйте ще раз або напишіть на info@acathi.org.',
+    ok_title: 'Згоду підписано',
+    ok_msg: 'Дякуємо. Документ збережено. Ви можете закрити це вікно.',
+    ok_icon: '✅',
+  },
+};
+
+// ── Signature pad ─────────────────────────────────────────────────────────
+var canvas = document.getElementById('sig-canvas');
+var ctx = canvas.getContext('2d');
+var drawing = false;
+var sigEmpty = true;
+var hint = document.getElementById('sig-hint');
+
+function resizeCanvas() {
+  var rect = canvas.parentElement.getBoundingClientRect();
+  var dpr = window.devicePixelRatio || 1;
+  var w = rect.width;
+  var h = 200;
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
+  canvas.style.width = w + 'px';
+  canvas.style.height = h + 'px';
+  ctx.scale(dpr, dpr);
+  ctx.strokeStyle = '#333';
+  ctx.lineWidth = 2.5;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+function getPos(e) {
+  var r = canvas.getBoundingClientRect();
+  var src = e.touches ? e.touches[0] : e;
+  return { x: src.clientX - r.left, y: src.clientY - r.top };
+}
+function startDraw(e) { e.preventDefault(); drawing = true; var p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); hint.style.display = 'none'; }
+function moveDraw(e) { if (!drawing) return; e.preventDefault(); var p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); sigEmpty = false; }
+function endDraw() { drawing = false; }
+
+canvas.addEventListener('mousedown', startDraw);
+canvas.addEventListener('mousemove', moveDraw);
+canvas.addEventListener('mouseup', endDraw);
+canvas.addEventListener('mouseleave', endDraw);
+canvas.addEventListener('touchstart', startDraw, { passive: false });
+canvas.addEventListener('touchmove', moveDraw, { passive: false });
+canvas.addEventListener('touchend', endDraw);
+
+document.getElementById('btn-clear').addEventListener('click', function() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  sigEmpty = true;
+  hint.style.display = '';
+});
+
+// ── Language switching ────────────────────────────────────────────────────
+var currentLang = DEFAULT_LANG in T ? DEFAULT_LANG : 'ca';
+
+function applyLang(lang) {
+  var t = T[lang];
+  currentLang = lang;
+  document.documentElement.lang = lang;
+  document.documentElement.dir = t.dir;
+
+  document.getElementById('hdr-title').textContent = t.hdr_title;
+  document.getElementById('hdr-org').textContent = t.hdr_org;
+  document.getElementById('sec-personal').textContent = t.sec_personal;
+  document.getElementById('lbl-firstname').textContent = t.lbl_firstname;
+  document.getElementById('lbl-lastname').textContent = t.lbl_lastname;
+  document.getElementById('lbl-doc').textContent = t.lbl_doc;
+  document.getElementById('lbl-dob').textContent = t.lbl_dob;
+  document.getElementById('lbl-email').textContent = t.lbl_email;
+  document.getElementById('lbl-place').textContent = t.lbl_place;
+  document.getElementById('sec-consents').textContent = t.sec_consents;
+  document.getElementById('lbl-required').textContent = t.lbl_required;
+  document.getElementById('cat-basic-label').textContent = t.cat_basic_label;
+  document.getElementById('cat-basic-desc').textContent = t.cat_basic_desc;
+  document.getElementById('cat-legal-label').textContent = t.cat_legal_label;
+  document.getElementById('cat-legal-desc').textContent = t.cat_legal_desc;
+  document.getElementById('cat-identity-label').textContent = t.cat_identity_label;
+  document.getElementById('cat-identity-desc').textContent = t.cat_identity_desc;
+  document.getElementById('cat-health-label').textContent = t.cat_health_label;
+  document.getElementById('cat-health-desc').textContent = t.cat_health_desc;
+  document.getElementById('cat-economic-label').textContent = t.cat_economic_label;
+  document.getElementById('cat-economic-desc').textContent = t.cat_economic_desc;
+  document.getElementById('cat-risk-label').textContent = t.cat_risk_label;
+  document.getElementById('cat-risk-desc').textContent = t.cat_risk_desc;
+  document.getElementById('sec-signature').textContent = t.sec_signature;
+  document.getElementById('sig-instruction').textContent = t.sig_instruction;
+  document.getElementById('sig-hint').textContent = t.sig_hint;
+  document.getElementById('btn-clear').textContent = t.btn_clear;
+  document.getElementById('sec-legal').textContent = t.sec_legal;
+  document.getElementById('legal-text').textContent = t.legal_text;
+  document.getElementById('btn-submit').textContent = t.btn_submit;
+  document.title = 'ACATHI — ' + t.hdr_title;
+
+  document.querySelectorAll('.lang-btn').forEach(function(b) {
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+}
+
+document.getElementById('lang-bar').addEventListener('click', function(e) {
+  if (e.target.dataset.lang) applyLang(e.target.dataset.lang);
+});
+
+// ── Submit ────────────────────────────────────────────────────────────────
+document.getElementById('btn-submit').addEventListener('click', function() {
+  var t = T[currentLang];
+  var errEl = document.getElementById('error-msg');
+  errEl.style.display = 'none';
+
+  var fn = document.getElementById('firstName').value.trim();
+  var ln = document.getElementById('lastName').value.trim();
+  if (!fn) { errEl.textContent = t.err_firstname; errEl.style.display = 'block'; document.getElementById('firstName').focus(); return; }
+  if (!ln) { errEl.textContent = t.err_lastname; errEl.style.display = 'block'; document.getElementById('lastName').focus(); return; }
+  if (!document.getElementById('cb-basic').checked) { errEl.textContent = t.err_basic; errEl.style.display = 'block'; return; }
+
+  var sigData = sigEmpty ? null : canvas.toDataURL('image/png');
+
+  var payload = {
+    firstName: fn,
+    lastName: ln,
+    docNum: document.getElementById('docNum').value.trim(),
+    dob: document.getElementById('dob').value,
+    email: document.getElementById('email').value.trim(),
+    consentDate: new Date().toISOString().slice(0, 10),
+    consentPlace: document.getElementById('place').value.trim() || 'Barcelona',
+    language: currentLang,
+    signature: sigData,
+    consents: {
+      basic:    document.getElementById('cb-basic').checked,
+      legal:    document.getElementById('cb-legal').checked,
+      identity: document.getElementById('cb-identity').checked,
+      health:   document.getElementById('cb-health').checked,
+      economic: document.getElementById('cb-economic').checked,
+      risk:     document.getElementById('cb-risk').checked,
+    },
+  };
+
+  var btn = document.getElementById('btn-submit');
+  btn.disabled = true;
+  btn.textContent = '…';
+
+  fetch('/acathi/consent/' + TOKEN + '/submit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    if (data.success) {
+      document.getElementById('form-container').style.display = 'none';
+      var ss = document.getElementById('status-screen');
+      document.getElementById('status-icon').textContent = t.ok_icon;
+      document.getElementById('status-title').textContent = t.ok_title;
+      document.getElementById('status-msg').textContent = t.ok_msg;
+      ss.style.display = 'block';
+    } else {
+      errEl.textContent = data.error || t.err_server;
+      errEl.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = t.btn_submit;
+    }
+  })
+  .catch(function() {
+    errEl.textContent = t.err_server;
+    errEl.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = t.btn_submit;
+  });
+});
+
+// ── Init ──────────────────────────────────────────────────────────────────
+applyLang(currentLang);
+</script>
+</body>
+</html>

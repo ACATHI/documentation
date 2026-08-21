@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- ── LLISTA ────────────────────────────────────────────── -->
+  <record id="view_acathi_volunteer_list" model="ir.ui.view">
+    <field name="name">acathi.volunteer.list</field>
+    <field name="model">acathi.volunteer</field>
+    <field name="arch" type="xml">
+      <tree string="Voluntariado" default_order="name">
+        <field name="name"/>
+        <field name="area_ids"/>
+        <field name="email"/>
+        <field name="phone"/>
+        <field name="entry_date"/>
+        <field name="exit_date" optional="show"/>
+        <field name="gdpr_consent" widget="boolean_toggle"/>
+        <field name="state" widget="badge"
+               decoration-success="state == 'active'"
+               decoration-warning="state == 'training'"
+               decoration-danger="state == 'inactive'"/>
+      </tree>
+    </field>
+  </record>
+
+  <!-- ── FORMULARI ─────────────────────────────────────────── -->
+  <record id="view_acathi_volunteer_form" model="ir.ui.view">
+    <field name="name">acathi.volunteer.form</field>
+    <field name="model">acathi.volunteer</field>
+    <field name="arch" type="xml">
+      <form string="Voluntario/a">
+        <header>
+          <field name="state" widget="statusbar"
+                 statusbar_visible="training,active,inactive"/>
+        </header>
+        <sheet>
+          <div class="oe_button_box" name="button_box">
+            <button name="toggle_active" type="object"
+                    class="oe_stat_button" icon="fa-archive"
+                    groups="acathi_social.group_acathi_manager">
+              <field name="active" widget="boolean_button"
+                     options="{'terminology': 'archive'}"/>
+            </button>
+          </div>
+
+          <div class="oe_title">
+            <label for="name"/>
+            <h1>
+              <field name="name" placeholder="Nom complet..."/>
+            </h1>
+          </div>
+
+          <group>
+            <group string="Contacte">
+              <field name="email"/>
+              <field name="phone"/>
+              <field name="partner_id" options="{'no_create': True}"/>
+            </group>
+            <group string="Vinculació">
+              <field name="area_ids"/>
+              <field name="entry_date"/>
+              <field name="exit_date"/>
+              <field name="gdpr_consent"/>
+            </group>
+          </group>
+
+          <notebook>
+            <page string="Habilitats i disponibilitat" name="habilitats">
+              <separator string="Habilitats i competències"/>
+              <field name="skills" nolabel="1"
+                     placeholder="Formació, idiomes, habilitats rellevants..."
+                     style="width:100%;" rows="4"/>
+              <separator string="Disponibilitat horària"/>
+              <field name="availability" nolabel="1"
+                     placeholder="Dies i franges horàries disponibles..."
+                     style="width:100%;" rows="3"/>
+            </page>
+
+            <page string="Observacions" name="notes">
+              <field name="notes" nolabel="1"
+                     placeholder="Observacions internes..."
+                     style="width:100%;" rows="5"/>
+            </page>
+          </notebook>
+        </sheet>
+        <div class="oe_chatter">
+          <field name="message_follower_ids"/>
+          <field name="activity_ids"/>
+          <field name="message_ids"/>
+        </div>
+      </form>
+    </field>
+  </record>
+
+  <!-- ── ACCIÓ ──────────────────────────────────────────────── -->
+  <record id="action_acathi_volunteer" model="ir.actions.act_window">
+    <field name="name">Voluntariado</field>
+    <field name="res_model">acathi.volunteer</field>
+    <field name="view_mode">list,form</field>
+  </record>
+
+</odoo>

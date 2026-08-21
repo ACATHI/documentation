@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_grant_project_form" model="ir.ui.view">
+        <field name="name">grant.project.form</field>
+        <field name="model">grant.project</field>
+        <field name="arch" type="xml">
+            <form string="Projecte social">
+                <header>
+                    <field name="estado" widget="statusbar"
+                           statusbar_visible="borrador,activo,completado"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_applications"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-file-text-o">
+                            <field name="application_count" widget="statinfo"
+                                   string="Expedients"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Nom del projecte..."/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="area"/>
+                            <field name="duracion"/>
+                            <field name="presupuesto" widget="monetary"
+                                   options="{'currency_field': false}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Descripció">
+                            <field name="objetivo" placeholder="Objectiu general del projecte..."/>
+                            <separator string="Descripció completa"/>
+                            <field name="descripcion" placeholder="Descripció detallada..."/>
+                        </page>
+                        <page string="Activitats i metodologia">
+                            <field name="actividades" placeholder="Activitats principals..."/>
+                            <separator string="Metodologia / avaluació"/>
+                            <field name="metodologia" placeholder="Metodologia i sistema d'avaluació..."/>
+                        </page>
+                        <page string="Expedients" name="applications">
+                            <field name="application_ids" readonly="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="call_id"/>
+                                    <field name="funder_id"/>
+                                    <field name="state"/>
+                                    <field name="amount_requested"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_grant_project_tree" model="ir.ui.view">
+        <field name="name">grant.project.tree</field>
+        <field name="model">grant.project</field>
+        <field name="arch" type="xml">
+            <tree string="Projectes socials">
+                <field name="name"/>
+                <field name="area"/>
+                <field name="duracion"/>
+                <field name="presupuesto"/>
+                <field name="estado"/>
+                <field name="application_count" string="Expedients"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_grant_project_search" model="ir.ui.view">
+        <field name="name">grant.project.search</field>
+        <field name="model">grant.project</field>
+        <field name="arch" type="xml">
+            <search string="Cercar projectes">
+                <field name="name"/>
+                <field name="area"/>
+                <filter string="Actius" name="activos"
+                        domain="[('estado', '=', 'activo')]"/>
+                <filter string="Esborranys" name="borradores"
+                        domain="[('estado', '=', 'borrador')]"/>
+                <group expand="0" string="Agrupar per">
+                    <filter string="Àrea" name="group_area"
+                            context="{'group_by': 'area'}"/>
+                    <filter string="Estat" name="group_estado"
+                            context="{'group_by': 'estado'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_grant_project" model="ir.actions.act_window">
+        <field name="name">Projectes socials</field>
+        <field name="res_model">grant.project</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_grant_project_search"/>
+    </record>
+
+</odoo>

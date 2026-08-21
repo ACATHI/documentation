@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         SUB-02: Camp grant_application_id a registres socials
+    ═══════════════════════════════════════════════════════════════════════ -->
+
+    <!-- Intervenció: camp subvenció al formulari -->
+    <record id="view_acathi_intervention_form_sub02" model="ir.ui.view">
+        <field name="name">acathi.intervention.form.sub02</field>
+        <field name="model">acathi.intervention</field>
+        <field name="inherit_id" ref="acathi_social.view_acathi_intervention_form"/>
+        <field name="arch" type="xml">
+            <field name="case_id" position="after">
+                <field name="grant_application_id"
+                       options="{'no_create': True, 'no_quick_create': True}"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Activitat: camp subvenció al formulari -->
+    <record id="view_acathi_activity_form_sub02" model="ir.ui.view">
+        <field name="name">acathi.activity.form.sub02</field>
+        <field name="model">acathi.activity</field>
+        <field name="inherit_id" ref="acathi_social.view_acathi_activity_form"/>
+        <field name="arch" type="xml">
+            <field name="project_id" position="after">
+                <field name="grant_application_id"
+                       options="{'no_create': True, 'no_quick_create': True}"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Ajuda econòmica: camp subvenció al formulari -->
+    <record id="view_acathi_aid_form_sub02" model="ir.ui.view">
+        <field name="name">acathi.aid.form.sub02</field>
+        <field name="model">acathi.aid</field>
+        <field name="inherit_id" ref="acathi_social.view_acathi_aid_form"/>
+        <field name="arch" type="xml">
+            <field name="professional_id" position="after">
+                <field name="grant_application_id"
+                       options="{'no_create': True, 'no_quick_create': True}"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         SUB-02: Smart buttons a grant.application
+    ═══════════════════════════════════════════════════════════════════════ -->
+
+    <record id="view_grant_application_form_sub02" model="ir.ui.view">
+        <field name="name">grant.application.form.sub02</field>
+        <field name="model">grant.application</field>
+        <field name="inherit_id" ref="grant_management.view_grant_application_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_view_interventions" type="object"
+                        class="oe_stat_button" icon="fa-comments-o"
+                        invisible="intervention_count == 0">
+                    <field name="intervention_count" widget="statinfo"
+                           string="Intervencions"/>
+                </button>
+                <button name="action_view_activities" type="object"
+                        class="oe_stat_button" icon="fa-calendar-check-o"
+                        invisible="activity_count == 0">
+                    <field name="activity_count" widget="statinfo"
+                           string="Activitats"/>
+                </button>
+                <button name="action_view_grant_aids" type="object"
+                        class="oe_stat_button" icon="fa-money"
+                        invisible="aid_count == 0">
+                    <field name="aid_count" widget="statinfo"
+                           string="Ajudes"/>
+                </button>
+                <button name="action_view_grant_persons" type="object"
+                        class="oe_stat_button" icon="fa-users"
+                        invisible="person_count == 0">
+                    <field name="person_count" widget="statinfo"
+                           string="Persones ateses"/>
+                </button>
+            </div>
+        </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         SUB-02: Camp social_source als indicadors (inline dins expedient)
+    ═══════════════════════════════════════════════════════════════════════ -->
+
+    <record id="view_grant_application_indicators_sub02" model="ir.ui.view">
+        <field name="name">grant.application.indicators.sub02</field>
+        <field name="model">grant.application</field>
+        <field name="inherit_id" ref="grant_management.view_grant_application_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='indicator_ids']/tree/field[@name='source']"
+                   position="before">
+                <field name="social_source" optional="show"/>
+                <button name="action_compute_from_social" type="object"
+                        string="↻" title="Actualitzar des de dades socials"
+                        invisible="social_source == 'manual'"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

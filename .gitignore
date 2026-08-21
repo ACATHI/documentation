@@ -1,7 +1,9 @@
+# Odoo / Python genèric (del remot original)
 *.pyc
 *.mo
 .*
 !.gitattributes
+!.gitignore
 !.weblate.json
 
 # Sphinx build files
@@ -9,3 +11,59 @@ _build/
 
 # Dependencies
 odoo
+
+# Graft — graf de codi regenerable
+graft/
+
+# Entorn virtual Python
+.venv/
+
+# Caché Python
+__pycache__/
+*.pyo
+*.pyd
+.Python
+
+# Caché Ruff
+.ruff_cache/
+
+# Arxius ZIP i comprimits — artifacts de build, no codi font
+*.zip
+*.tar.gz
+*.tar.bz2
+*.gz
+
+# Arxius Office — documents de traspàs, no s'han de versionar aquí
+# (guardar-los al Drive o SharePoint)
+*.docx
+*.doc
+*.xlsx
+*.xls
+*.pdf
+
+# Fitxers de text voluminosos / exportacions
+*.txt
+grant_module_code.txt
+
+# Configuració i sessions Claude Code
+.claude/
+
+# Eines de validació RAG (no és codi Odoo)
+rag-validation/
+
+# Configuració local (pot tenir paths absoluts)
+settings.local.json
+launch.json
+
+# Odoo
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="view_acathi_person_form_documents" model="ir.ui.view">
+    <field name="name">acathi.person.form.documents</field>
+    <field name="model">acathi.person</field>
+    <field name="inherit_id" ref="acathi_social.view_acathi_person_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//div[@name='button_box']" position="inside">
+        <button name="action_generate_document" type="object"
+                class="oe_stat_button" icon="fa-file-word-o"
+                invisible="id == False"
+                string="Generar document"/>
+      </xpath>
+    </field>
+  </record>
+
+</odoo>

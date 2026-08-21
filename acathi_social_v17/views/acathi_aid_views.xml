@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_acathi_aid_tree" model="ir.ui.view">
+        <field name="name">acathi.aid.tree</field>
+        <field name="model">acathi.aid</field>
+        <field name="arch" type="xml">
+            <tree string="Ajudes econòmiques"
+                  decoration-success="state == 'paid'"
+                  decoration-danger="state == 'rejected'"
+                  decoration-muted="state == 'cancelled'">
+                <field name="date_request"/>
+                <field name="person_id"/>
+                <field name="aid_type"/>
+                <field name="description"/>
+                <field name="amount" sum="Total"/>
+                <field name="payment_method"/>
+                <field name="professional_id"/>
+                <field name="state" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_acathi_aid_form" model="ir.ui.view">
+        <field name="name">acathi.aid.form</field>
+        <field name="model">acathi.aid</field>
+        <field name="arch" type="xml">
+            <form string="Ajuda econòmica">
+                <header>
+                    <button name="action_request" string="Sol·licitar" type="object"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_approve" string="Aprovar" type="object"
+                            class="btn-primary" invisible="state != 'requested'"/>
+                    <button name="action_pay" string="Marcar pagada" type="object"
+                            class="btn-primary" invisible="state != 'approved'"/>
+                    <button name="action_reject" string="Denegar" type="object"
+                            invisible="state not in ['requested', 'approved']"/>
+                    <button name="action_cancel" string="Cancel·lar" type="object"
+                            invisible="state in ['paid', 'rejected', 'cancelled']"/>
+                    <button name="action_draft" string="Tornar a esborrany" type="object"
+                            invisible="state not in ['rejected', 'cancelled']"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,requested,approved,paid"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group string="Persona">
+                            <field name="person_id"/>
+                            <field name="case_id"
+                                   domain="[('person_id','=',person_id)]"
+                                   context="{'default_person_id': person_id}"/>
+                            <field name="professional_id"/>
+                        </group>
+                        <group string="Ajuda">
+                            <field name="aid_type"/>
+                            <field name="description"/>
+                            <field name="funder"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Import i pagament">
+                            <field name="amount"/>
+                            <field name="payment_method"/>
+                        </group>
+                        <group string="Dates">
+                            <field name="date_request"/>
+                            <field name="date_approved" invisible="state not in ['approved','paid']"/>
+                            <field name="date_paid" invisible="state != 'paid'"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="notes" placeholder="Observacions sobre la situació o la justificació de l'ajuda..."/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_acathi_aid_search" model="ir.ui.view">
+        <field name="name">acathi.aid.search</field>
+        <field name="model">acathi.aid</field>
+        <field name="arch" type="xml">
+            <search string="Cercar ajudes">
+                <field name="person_id"/>
+                <field name="description"/>
+                <field name="professional_id"/>
+                <filter name="draft" string="Esborranys" domain="[('state','=','draft')]"/>
+                <filter name="requested" string="Sol·licitades" domain="[('state','=','requested')]"/>
+                <filter name="approved" string="Aprovades" domain="[('state','=','approved')]"/>
+                <filter name="paid" string="Pagades" domain="[('state','=','paid')]"/>
+                <filter name="rejected" string="Denegades" domain="[('state','=','rejected')]"/>
+                <separator/>
+                <filter name="pending" string="Pendents de pagament"
+                        domain="[('state','in',['requested','approved'])]"/>
+                <group expand="0" string="Agrupar per">
+                    <filter name="group_type" string="Tipus" context="{'group_by': 'aid_type'}"/>
+                    <filter name="group_state" string="Estat" context="{'group_by': 'state'}"/>
+                    <filter name="group_professional" string="Professional" context="{'group_by': 'professional_id'}"/>
+                    <filter name="group_month" string="Mes" context="{'group_by': 'date_request:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_acathi_aid" model="ir.actions.act_window">
+        <field name="name">Ajudes econòmiques</field>
+        <field name="res_model">acathi.aid</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_acathi_aid_search"/>
+    </record>
+
+    <record id="view_acathi_person_form_soc07" model="ir.ui.view">
+        <field name="name">acathi.person.form.soc07</field>
+        <field name="model">acathi.person</field>
+        <field name="inherit_id" ref="acathi_social.view_acathi_person_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_view_aids" type="object"
+                        class="oe_stat_button" icon="fa-money"
+                        invisible="aid_count == 0">
+                    <field name="aid_count" widget="statinfo" string="Ajudes"/>
+                </button>
+            </div>
+        </field>
+    </record>
+
+    <record id="view_acathi_case_form_soc07" model="ir.ui.view">
+        <field name="name">acathi.case.form.soc07</field>
+        <field name="model">acathi.case</field>
+        <field name="inherit_id" ref="acathi_social.view_acathi_case_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_view_case_aids" type="object"
+                        class="oe_stat_button" icon="fa-money"
+                        invisible="aid_count == 0">
+                    <field name="aid_count" widget="statinfo" string="Ajudes"/>
+                </button>
+            </div>
+        </field>
+    </record>
+
+    <menuitem id="menu_acathi_aid_list"
+              name="Ajudes econòmiques"
+              parent="acathi_social.menu_acathi_cases"
+              action="action_acathi_aid"
+              sequence="30"
+              groups="acathi_social.group_acathi_professional"/>
+
+</odoo>

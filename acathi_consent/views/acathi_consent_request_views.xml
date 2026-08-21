@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- ── List view ── -->
+  <record id="view_acathi_consent_request_list" model="ir.ui.view">
+    <field name="name">acathi.consent.request.list</field>
+    <field name="model">acathi.consent.request</field>
+    <field name="arch" type="xml">
+      <tree string="Consentiments RGPD" decoration-success="state == 'signed'" decoration-muted="state == 'expired'">
+        <field name="person_id"/>
+        <field name="create_date" string="Data creació"/>
+        <field name="state" widget="badge"
+               decoration-success="state == 'signed'"
+               decoration-warning="state == 'pending'"
+               decoration-muted="state == 'expired'"/>
+        <field name="signed_at"/>
+        <field name="signer_name"/>
+        <field name="consent_basic" widget="boolean_toggle"/>
+        <field name="consent_legal" widget="boolean_toggle"/>
+        <field name="consent_identity" widget="boolean_toggle"/>
+        <field name="consent_health" widget="boolean_toggle"/>
+      </tree>
+    </field>
+  </record>
+
+  <!-- ── Form view ── -->
+  <record id="view_acathi_consent_request_form" model="ir.ui.view">
+    <field name="name">acathi.consent.request.form</field>
+    <field name="model">acathi.consent.request</field>
+    <field name="arch" type="xml">
+      <form string="Sol·licitud de consentiment RGPD">
+        <header>
+          <field name="state" widget="statusbar" statusbar_visible="pending,signed,expired"/>
+          <button string="Caducar" name="action_expire" type="object"
+                  invisible="state != 'pending'" class="btn-secondary"/>
+        </header>
+        <sheet>
+          <!-- Camps ocults necessaris per als modificadors invisible -->
+          <field name="attachment_id" invisible="1"/>
+
+          <div class="oe_button_box" name="button_box">
+            <button name="action_open_form_url" type="object"
+                    class="oe_stat_button" icon="fa-external-link"
+                    invisible="state != 'pending'">
+              <span class="o_stat_text">Obrir formulari</span>
+            </button>
+            <button name="action_view_document" type="object"
+                    class="oe_stat_button" icon="fa-download"
+                    invisible="not attachment_id">
+              <span class="o_stat_text">Veure document</span>
+            </button>
+          </div>
+
+          <group>
+            <group string="Sol·licitud">
+              <field name="person_id"/>
+              <field name="language"/>
+              <field name="create_date" string="Creada el"/>
+            </group>
+            <group string="Signatura" invisible="state != 'signed'">
+              <field name="signed_at"/>
+              <field name="signer_name"/>
+              <field name="signer_doc"/>
+            </group>
+          </group>
+
+          <group string="Categories consentides" invisible="state != 'signed'">
+            <group>
+              <field name="consent_basic"/>
+              <field name="consent_legal"/>
+              <field name="consent_identity"/>
+            </group>
+            <group>
+              <field name="consent_health"/>
+              <field name="consent_economic"/>
+              <field name="consent_risk"/>
+            </group>
+          </group>
+
+          <group string="Accés al formulari" invisible="state != 'pending'">
+            <field name="consent_url" string="URL per compartir" widget="url"
+                   help="Envia aquest link a la persona per WhatsApp o SMS. Caduca quan la persona signa."/>
+          </group>
+        </sheet>
+        <chatter/>
+      </form>
+    </field>
+  </record>
+
+  <!-- ── Action ── -->
+  <record id="action_acathi_consent_request" model="ir.actions.act_window">
+    <field name="name">Consentiments RGPD</field>
+    <field name="res_model">acathi.consent.request</field>
+    <field name="view_mode">list,form</field>
+  </record>
+
+  <!-- ── Menu (inside ACATHI Social) ── -->
+  <menuitem id="menu_acathi_consent"
+            name="Consentiments RGPD"
+            parent="acathi_social.menu_acathi_root"
+            action="action_acathi_consent_request"
+            sequence="90"/>
+
+</odoo>

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_consent_request_user,acathi.consent.request.user,model_acathi_consent_request,acathi_social.group_acathi_user,1,0,0,0
+access_consent_request_professional,acathi.consent.request.professional,model_acathi_consent_request,acathi_social.group_acathi_professional,1,1,1,0
+access_consent_request_manager,acathi.consent.request.manager,model_acathi_consent_request,acathi_social.group_acathi_manager,1,1,1,1

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- ── LLISTA ────────────────────────────────────────────── -->
+  <record id="view_acathi_ally_list" model="ir.ui.view">
+    <field name="name">acathi.ally.list</field>
+    <field name="model">acathi.ally</field>
+    <field name="arch" type="xml">
+      <tree string="Entidades aliadas" default_order="name">
+        <field name="name"/>
+        <field name="ally_type" widget="badge"/>
+        <field name="contact_name"/>
+        <field name="contact_phone"/>
+        <field name="contact_email"/>
+        <field name="agreement_type" optional="show"/>
+        <field name="referral_count" string="Derivaciones"/>
+        <field name="state" widget="badge"
+               decoration-success="state == 'active'"
+               decoration-warning="state == 'occasional'"
+               decoration-info="state == 'potential'"
+               decoration-danger="state == 'inactive'"/>
+      </tree>
+    </field>
+  </record>
+
+  <!-- ── FORMULARI ─────────────────────────────────────────── -->
+  <record id="view_acathi_ally_form" model="ir.ui.view">
+    <field name="name">acathi.ally.form</field>
+    <field name="model">acathi.ally</field>
+    <field name="arch" type="xml">
+      <form string="Entidad aliada">
+        <header>
+          <field name="state" widget="statusbar"
+                 statusbar_visible="potential,active,occasional,inactive"/>
+        </header>
+        <sheet>
+          <div class="oe_button_box" name="button_box">
+            <button name="toggle_active" type="object"
+                    class="oe_stat_button" icon="fa-archive"
+                    groups="acathi_social.group_acathi_manager">
+              <field name="active" widget="boolean_button"
+                     options="{'terminology': 'archive'}"/>
+            </button>
+          </div>
+
+          <div class="oe_title">
+            <label for="name"/>
+            <h1>
+              <field name="name" placeholder="Nom de l'entitat..."/>
+            </h1>
+          </div>
+
+          <group>
+            <group string="Classificació">
+              <field name="ally_type"/>
+              <field name="partner_id" options="{'no_create': True}"/>
+              <field name="website"/>
+            </group>
+            <group string="Acord de col·laboració">
+              <field name="agreement_type"/>
+              <field name="agreement_date"/>
+              <field name="agreement_expiry"/>
+            </group>
+          </group>
+
+          <notebook>
+            <page string="Contacte" name="contacte">
+              <group>
+                <group>
+                  <field name="contact_name"/>
+                  <field name="contact_phone"/>
+                  <field name="contact_email"/>
+                </group>
+                <group>
+                  <field name="address"/>
+                  <field name="city"/>
+                </group>
+              </group>
+            </page>
+
+            <page string="Serveis i notes" name="serveis">
+              <separator string="Serveis que ofereixen"/>
+              <field name="services" nolabel="1"
+                     placeholder="Descriu els serveis o recursos que ofereix l'entitat..."
+                     style="width:100%;" rows="4"/>
+              <separator string="Observacions"/>
+              <field name="notes" nolabel="1"
+                     placeholder="Observacions internes..."
+                     style="width:100%;" rows="3"/>
+            </page>
+
+            <page string="Derivacions" name="derivacions">
+              <field name="referral_ids" nolabel="1">
+                <tree default_order="date desc">
+                  <field name="date"/>
+                  <field name="person_id"/>
+                  <field name="service"/>
+                  <field name="professional_id"/>
+                  <field name="state" widget="badge"
+                         decoration-success="state == 'completed'"
+                         decoration-warning="state == 'waiting'"
+                         decoration-danger="state == 'rejected'"/>
+                </tree>
+              </field>
+            </page>
+          </notebook>
+        </sheet>
+        <div class="oe_chatter">
+          <field name="message_follower_ids"/>
+          <field name="activity_ids"/>
+          <field name="message_ids"/>
+        </div>
+      </form>
+    </field>
+  </record>
+
+  <!-- ── ACCIÓ ──────────────────────────────────────────────── -->
+  <record id="action_acathi_ally" model="ir.actions.act_window">
+    <field name="name">Entidades aliadas</field>
+    <field name="res_model">acathi.ally</field>
+    <field name="view_mode">list,form</field>
+  </record>
+
+</odoo>

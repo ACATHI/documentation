@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- =====================================================================
+         VISTES acathi.housing.payment
+         ===================================================================== -->
+
+    <record id="view_acathi_housing_payment_list" model="ir.ui.view">
+        <field name="name">acathi.housing.payment.list</field>
+        <field name="model">acathi.housing.payment</field>
+        <field name="arch" type="xml">
+            <tree string="Pagaments"
+                  decoration-danger="state == 'pendent'"
+                  decoration-success="state == 'pagat'">
+                <field name="period_year"/>
+                <field name="period_month"/>
+                <field name="person_id"/>
+                <field name="housing_id"/>
+                <field name="amount"/>
+                <field name="amount_paid"/>
+                <field name="due_date"/>
+                <field name="payment_date"/>
+                <field name="state" widget="badge"
+                       decoration-danger="state == 'pendent'"
+                       decoration-warning="state == 'parcial'"
+                       decoration-success="state == 'pagat'"
+                       decoration-info="state == 'exempt'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_acathi_housing_payment_form" model="ir.ui.view">
+        <field name="name">acathi.housing.payment.form</field>
+        <field name="model">acathi.housing.payment</field>
+        <field name="arch" type="xml">
+            <form string="Pagament habitatge">
+                <header>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="pendent,parcial,pagat,exempt"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group string="Ocupant">
+                            <field name="occupant_id"/>
+                            <field name="housing_id" readonly="1"/>
+                            <field name="person_id" readonly="1"/>
+                        </group>
+                        <group string="Període">
+                            <field name="period_year"/>
+                            <field name="period_month"/>
+                            <field name="due_date"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Imports">
+                            <field name="amount"/>
+                            <field name="amount_paid"/>
+                            <field name="payment_date"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="notes"
+                               placeholder="Observacions sobre aquest pagament..."/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_acathi_housing_payment_search" model="ir.ui.view">
+        <field name="name">acathi.housing.payment.search</field>
+        <field name="model">acathi.housing.payment</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="person_id"/>
+                <field name="housing_id"/>
+                <field name="period_year"/>
+                <filter name="filter_pendent" string="Pendents"
+                        domain="[('state','=','pendent')]"/>
+                <filter name="filter_pagat" string="Pagats"
+                        domain="[('state','=','pagat')]"/>
+                <filter name="filter_parcial" string="Parcials"
+                        domain="[('state','=','parcial')]"/>
+                <group expand="0" string="Agrupar per">
+                    <filter name="group_housing" string="Pis"
+                            context="{'group_by': 'housing_id'}"/>
+                    <filter name="group_year" string="Any"
+                            context="{'group_by': 'period_year'}"/>
+                    <filter name="group_state" string="Estat"
+                            context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_acathi_housing_payment" model="ir.actions.act_window">
+        <field name="name">Pagaments habitatge</field>
+        <field name="res_model">acathi.housing.payment</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_acathi_housing_payment_search"/>
+    </record>
+
+    <!-- =====================================================================
+         EXTENSIÓ: afegir monthly_contribution a la pàgina d'Ocupants Actuals
+         del formulari del pis (hereta view_acathi_housing_form)
+         ===================================================================== -->
+
+    <record id="view_acathi_housing_form_viv02" model="ir.ui.view">
+        <field name="name">acathi.housing.form.viv02</field>
+        <field name="model">acathi.housing</field>
+        <field name="inherit_id" ref="acathi_social.view_acathi_housing_form"/>
+        <field name="arch" type="xml">
+            <!-- Afegir monthly_contribution a l'arbre d'ocupants -->
+            <field name="signed_rules" position="after">
+                <field name="monthly_contribution" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Menú "Pagaments" sota Alojamiento -->
+    <menuitem id="menu_acathi_housing_payments"
+              name="Pagaments"
+              parent="acathi_social.menu_acathi_housing_root"
+              action="action_acathi_housing_payment"
+              sequence="20"
+              groups="acathi_social.group_acathi_professional"/>
+
+</odoo>

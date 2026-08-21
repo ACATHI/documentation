@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_intake" model="ir.ui.view">
+        <field name="name">res.partner.form.intake</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Acogida ACATHI">
+                    <group>
+                        <group string="Canales">
+                            <field name="whatsapp_number"/>
+                            <field name="telegram_user_id"/>
+                            <field name="preferred_channel"/>
+                        </group>
+                        <group string="Atención">
+                            <field name="preferred_language"/>
+                            <field name="needs_interpreter"/>
+                            <field name="is_beneficiary_lgtbi"/>
+                            <field name="intake_request_count"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         grant.funder
+    ═══════════════════════════════════════════════════════════════════════ -->
+
+    <record id="view_grant_funder_tree" model="ir.ui.view">
+        <field name="name">grant.funder.tree</field>
+        <field name="model">grant.funder</field>
+        <field name="arch" type="xml">
+            <tree string="Finançadors">
+                <field name="name"/>
+                <field name="short_name"/>
+                <field name="funder_type"/>
+                <field name="call_count" string="Convocatòries"/>
+                <field name="active" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_grant_funder_form" model="ir.ui.view">
+        <field name="name">grant.funder.form</field>
+        <field name="model">grant.funder</field>
+        <field name="arch" type="xml">
+            <form string="Finançador">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_calls" type="object"
+                                class="oe_stat_button" icon="fa-calendar">
+                            <field name="call_count" widget="statinfo" string="Convocatòries"/>
+                        </button>
+                    </div>
+                    <field name="logo" widget="image" class="oe_avatar"
+                           options="{'preview_image': 'logo'}"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Nom complet del finançador"/></h1>
+                        <label for="short_name"/>
+                        <h2><field name="short_name" placeholder="Abreviació (ex: DIBA, GEN_DS)"/></h2>
+                    </div>
+                    <group>
+                        <group string="Identificació">
+                            <field name="funder_type"/>
+                            <field name="partner_id"/>
+                            <field name="active"/>
+                        </group>
+                        <group string="Comportament específic">
+                            <field name="requires_entity_report"/>
+                            <field name="single_project_per_call"/>
+                            <field name="has_penal_context"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Normes d'ús del logo" name="logo_specs">
+                            <field name="logo_specs_html" widget="html"
+                                   placeholder="Dimensions, espai protegit, text obligatori..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_grant_funder" model="ir.actions.act_window">
+        <field name="name">Finançadors</field>
+        <field name="res_model">grant.funder</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         grant.call
+    ═══════════════════════════════════════════════════════════════════════ -->
+
+    <record id="view_grant_call_tree" model="ir.ui.view">
+        <field name="name">grant.call.tree</field>
+        <field name="model">grant.call</field>
+        <field name="arch" type="xml">
+            <tree string="Convocatòries">
+                <field name="year"/>
+                <field name="funder_id"/>
+                <field name="name"/>
+                <field name="line_code"/>
+                <field name="date_close"/>
+                <field name="date_justification"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'resolucio'"
+                       decoration-warning="state == 'tancada'"
+                       decoration-muted="state == 'arxivada'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_grant_call_form" model="ir.ui.view">
+        <field name="name">grant.call.form</field>
+        <field name="model">grant.call</field>
+        <field name="arch" type="xml">
+            <form string="Convocatòria">
+                <header>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="oberta,tancada,resolucio,arxivada"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Nom de la convocatòria"/></h1>
+                    </div>
+                    <group>
+                        <group string="Identificació">
+                            <field name="funder_id"/>
+                            <field name="year"/>
+                            <field name="call_code"/>
+                            <field name="line_code"/>
+                            <field name="subline_name"/>
+                            <field name="url_bases" widget="url"/>
+                        </group>
+                        <group string="Execució">
+                            <field name="is_pluriannual"/>
+                            <field name="execution_years"
+                                   invisible="not is_pluriannual"/>
+                            <field name="max_grant_pct" widget="percentage"/>
+                            <field name="reformulation_days"/>
+                        </group>
+                    </group>
+                    <group string="Terminis">
+                        <group>
+                            <field name="date_open"/>
+                            <field name="date_close"/>
+                        </group>
+                        <group>
+                            <field name="date_resolution"/>
+                            <field name="date_justification"/>
+                        </group>
+                    </group>
+                    <group string="Configuració">
+                        <field name="config_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_grant_call_search" model="ir.ui.view">
+        <field name="name">grant.call.search</field>
+        <field name="model">grant.call</field>
+        <field name="arch" type="xml">
+            <search string="Cercar convocatòries">
+                <field name="name"/>
+                <field name="funder_id"/>
+                <field name="year"/>
+                <filter name="filter_open" string="Obertes" domain="[('state','=','oberta')]"/>
+                <filter name="filter_resolution" string="En resolució"
+                        domain="[('state','=','resolucio')]"/>
+                <separator/>
+                <group expand="0" string="Agrupar per">
+                    <filter name="group_funder" string="Finançador" context="{'group_by': 'funder_id'}"/>
+                    <filter name="group_year" string="Any" context="{'group_by': 'year'}"/>
+                    <filter name="group_state" string="Estat" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_grant_call" model="ir.actions.act_window">
+        <field name="name">Convocatòries</field>
+        <field name="res_model">grant.call</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_grant_call_search"/>
+    </record>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         grant.call.config
+    ═══════════════════════════════════════════════════════════════════════ -->
+
+    <record id="view_grant_call_config_tree" model="ir.ui.view">
+        <field name="name">grant.call.config.tree</field>
+        <field name="model">grant.call.config</field>
+        <field name="arch" type="xml">
+            <tree string="Configuracions de convocatòria">
+                <field name="name"/>
+                <field name="funder_id"/>
+                <field name="budget_template"/>
+                <field name="justification_template"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_grant_call_config_form" model="ir.ui.view">
+        <field name="name">grant.call.config.form</field>
+        <field name="model">grant.call.config</field>
+        <field name="arch" type="xml">
+            <form string="Configuració de convocatòria">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Ex: Ajuntament BCN 2026"/></h1>
+                    </div>
+                    <group>
+                        <field name="funder_id"/>
+                    </group>
+                    <notebook>
+                        <page string="Seccions visibles" name="sections">
+                            <group string="Perspectives transversals">
+                                <field name="show_ecosocial"/>
+                                <field name="show_intercultural"/>
+                                <field name="show_gender_table"/>
+                                <field name="show_revaluation_plan"/>
+                            </group>
+                            <group string="Pressupost i estructura">
+                                <field name="show_xfa_budget"/>
+                                <field name="show_ambit_selector"/>
+                                <field name="show_counting_units"/>
+                            </group>
+                            <group string="Personal i dispositius">
+                                <field name="show_volunteer_table"/>
+                                <field name="show_device_table"/>
+                            </group>
+                            <group string="Context penitenciari (SMPRAV)">
+                                <field name="show_penal_fields"/>
+                            </group>
+                            <group string="COSIFE">
+                                <field name="show_sai_network"/>
+                                <field name="show_law_19_2020"/>
+                                <field name="show_objectives_table"/>
+                                <field name="show_catalan_policy"/>
+                            </group>
+                            <group string="Clàusules i polítiques">
+                                <field name="show_social_clauses"/>
+                            </group>
+                        </page>
+                        <page string="Límits de camp" name="limits">
+                            <group string="Límits de caràcters (0 = sense límit)">
+                                <field name="social_interest_max_chars"/>
+                                <field name="brief_description_max_chars"/>
+                                <field name="communication_message_max_chars"/>
+                            </group>
+                            <group string="Límits d'objectius (0 = sense límit)">
+                                <field name="max_general_objectives"/>
+                                <field name="max_specific_objectives"/>
+                            </group>
+                        </page>
+                        <page string="Pressupost" name="budget">
+                            <group>
+                                <field name="budget_template"/>
+                                <field name="budget_must_balance"/>
+                            </group>
+                            <group string="Categories de despesa habilitades">
+                                <field name="budget_category_ids"
+                                       widget="many2many_tags"
+                                       options="{'no_create': True}"/>
+                            </group>
+                        </page>
+                        <page string="Justificació" name="justification">
+                            <group>
+                                <field name="justification_template"/>
+                                <field name="requires_monthly_execution"/>
+                                <field name="requires_user_age_breakdown"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_grant_call_config" model="ir.actions.act_window">
+        <field name="name">Configuracions</field>
+        <field name="res_model">grant.call.config</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         grant.budget.category
+    ═══════════════════════════════════════════════════════════════════════ -->
+
+    <record id="view_grant_budget_category_tree" model="ir.ui.view">
+        <field name="name">grant.budget.category.tree</field>
+        <field name="model">grant.budget.category</field>
+        <field name="arch" type="xml">
+            <tree string="Categories de despesa" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="category_type"/>
+                <field name="description"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_grant_budget_category" model="ir.actions.act_window">
+        <field name="name">Categories de despesa</field>
+        <field name="res_model">grant.budget.category</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+</odoo>

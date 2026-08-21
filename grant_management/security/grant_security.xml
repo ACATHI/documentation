@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Categoria dels grups -->
+        <record id="module_category_grant" model="ir.module.category">
+            <field name="name">Gestió de Subvencions</field>
+            <field name="sequence">80</field>
+        </record>
+
+        <!-- Grup 1: Usuari (pot veure i editar els seus expedients) -->
+        <record id="group_grant_user" model="res.groups">
+            <field name="name">Usuari</field>
+            <field name="category_id" ref="module_category_grant"/>
+        </record>
+
+        <!-- Grup 2: Gestor (accés complet a expedients, pot aprovar i canviar estats) -->
+        <record id="group_grant_manager" model="res.groups">
+            <field name="name">Gestor</field>
+            <field name="category_id" ref="module_category_grant"/>
+            <field name="implied_ids" eval="[(4, ref('group_grant_user'))]"/>
+        </record>
+
+        <!-- Grup 3: Administrador (configuració de finançadors, convocatòries, categories) -->
+        <record id="group_grant_admin" model="res.groups">
+            <field name="name">Administrador</field>
+            <field name="category_id" ref="module_category_grant"/>
+            <field name="implied_ids" eval="[(4, ref('group_grant_manager'))]"/>
+        </record>
+
+    </data>
+</odoo>
