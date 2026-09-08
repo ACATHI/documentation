@@ -349,7 +349,7 @@ body{{margin:0;font-family:system-ui,sans-serif;background:#fef2f2;display:flex;
 <html lang="{lang}" {"dir='rtl'" if is_rtl else ""}>
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ACATHI — {t['title']}</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/4.1.7/signature_pad.umd.min.js"></script>
@@ -445,13 +445,18 @@ async function loadPdf() {{
   const container = document.getElementById('pdfContainer');
   try {{
     const pdf = await pdfjsLib.getDocument(PDF_URL).promise;
+    const dpr = window.devicePixelRatio || 1;
     for (let i = 1; i <= pdf.numPages; i++) {{
       const page = await pdf.getPage(i);
-      const scale = container.clientWidth / page.getViewport({{scale:1}}).width * 0.96;
-      const vp = page.getViewport({{scale}});
+      const naturalVp = page.getViewport({{scale:1}});
+      const cssScale = Math.max(container.clientWidth / naturalVp.width * 0.96, 1.2);
+      const renderScale = cssScale * dpr;
+      const vp = page.getViewport({{scale: renderScale}});
       const canvas = document.createElement('canvas');
-      canvas.height = vp.height;
       canvas.width = vp.width;
+      canvas.height = vp.height;
+      canvas.style.width = (vp.width / dpr) + 'px';
+      canvas.style.height = (vp.height / dpr) + 'px';
       container.appendChild(canvas);
       await page.render({{canvasContext: canvas.getContext('2d'), viewport: vp}}).promise;
     }}
