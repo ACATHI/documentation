@@ -1,0 +1,624 @@
+# Translation of acathi_assessment to Arabic
+# Copyright (C) ACATHI
+msgid ""
+msgstr ""
+"Project-Id-Version: acathi_assessment\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-23 00:00+0000\n"
+"PO-Revision-Date: 2026-08-23 00:00+0000\n"
+"Last-Translator: ACATHI\n"
+"Language-Team: Arabic\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# ── الحقول المشتركة ───────────────────────────────────────────────────────────
+msgid "Persona atesa"
+msgstr "الشخص المُستفيد"
+
+msgid "Cas"
+msgstr "الملف / القضية"
+
+msgid "Professional"
+msgstr "المختص/ة"
+
+msgid "Data d'administració"
+msgstr "تاريخ الإجراء"
+
+msgid "Puntuació total"
+msgstr "المجموع الكلي"
+
+msgid "Nivell / Interpretació"
+msgstr "المستوى / التفسير"
+
+msgid "Observacions"
+msgstr "ملاحظات"
+
+# ── PHQ-9 ─────────────────────────────────────────────────────────────────────
+# [translation - not officially validated in Arabic; clinically reviewed translation]
+msgid "PHQ-9 — Escala de Depressió"
+msgstr "PHQ-9 — مقياس الاكتئاب"
+
+msgid "0 — Mai"
+msgstr "0 — أبداً"
+
+msgid "1 — Alguns dies"
+msgstr "1 — عدة أيام"
+
+msgid "2 — Més de la meitat dels dies"
+msgstr "2 — أكثر من نصف الأيام"
+
+msgid "3 — Quasi cada dia"
+msgstr "3 — كل يوم تقريباً"
+
+msgid "1. Tenir poc interès o plaer en fer les coses"
+msgstr "1. ضعف الاهتمام أو المتعة في القيام بالأشياء"
+
+msgid "2. Sentir-se desanimat/ada, deprimit/ida o sense esperança"
+msgstr "2. الشعور بالإحباط أو الاكتئاب أو انعدام الأمل"
+
+msgid "3. Dificultats per adormir-se, continuar dormint o dormir massa"
+msgstr "3. صعوبة في النوم أو الاستمرار فيه أو النوم بشكل مفرط"
+
+msgid "4. Sentir-se cansat/ada o tenir poca energia"
+msgstr "4. الشعور بالتعب أو نقص الطاقة"
+
+msgid "5. Poc apetit o menjar en excés"
+msgstr "5. ضعف الشهية أو الإفراط في الأكل"
+
+msgid "6. Sentir-se malament amb vostè mateix/a, o pensar que ha fallat"
+msgstr "6. الشعور السيئ تجاه النفس أو الشعور بالفشل"
+
+msgid "7. Dificultats per concentrar-se (llegir, mirar la televisió, etc.)"
+msgstr "7. صعوبة في التركيز (القراءة أو مشاهدة التلفاز وغيرها)"
+
+msgid "8. Moure's o parlar tan lentament que la gent ho hagi notat, o estar tan inquiet/a que s'ha mogut molt"
+msgstr "8. التحرك أو التحدث ببطء شديد لدرجة أن الآخرين لاحظوا ذلك، أو العكس: القلق الزائد والحركة المفرطة"
+
+msgid "9. Pensaments que seria millor estar mort/a, o de fer-se mal"
+msgstr "9. أفكار بأن الحياة لا تستحق، أو الرغبة في إيذاء النفس"
+
+msgid "Depressió mínima"
+msgstr "اكتئاب طفيف جداً"
+
+msgid "Depressió lleu"
+msgstr "اكتئاب خفيف"
+
+msgid "Depressió moderada"
+msgstr "اكتئاب متوسط"
+
+msgid "Depressió moderadament greu"
+msgstr "اكتئاب متوسط إلى شديد"
+
+msgid "Depressió greu"
+msgstr "اكتئاب شديد"
+
+# ── GAD-7 ─────────────────────────────────────────────────────────────────────
+# [translation - not officially validated in Arabic]
+msgid "GAD-7 — Escala d'Ansietat Generalitzada"
+msgstr "GAD-7 — مقياس اضطراب القلق العام"
+
+msgid "1. Sentir-se nerviós/a, ansiós/a o a la vora del precipici"
+msgstr "1. الشعور بالعصبية أو القلق أو التوتر الشديد"
+
+msgid "2. No poder aturar o controlar la preocupació"
+msgstr "2. عدم القدرة على التوقف عن القلق أو السيطرة عليه"
+
+msgid "3. Preocupar-se massa per coses diverses"
+msgstr "3. القلق المفرط من أشياء مختلفة"
+
+msgid "4. Dificultats per relaxar-se"
+msgstr "4. صعوبة في الاسترخاء"
+
+msgid "5. Estar tan inquiet/a que és difícil estar quiet/a"
+msgstr "5. التوتر الشديد لدرجة يصعب فيها الجلوس بهدوء"
+
+msgid "6. Enfadar-se o irritar-se fàcilment"
+msgstr "6. سرعة الغضب أو الانزعاج"
+
+msgid "7. Sentir por com si pogués passar alguna cosa terrible"
+msgstr "7. الشعور بالخوف كأن شيئاً سيئاً سيحدث"
+
+msgid "Ansietat mínima"
+msgstr "قلق طفيف جداً"
+
+msgid "Ansietat lleu"
+msgstr "قلق خفيف"
+
+msgid "Ansietat moderada"
+msgstr "قلق متوسط"
+
+msgid "Ansietat greu"
+msgstr "قلق شديد"
+
+# ── PCL-5 ─────────────────────────────────────────────────────────────────────
+# [translation - not officially validated in Arabic]
+msgid "PCL-5 — Llista de Verificació del TEPT (DSM-5)"
+msgstr "PCL-5 — قائمة التحقق من اضطراب ما بعد الصدمة (DSM-5)"
+
+msgid "Esdeveniment traumàtic de referència"
+msgstr "الحدث الصادم المرجعي"
+
+msgid "0 — Gens"
+msgstr "0 — إطلاقاً"
+
+msgid "1 — Una mica"
+msgstr "1 — قليلاً"
+
+msgid "2 — Moderadament"
+msgstr "2 — بشكل معتدل"
+
+msgid "3 — Bastant"
+msgstr "3 — كثيراً"
+
+msgid "4 — Extremament"
+msgstr "4 — بشكل شديد جداً"
+
+msgid "1. Records repetitius, molestos i no desitjats de l'experiència"
+msgstr "1. ذكريات متكررة ومزعجة وغير مرغوب بها عن التجربة"
+
+msgid "2. Somnis pertorbadors sobre l'experiència"
+msgstr "2. أحلام مزعجة تتعلق بالتجربة"
+
+msgid "3. Sentir-se o actuar com si l'experiència estigués passant de nou (flashback)"
+msgstr "3. الشعور أو التصرف كأن التجربة تتكرر من جديد (فلاش باك)"
+
+msgid "4. Sentir-se molt alterat/ada quan alguna cosa recorda l'experiència"
+msgstr "4. الشعور بالانزعاج الشديد حين يذكرك شيء ما بالتجربة"
+
+msgid "5. Reaccions físiques intenses davant recordatoris (cor que batega fort, suor, dificultat per respirar)"
+msgstr "5. ردود فعل جسدية قوية عند التذكر (تسارع القلب، التعرق، صعوبة التنفس)"
+
+msgid "6. Evitar records, pensaments o sentiments relacionats amb l'experiència"
+msgstr "6. تجنب الذكريات والأفكار والمشاعر المرتبطة بالتجربة"
+
+msgid "7. Evitar persones, llocs, converses o situacions que recorden l'experiència"
+msgstr "7. تجنب الأشخاص والأماكن والمحادثات والمواقف التي تذكرك بالتجربة"
+
+msgid "8. Problemes per recordar parts importants de l'experiència"
+msgstr "8. صعوبة تذكر أجزاء مهمة من التجربة"
+
+msgid "9. Creences negatives fortes sobre vostè mateix/a, els altres o el món"
+msgstr "9. معتقدات سلبية قوية عن النفس أو الآخرين أو العالم"
+
+msgid "10. Culpar-se a vostè mateix/a o als altres del que va passar"
+msgstr "10. إلقاء اللوم على النفس أو على الآخرين بسبب ما حدث"
+
+msgid "11. Sentiments negatius intensos (por, horror, ràbia, culpa, vergonya)"
+msgstr "11. مشاعر سلبية حادة (الخوف، الرعب، الغضب، الذنب، الخزي)"
+
+msgid "12. Pèrdua de interès en activitats que abans gaudia"
+msgstr "12. فقدان الاهتمام بالأنشطة التي كنت تستمتع بها"
+
+msgid "13. Sentir-se distant o desconnectat/ada de les altres persones"
+msgstr "13. الشعور بالبُعد أو الانفصال عن الآخرين"
+
+msgid "14. Dificultats per experimentar sentiments positius"
+msgstr "14. صعوبة في الشعور بالمشاعر الإيجابية"
+
+msgid "15. Comportament irritable, explosions de ràbia o agressivitat"
+msgstr "15. سلوك عدواني أو نوبات غضب أو تهيج"
+
+msgid "16. Assumir riscos o fer coses que podrien causar danys"
+msgstr "16. المجازفة أو القيام بأشياء قد تسبب الأذى"
+
+msgid "17. Estar en alerta màxima, vigilant o guardant-se"
+msgstr "17. الحالة القصوى من اليقظة أو الحذر"
+
+msgid "18. Sobresaltar-se fàcilment"
+msgstr "18. التوجس والانزعاج بسهولة"
+
+msgid "19. Dificultats per concentrar-se"
+msgstr "19. صعوبة في التركيز"
+
+msgid "20. Dificultats per adormir-se"
+msgstr "20. صعوبة في النوم"
+
+msgid "Per sota del llindar (TEPT poc probable)"
+msgstr "دون العتبة (اضطراب ما بعد الصدمة غير مرجح)"
+
+msgid "Llindar probable de TEPT — Avaluació clínica recomanada"
+msgstr "عتبة مرجحة لاضطراب ما بعد الصدمة — يُنصح بالتقييم السريري"
+
+msgid "TEPT probable — Derivació urgent recomanada"
+msgstr "اضطراب ما بعد الصدمة مرجح — يُنصح بالإحالة العاجلة"
+
+# ── HSCL-25 ───────────────────────────────────────────────────────────────────
+# [translation - not officially validated in Arabic]
+msgid "HSCL-25 — Llista de Símptomes Hopkins"
+msgstr "HSCL-25 — قائمة أعراض هوبكنز"
+
+msgid "Mitjana global (25 ítems)"
+msgstr "المتوسط الكلي (25 بنداً)"
+
+msgid "Mitjana ansietat"
+msgstr "متوسط القلق"
+
+msgid "Mitjana depressió"
+msgstr "متوسط الاكتئاب"
+
+msgid "1 — Gens"
+msgstr "1 — إطلاقاً"
+
+msgid "2 — Una mica"
+msgstr "2 — قليلاً"
+
+msgid "3 — Bastant"
+msgstr "3 — كثيراً"
+
+msgid "4 — Molt"
+msgstr "4 — جداً"
+
+msgid "A1. Tremolors"
+msgstr "A1. الارتعاش"
+
+msgid "A2. Nerviosisme o agitació interior"
+msgstr "A2. العصبية أو الاضطراب الداخلي"
+
+msgid "A3. Pors sobtades sense cap raó"
+msgstr "A3. مخاوف مفاجئة دون سبب"
+
+msgid "A4. Pors o pànic"
+msgstr "A4. الخوف أو الهلع"
+
+msgid "A5. Sentir-se atemoritzat/ada"
+msgstr "A5. الشعور بالخوف"
+
+msgid "A6. El cor que batega fort"
+msgstr "A6. خفقان القلب"
+
+msgid "A7. Tremolors a les mans"
+msgstr "A7. ارتعاش اليدين"
+
+msgid "A8. Sensació de tensió o d'estar en un nus"
+msgstr "A8. الإحساس بالتوتر أو التشنج"
+
+msgid "A9. Atacs de pànic o terror"
+msgstr "A9. نوبات هلع أو رعب"
+
+msgid "A10. Estar tan inquiet/a que no pot estar quiet/a"
+msgstr "A10. التوتر الشديد الذي يمنع من البقاء ساكناً"
+
+msgid "D1. Sentir-se adormit/ida o amb la ment en blanc"
+msgstr "D1. الشعور بالخدر أو فراغ الذهن"
+
+msgid "D2. Sentir-se sol/a"
+msgstr "D2. الشعور بالوحدة"
+
+msgid "D3. Sentir-se trist/a"
+msgstr "D3. الشعور بالحزن"
+
+msgid "D4. Preocupar-se massa per les coses"
+msgstr "D4. القلق المفرط من الأشياء"
+
+msgid "D5. Sentir-se desanimat/ada respecte al futur"
+msgstr "D5. الشعور بالإحباط تجاه المستقبل"
+
+msgid "D6. Sentir que tot és un esforç"
+msgstr "D6. الشعور بأن كل شيء يتطلب جهداً كبيراً"
+
+msgid "D7. Sentir-se sense esperança sobre el futur"
+msgstr "D7. الشعور باليأس من المستقبل"
+
+msgid "D8. Sentir que no val res"
+msgstr "D8. الشعور بعدم القيمة"
+
+msgid "D9. Sentir-se buit/ida per dins"
+msgstr "D9. الشعور بالفراغ الداخلي"
+
+msgid "D10. Sentir que alguna cosa dolenta anirà a passar"
+msgstr "D10. الشعور بأن شيئاً سيئاً سيحدث"
+
+msgid "D11. Tenir ganes de plorar"
+msgstr "D11. الرغبة في البكاء"
+
+msgid "D12. Sentir-se atrapat/ada o encasellat/ada"
+msgstr "D12. الشعور بالفخ أو الحبس"
+
+msgid "D13. Culpar-se de les coses"
+msgstr "D13. إلقاء اللوم على النفس"
+
+msgid "D14. Sentir-se incapaç/aç de fer les coses"
+msgstr "D14. الشعور بالعجز عن القيام بالأشياء"
+
+msgid "D15. Tenir pensaments d'acabar amb la pròpia vida"
+msgstr "D15. أفكار بإنهاء الحياة"
+
+msgid "Distress clínic"
+msgstr "ضائقة نفسية سريرية"
+
+msgid "Sense significació clínica"
+msgstr "بدون دلالة سريرية"
+
+# ── IES-R ─────────────────────────────────────────────────────────────────────
+# [translation - not officially validated in Arabic]
+msgid "IES-R — Escala d'Impacte de l'Esdeveniment (Revisada)"
+msgstr "IES-R — مقياس تأثير الحدث (المُراجَع)"
+
+msgid "Descripció de l'esdeveniment"
+msgstr "وصف الحدث"
+
+msgid "Subescala Intrusió"
+msgstr "مقياس فرعي: الاقتحامية"
+
+msgid "Subescala Evitació"
+msgstr "مقياس فرعي: التجنب"
+
+msgid "Subescala Hiperactivació"
+msgstr "مقياس فرعي: فرط الاستثارة"
+
+msgid "1. Qualsevol recordatori em tornava a portar sentiments sobre això"
+msgstr "1. أي مُذكِّر كان يعيد إليّ المشاعر المتعلقة بهذا الأمر"
+
+msgid "2. Tenia dificultats per continuar dormint"
+msgstr "2. كانت لديّ صعوبة في الاستمرار في النوم"
+
+msgid "3. Altres coses em feien pensar en l'esdeveniment constantment"
+msgstr "3. أشياء أخرى كانت تجعلني أفكر في الحدث باستمرار"
+
+msgid "4. Sentia irritació i ràbia"
+msgstr "4. كنت أشعر بالانزعاج والغضب"
+
+msgid "5. Intentava no pertorbar-me quan en pensava o se me'n recordava"
+msgstr "5. كنت أحاول ألا أنزعج حين أفكر فيه أو أتذكره"
+
+msgid "6. Hi pensava sense voler fer-ho"
+msgstr "6. كنت أفكر فيه دون أن أقصد"
+
+msgid "7. Sentia com si no hagués passat o no fos real"
+msgstr "7. كنت أشعر كأن الأمر لم يحدث أو لم يكن حقيقياً"
+
+msgid "8. M'allunyava de les recordances"
+msgstr "8. كنت أبتعد عما يُذكّرني به"
+
+msgid "9. Imatges de l'esdeveniment em venien a la ment"
+msgstr "9. كانت صور الحدث تتبادر إلى ذهني"
+
+msgid "10. Estava nerviós/a i m'espaventava fàcilment"
+msgstr "10. كنت متوتراً ويسهل إخافتي"
+
+msgid "11. Intentava no pensar-hi"
+msgstr "11. كنت أحاول ألا أفكر فيه"
+
+msgid "12. Era conscient que hi havia molts sentiments, però no els vaig abordar"
+msgstr "12. كنت مدركاً وجود مشاعر كثيرة لكنني لم أتعامل معها"
+
+msgid "13. Els meus sentiments estaven com adormits"
+msgstr "13. كانت مشاعري كأنها مخدّرة"
+
+msgid "14. Em trobava actuant o sentint com si estigués de nou en aquell moment"
+msgstr "14. كنت أجد نفسي أتصرف أو أشعر كأنني في ذلك الوقت مرة أخرى"
+
+msgid "15. Tenia problemes per adormir-me"
+msgstr "15. كانت لديّ صعوبة في النوم"
+
+msgid "16. Tenia onades de sentiments forts al respecte"
+msgstr "16. كانت تنتابني موجات من المشاعر القوية تجاه ذلك"
+
+msgid "17. Intentava esborrar-ho de la memòria"
+msgstr "17. كنت أحاول محو ذلك من ذاكرتي"
+
+msgid "18. Tenia dificultats per concentrar-me"
+msgstr "18. كانت لديّ صعوبة في التركيز"
+
+msgid "19. El que em recordava l'esdeveniment em causava reaccions físiques (suor, cor palpitant, nàusea)"
+msgstr "19. ما يُذكّرني بالحدث كان يسبب ردود فعل جسدية (تعرق، تسارع القلب، غثيان)"
+
+msgid "20. Tenia somnis sobre l'esdeveniment"
+msgstr "20. كانت لديّ أحلام عن الحدث"
+
+msgid "21. Em sentia vigilant i en guarda"
+msgstr "21. كنت أشعر باليقظة والحذر"
+
+msgid "22. Intentava no parlar-ne"
+msgstr "22. كنت أحاول ألا أتحدث عنه"
+
+msgid "Baix — Resposta normal"
+msgstr "منخفض — استجابة طبيعية"
+
+msgid "Moderat — Seguiment recomanat"
+msgstr "متوسط — يُنصح بالمتابعة"
+
+msgid "Probable TEPT — Avaluació clínica"
+msgstr "اضطراب ما بعد الصدمة المرجح — تقييم سريري"
+
+msgid "TEPT probable — Derivació recomanada"
+msgstr "اضطراب ما بعد الصدمة المرجح — يُنصح بالإحالة"
+
+# ── WHODAS 2.0 ────────────────────────────────────────────────────────────────
+# [translation - based on WHO Arabic validated version]
+msgid "WHODAS 2.0 — Avaluació de Discapacitat i Funcionament (12 ítems)"
+msgstr "WHODAS 2.0 — تقييم الإعاقة والأداء الوظيفي (12 بنداً)"
+
+msgid "Puntuació simple (0–48)"
+msgstr "الدرجة البسيطة (0–48)"
+
+msgid "% Discapacitat"
+msgstr "% الإعاقة"
+
+msgid "1 — Cap"
+msgstr "1 — لا شيء"
+
+msgid "2 — Lleugera"
+msgstr "2 — خفيفة"
+
+msgid "3 — Moderada"
+msgstr "3 — متوسطة"
+
+msgid "4 — Greu"
+msgstr "4 — شديدة"
+
+msgid "5 — Extrema / No pot fer-ho"
+msgstr "5 — شديدة جداً / لا يستطيع القيام بها"
+
+msgid "C1. Concentrar-se en fer alguna cosa durant deu minuts?"
+msgstr "C1. التركيز في عمل ما لمدة عشر دقائق؟"
+
+msgid "C2. Recordar coses importants?"
+msgstr "C2. تذكر الأشياء المهمة؟"
+
+msgid "M1. Caminar llargues distàncies, com un quilòmetre?"
+msgstr "M1. المشي لمسافات طويلة، كيلومتر مثلاً؟"
+
+msgid "M2. Posar-se dempeus des que estava assegut/da?"
+msgstr "M2. النهوض من وضع الجلوس؟"
+
+msgid "Au1. Rentar-se tot el cos?"
+msgstr "Au1. الاستحمام وغسل الجسم كله؟"
+
+msgid "Au2. Vestir-se?"
+msgstr "Au2. ارتداء الملابس؟"
+
+msgid "R1. Relacionar-se amb persones que no coneix?"
+msgstr "R1. التعامل مع أشخاص لا تعرفهم؟"
+
+msgid "R2. Mantenir una amistat?"
+msgstr "R2. الحفاظ على صداقة؟"
+
+msgid "AV1. Les responsabilitats quotidianes a la llar?"
+msgstr "AV1. المسؤوليات اليومية في المنزل؟"
+
+msgid "AV2. Les responsabilitats laborals o escolars principals?"
+msgstr "AV2. المسؤوليات الرئيسية في العمل أو الدراسة؟"
+
+msgid "P1. Participar en activitats de la comunitat?"
+msgstr "P1. المشاركة في أنشطة المجتمع؟"
+
+msgid "P2. L'impacte dels problemes de salut en la seva vida en general?"
+msgstr "P2. تأثير مشكلات الصحة على حياتك بشكل عام؟"
+
+msgid "Sense discapacitat (0%)"
+msgstr "بدون إعاقة (0%)"
+
+msgid "Discapacitat lleu"
+msgstr "إعاقة خفيفة"
+
+msgid "Discapacitat moderada"
+msgstr "إعاقة متوسطة"
+
+msgid "Discapacitat greu"
+msgstr "إعاقة شديدة"
+
+msgid "Discapacitat extrema"
+msgstr "إعاقة شديدة جداً"
+
+# ── فحص مؤشرات الاتجار بالبشر ────────────────────────────────────────────────
+# [translation - not officially validated in Arabic]
+msgid "Cribratge d'Indicadors de Tràfic d'Éssers Humans"
+msgstr "فحص مؤشرات الاتجار بالبشر"
+
+msgid "Puntuació total (màx. 36)"
+msgstr "المجموع الكلي (الحد الأقصى 36)"
+
+msgid "Nivell de risc"
+msgstr "مستوى الخطر"
+
+msgid "Risc baix"
+msgstr "خطر منخفض"
+
+msgid "Risc moderat — Investigar"
+msgstr "خطر متوسط — تحقيق مطلوب"
+
+msgid "Risc alt — Activar protocol"
+msgstr "خطر مرتفع — تفعيل البروتوكول"
+
+msgid "0 — No / Desconegut"
+msgstr "0 — لا / غير معروف"
+
+msgid "1 — Possible"
+msgstr "1 — محتمل"
+
+msgid "2 — Sí"
+msgstr "2 — نعم"
+
+msgid "Control i coacció"
+msgstr "التحكم والإكراه"
+
+msgid "Engany i captació"
+msgstr "الخداع والتجنيد"
+
+msgid "Explotació"
+msgstr "الاستغلال"
+
+msgid "Vulnerabilitat"
+msgstr "الهشاشة / الضعف"
+
+msgid "A1. La persona sembla controlada per un tercer (moviments, comunicació, diners)"
+msgstr "A1. يبدو أن الشخص يخضع لسيطرة طرف ثالث (تنقلاته، تواصله، أمواله)"
+
+msgid "A2. La persona té por de parlar lliurement o sembla vigilada"
+msgstr "A2. يخشى الشخص التحدث بحرية أو يبدو كأنه مراقَب"
+
+msgid "A3. La persona no controla els seus propis documents d'identitat"
+msgstr "A3. الشخص لا يتحكم في وثائق هويته الخاصة"
+
+msgid "A4. La persona viu on treballa o en condicions de dependència de l'explotador"
+msgstr "A4. يعيش الشخص في مكان عمله أو في ظروف تبعية للمستغِل"
+
+msgid "A5. La persona fa referència a haver rebut amenaces (directes o a la família)"
+msgstr "A5. يشير الشخص إلى تلقيه تهديدات (مباشرة أو موجهة لعائلته)"
+
+msgid "B1. La persona va ser captada amb promeses falses (feina, allotjament, parella)"
+msgstr "B1. جُنِّد الشخص بوعود كاذبة (عمل، سكن، شريك حياة)"
+
+msgid "B2. La persona va arribar al país a través d'intermediaris o xarxes"
+msgstr "B2. وصل الشخص إلى البلد عبر وسطاء أو شبكات"
+
+msgid "B3. La persona deu diners al captador/a ('deute de transport')"
+msgstr "B3. الشخص مدين بأموال للمجنِّد ('ديْن النقل')"
+
+msgid "B4. La persona desconeix la seva situació legal o la van enganyar respecte als papers"
+msgstr "B4. الشخص لا يعرف وضعه القانوني أو تم خداعه بشأن الأوراق"
+
+msgid "C1. Hi ha indicis d'explotació sexual (passat o present)"
+msgstr "C1. توجد مؤشرات على استغلال جنسي (سابق أو حالي)"
+
+msgid "C2. Hi ha indicis d'explotació laboral (condicions abusives, sense remuneració)"
+msgstr "C2. توجد مؤشرات على استغلال عمالي (ظروف مسيئة، بدون أجر)"
+
+msgid "C3. La persona ha estat forçada a demanar o a delinquir"
+msgstr "C3. أُجبر الشخص على التسول أو ارتكاب جرائم"
+
+msgid "C4. La persona fa referència a haver servit en una llar en condicions d'esclavatge"
+msgstr "C4. يشير الشخص إلى خدمته في منزل في ظروف العبودية"
+
+msgid "C5. La persona ha estat explotada per motiu de la seva orientació sexual o identitat de gènere"
+msgstr "C5. استُغل الشخص بسبب ميوله الجنسية أو هويته الجندرية"
+
+msgid "D1. La persona es troba en situació irregular administrativa"
+msgstr "D1. الشخص في وضع إداري غير نظامي"
+
+msgid "D2. La persona no té xarxa de suport ni família accessible"
+msgstr "D2. الشخص ليس لديه شبكة دعم ولا عائلة يمكن الوصول إليها"
+
+msgid "D3. La persona ha patit violència, abús sexual o tortura prèvia"
+msgstr "D3. تعرض الشخص لعنف أو إساءة جنسية أو تعذيب سابق"
+
+msgid "D4. La persona presenta símptomes de trauma greu (dissociació, flashbacks, por extrema)"
+msgstr "D4. يعاني الشخص من أعراض صدمة شديدة (تفارق، فلاش باك، خوف شديد)"
+
+# ── القوائم ───────────────────────────────────────────────────────────────────
+msgid "Avaluacions"
+msgstr "التقييمات"
+
+msgid "PHQ-9 Depressió"
+msgstr "PHQ-9 الاكتئاب"
+
+msgid "GAD-7 Ansietat"
+msgstr "GAD-7 القلق"
+
+msgid "PCL-5 TEPT"
+msgstr "PCL-5 اضطراب ما بعد الصدمة"
+
+msgid "HSCL-25 Hopkins"
+msgstr "HSCL-25 هوبكنز"
+
+msgid "IES-R Impacte Esdeveniment"
+msgstr "IES-R تأثير الحدث"
+
+msgid "WHODAS 2.0 Discapacitat"
+msgstr "WHODAS 2.0 الإعاقة"
+
+msgid "Cribratge Tràfic"
+msgstr "فحص الاتجار بالبشر"

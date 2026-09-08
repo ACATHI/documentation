@@ -39,6 +39,10 @@
                     <button name="action_close" type="object"
                             string="Cerrar caso"
                             invisible="state == 'closed'"/>
+                    <button name="action_reopen" type="object"
+                            string="Reobrir cas" class="btn-warning"
+                            invisible="state != 'closed'"
+                            confirm="Es reactivarà el cas i es crearà una intervenció de reobertura. Continuar?"/>
                     <field name="state" widget="statusbar"
                            statusbar_visible="new,active,followup,closed"/>
                 </header>
@@ -85,6 +89,11 @@
                         <field name="close_reason"/>
                         <field name="referral_entity_id"
                                invisible="close_reason != 'referred'"/>
+                    </group>
+                    <group string="Seguiment" invisible="state == 'closed'">
+                        <field name="last_intervention_date" readonly="1"/>
+                        <field name="followup_snooze_date"
+                               help="Silencia els avisos d'inactivitat fins a aquesta data"/>
                     </group>
                 </sheet>
                 <div class="oe_chatter">

@@ -42,3 +42,6 @@ access_acathi_aid_manager,acathi.aid manager,model_acathi_aid,acathi_social.grou
 access_acathi_document_professional,acathi.document professional,model_acathi_document,acathi_social.group_acathi_professional,1,1,1,0
 access_acathi_document_sensitive,acathi.document sensitive,model_acathi_document,acathi_social.group_acathi_documents_sensitive,1,1,1,0
 access_acathi_document_manager,acathi.document manager,model_acathi_document,acathi_social.group_acathi_manager,1,1,1,1
+access_grant_hr_allocation_user,grant.hr.allocation user,model_grant_hr_allocation,acathi_social.group_acathi_user,1,0,0,0
+access_grant_hr_allocation_professional,grant.hr.allocation professional,model_grant_hr_allocation,acathi_social.group_acathi_professional,1,0,0,0
+access_grant_hr_allocation_manager,grant.hr.allocation manager,model_grant_hr_allocation,acathi_social.group_acathi_manager,1,1,1,1

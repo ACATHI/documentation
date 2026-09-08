@@ -1,0 +1,154 @@
+# Translation of acathi_social to Russian
+# Copyright (C) ACATHI
+msgid ""
+msgstr ""
+"Project-Id-Version: acathi_social\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-23 00:00+0000\n"
+"PO-Revision-Date: 2026-08-23 00:00+0000\n"
+"Last-Translator: ACATHI\n"
+"Language-Team: Russian\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# ── HR-04: grant.hr.allocation ────────────────────────────────────────────────
+msgid "Imputació mensual d'hores de personal a subvenció"
+msgstr "Ежемесячное распределение рабочих часов сотрудников на грант"
+
+msgid "Empleat/da"
+msgstr "Сотрудник/ца"
+
+msgid "Subvenció"
+msgstr "Грант"
+
+msgid "Any"
+msgstr "Год"
+
+msgid "Mes"
+msgstr "Месяц"
+
+msgid "% Dedicació"
+msgstr "% посвящения"
+
+msgid "Hores treballades al mes"
+msgstr "Отработанных часов за месяц"
+
+msgid "Hores imputades"
+msgstr "Распределённые часы"
+
+msgid "Cost/hora (€)"
+msgstr "Стоимость/час (€)"
+
+msgid "Cost imputat (€)"
+msgstr "Распределённые затраты (€)"
+
+msgid "Notes"
+msgstr "Заметки"
+
+msgid "Imputació de personal"
+msgstr "Распределение персонала"
+
+msgid "Imputació hores personal"
+msgstr "Распределение часов персонала"
+
+msgid "Registres personal"
+msgstr "Записи персонала"
+
+msgid "Cost personal (€)"
+msgstr "Затраты на персонал (€)"
+
+# Месяцы
+msgid "Gener"
+msgstr "Январь"
+
+msgid "Febrer"
+msgstr "Февраль"
+
+msgid "Març"
+msgstr "Март"
+
+msgid "Abril"
+msgstr "Апрель"
+
+msgid "Maig"
+msgstr "Май"
+
+msgid "Juny"
+msgstr "Июнь"
+
+msgid "Juliol"
+msgstr "Июль"
+
+msgid "Agost"
+msgstr "Август"
+
+msgid "Setembre"
+msgstr "Сентябрь"
+
+msgid "Octubre"
+msgstr "Октябрь"
+
+msgid "Novembre"
+msgstr "Ноябрь"
+
+msgid "Desembre"
+msgstr "Декабрь"
+
+# Уведомления кнопки предложения
+msgid "Dades incompletes"
+msgstr "Неполные данные"
+
+msgid "Sense dades"
+msgstr "Нет данных"
+
+msgid "Suggeriment aplicat"
+msgstr "Предложение применено"
+
+# ── AUT-01: acathi.case новые поля ────────────────────────────────────────────
+msgid "Silenciar avisos fins a"
+msgstr "Отложить оповещения до"
+
+msgid "Darrera intervenció"
+msgstr "Последнее вмешательство"
+
+msgid "Seguiment"
+msgstr "Сопровождение"
+
+msgid "Reobrir cas"
+msgstr "Повторно открыть дело"
+
+msgid "ACATHI: Avisos seguiment de casos inactius"
+msgstr "ACATHI: Оповещения о неактивных делах"
+
+# ── SUB-02: grant.application новые поля ──────────────────────────────────────
+msgid "Intervencions socials"
+msgstr "Социальные вмешательства"
+
+msgid "Activitats socials"
+msgstr "Социальные мероприятия"
+
+msgid "Ajudes econòmiques"
+msgstr "Экономическая помощь"
+
+msgid "Intervencions"
+msgstr "Вмешательства"
+
+msgid "Activitats"
+msgstr "Мероприятия"
+
+msgid "Ajudes"
+msgstr "Помощь"
+
+msgid "Persones ateses"
+msgstr "Обслуженные лица"
+
+msgid "Persones ateses (úniques)"
+msgstr "Обслуженные лица (уникальные)"
+
+msgid "Font automàtica"
+msgstr "Автоматический источник"
+
+msgid "Manual"
+msgstr "Вручную"

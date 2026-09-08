@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ══ VISTA LLISTA ══════════════════════════════════════════════════════ -->
+    <record id="view_acathi_trafficking_tree" model="ir.ui.view">
+        <field name="name">acathi.trafficking.screen.tree</field>
+        <field name="model">acathi.trafficking.screen</field>
+        <field name="arch" type="xml">
+            <tree string="Cribratge Tràfic d'Éssers Humans"
+                  decoration-danger="score >= 11"
+                  decoration-warning="score >= 5 and score &lt; 11">
+                <field name="date"/>
+                <field name="person_id"/>
+                <field name="case_id"/>
+                <field name="professional_id"/>
+                <field name="score" string="Puntuació"/>
+                <field name="risk_level" string="Risc"/>
+                <field name="severity" string="Nivell"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ══ VISTA FORMULARI ═══════════════════════════════════════════════════ -->
+    <record id="view_acathi_trafficking_form" model="ir.ui.view">
+        <field name="name">acathi.trafficking.screen.form</field>
+        <field name="model">acathi.trafficking.screen</field>
+        <field name="arch" type="xml">
+            <form string="Cribratge d'Indicadors de Tràfic d'Éssers Humans">
+                <sheet>
+                    <!-- Banner de màxima sensibilitat -->
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Dades de màxima sensibilitat</strong> —
+                        Accés restringit a professionals autoritzats.
+                        Tractar d'acord amb el protocol intern de ACATHI.
+                    </div>
+
+                    <group string="Informació general">
+                        <group>
+                            <field name="person_id"/>
+                            <field name="case_id"/>
+                        </group>
+                        <group>
+                            <field name="professional_id"/>
+                            <field name="date"/>
+                        </group>
+                    </group>
+
+                    <separator string="Instruccions"/>
+                    <div class="alert alert-info" role="alert">
+                        <p>Valoreu cada indicador d'acord amb la informació disponible
+                        i l'observació directa de la persona.
+                        Escala: 0 = No / Desconegut · 1 = Possible · 2 = Sí.</p>
+                    </div>
+
+                    <separator string="Grup A — Control i coacció"/>
+                    <group col="1">
+                        <field name="a1" widget="radio" options="{'horizontal': true}"/>
+                        <field name="a2" widget="radio" options="{'horizontal': true}"/>
+                        <field name="a3" widget="radio" options="{'horizontal': true}"/>
+                        <field name="a4" widget="radio" options="{'horizontal': true}"/>
+                        <field name="a5" widget="radio" options="{'horizontal': true}"/>
+                    </group>
+
+                    <separator string="Grup B — Engany i captació"/>
+                    <group col="1">
+                        <field name="b1" widget="radio" options="{'horizontal': true}"/>
+                        <field name="b2" widget="radio" options="{'horizontal': true}"/>
+                        <field name="b3" widget="radio" options="{'horizontal': true}"/>
+                        <field name="b4" widget="radio" options="{'horizontal': true}"/>
+                    </group>
+
+                    <separator string="Grup C — Explotació"/>
+                    <group col="1">
+                        <field name="c1" widget="radio" options="{'horizontal': true}"/>
+                        <field name="c2" widget="radio" options="{'horizontal': true}"/>
+                        <field name="c3" widget="radio" options="{'horizontal': true}"/>
+                        <field name="c4" widget="radio" options="{'horizontal': true}"/>
+                        <field name="c5" widget="radio" options="{'horizontal': true}"/>
+                    </group>
+
+                    <separator string="Grup D — Vulnerabilitat"/>
+                    <group col="1">
+                        <field name="d1" widget="radio" options="{'horizontal': true}"/>
+                        <field name="d2" widget="radio" options="{'horizontal': true}"/>
+                        <field name="d3" widget="radio" options="{'horizontal': true}"/>
+                        <field name="d4" widget="radio" options="{'horizontal': true}"/>
+                    </group>
+
+                    <separator string="Resultats"/>
+                    <group>
+                        <group>
+                            <field name="score" readonly="1"/>
+                            <field name="risk_level" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="severity" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <separator string="Observacions"/>
+                    <field name="notes" placeholder="Observacions addicionals del professional..."/>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ══ VISTA CERCA ═══════════════════════════════════════════════════════ -->
+    <record id="view_acathi_trafficking_search" model="ir.ui.view">
+        <field name="name">acathi.trafficking.screen.search</field>
+        <field name="model">acathi.trafficking.screen</field>
+        <field name="arch" type="xml">
+            <search string="Cercar Cribratge Tràfic">
+                <field name="person_id" string="Persona"/>
+                <field name="professional_id" string="Professional"/>
+                <field name="date" string="Data"/>
+                <filter string="Any actual" name="filter_this_year"
+                        domain="[('date', '>=', (context_today()).strftime('%Y') + '-01-01'),
+                                  ('date', '&lt;=', (context_today()).strftime('%Y') + '-12-31')]"/>
+                <separator/>
+                <filter string="Risc moderat o alt" name="filter_risk"
+                        domain="[('score', '>=', 5)]"/>
+                <filter string="Risc alt" name="filter_high_risk"
+                        domain="[('risk_level', '=', 'high')]"/>
+                <group expand="0" string="Agrupar per">
+                    <filter string="Persona" name="group_person" context="{'group_by': 'person_id'}"/>
+                    <filter string="Nivell de risc" name="group_risk" context="{'group_by': 'risk_level'}"/>
+                    <filter string="Professional" name="group_professional" context="{'group_by': 'professional_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ══ ACCIÓ ══════════════════════════════════════════════════════════════ -->
+    <record id="action_acathi_trafficking" model="ir.actions.act_window">
+        <field name="name">Cribratge Tràfic d'Éssers Humans</field>
+        <field name="res_model">acathi.trafficking.screen</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_acathi_trafficking_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Registreu un nou cribratge d'indicadors de tràfic
+            </p>
+        </field>
+    </record>
+
+</odoo>

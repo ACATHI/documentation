@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Grup: Visualitzador d'avaluacions
+             Implica el grup professional d'acathi_social (membres d'aquest grup
+             hereten els drets de professional). -->
+        <record id="group_assessment_viewer" model="res.groups">
+            <field name="name">Visualitzador d'avaluacions</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+            <field name="implied_ids" eval="[(4, ref('acathi_social.group_acathi_professional'))]"/>
+        </record>
+
+    </data>
+</odoo>

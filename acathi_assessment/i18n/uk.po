@@ -1,0 +1,624 @@
+# Translation of acathi_assessment to Ukrainian
+# Copyright (C) ACATHI
+msgid ""
+msgstr ""
+"Project-Id-Version: acathi_assessment\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-23 00:00+0000\n"
+"PO-Revision-Date: 2026-08-23 00:00+0000\n"
+"Last-Translator: ACATHI\n"
+"Language-Team: Ukrainian\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# ── Загальні поля ─────────────────────────────────────────────────────────────
+msgid "Persona atesa"
+msgstr "Особа, яка отримує послуги"
+
+msgid "Cas"
+msgstr "Справа"
+
+msgid "Professional"
+msgstr "Фахівець"
+
+msgid "Data d'administració"
+msgstr "Дата проведення"
+
+msgid "Puntuació total"
+msgstr "Загальний бал"
+
+msgid "Nivell / Interpretació"
+msgstr "Рівень / Інтерпретація"
+
+msgid "Observacions"
+msgstr "Примітки"
+
+# ── PHQ-9 ─────────────────────────────────────────────────────────────────────
+# [translation - not officially validated in Ukrainian]
+msgid "PHQ-9 — Escala de Depressió"
+msgstr "PHQ-9 — Шкала депресії"
+
+msgid "0 — Mai"
+msgstr "0 — Жодного разу"
+
+msgid "1 — Alguns dies"
+msgstr "1 — Кілька днів"
+
+msgid "2 — Més de la meitat dels dies"
+msgstr "2 — Більше половини днів"
+
+msgid "3 — Quasi cada dia"
+msgstr "3 — Майже щодня"
+
+msgid "1. Tenir poc interès o plaer en fer les coses"
+msgstr "1. Слабкий інтерес або задоволення від справ"
+
+msgid "2. Sentir-se desanimat/ada, deprimit/ida o sense esperança"
+msgstr "2. Пригніченість, депресія або відчуття безнадії"
+
+msgid "3. Dificultats per adormir-se, continuar dormint o dormir massa"
+msgstr "3. Труднощі із засинанням, продовженням сну або надмірний сон"
+
+msgid "4. Sentir-se cansat/ada o tenir poca energia"
+msgstr "4. Відчуття втоми або нестача енергії"
+
+msgid "5. Poc apetit o menjar en excés"
+msgstr "5. Поганий апетит або переїдання"
+
+msgid "6. Sentir-se malament amb vostè mateix/a, o pensar que ha fallat"
+msgstr "6. Негативне ставлення до себе або відчуття провини"
+
+msgid "7. Dificultats per concentrar-se (llegir, mirar la televisió, etc.)"
+msgstr "7. Труднощі з концентрацією (читання, перегляд телевізора тощо)"
+
+msgid "8. Moure's o parlar tan lentament que la gent ho hagi notat, o estar tan inquiet/a que s'ha mogut molt"
+msgstr "8. Уповільнення рухів або мовлення настільки, що оточуючі це помітили, або навпаки — надмірне занепокоєння та непосидючість"
+
+msgid "9. Pensaments que seria millor estar mort/a, o de fer-se mal"
+msgstr "9. Думки про те, що краще б померти, або про заподіяння собі шкоди"
+
+msgid "Depressió mínima"
+msgstr "Мінімальна депресія"
+
+msgid "Depressió lleu"
+msgstr "Легка депресія"
+
+msgid "Depressió moderada"
+msgstr "Помірна депресія"
+
+msgid "Depressió moderadament greu"
+msgstr "Помірно тяжка депресія"
+
+msgid "Depressió greu"
+msgstr "Тяжка депресія"
+
+# ── GAD-7 ─────────────────────────────────────────────────────────────────────
+# [translation - not officially validated in Ukrainian]
+msgid "GAD-7 — Escala d'Ansietat Generalitzada"
+msgstr "GAD-7 — Шкала генералізованого тривожного розладу"
+
+msgid "1. Sentir-se nerviós/a, ansiós/a o a la vora del precipici"
+msgstr "1. Відчуття нервовості, тривоги або крайньої напруги"
+
+msgid "2. No poder aturar o controlar la preocupació"
+msgstr "2. Нездатність зупинити або контролювати занепокоєння"
+
+msgid "3. Preocupar-se massa per coses diverses"
+msgstr "3. Надмірне занепокоєння різними речами"
+
+msgid "4. Dificultats per relaxar-se"
+msgstr "4. Труднощі з розслабленням"
+
+msgid "5. Estar tan inquiet/a que és difícil estar quiet/a"
+msgstr "5. Таке занепокоєння, що важко всидіти на місці"
+
+msgid "6. Enfadar-se o irritar-se fàcilment"
+msgstr "6. Дратівливість або запальність"
+
+msgid "7. Sentir por com si pogués passar alguna cosa terrible"
+msgstr "7. Страх, що може статися щось жахливе"
+
+msgid "Ansietat mínima"
+msgstr "Мінімальна тривога"
+
+msgid "Ansietat lleu"
+msgstr "Легка тривога"
+
+msgid "Ansietat moderada"
+msgstr "Помірна тривога"
+
+msgid "Ansietat greu"
+msgstr "Тяжка тривога"
+
+# ── PCL-5 ─────────────────────────────────────────────────────────────────────
+# [translation - not officially validated in Ukrainian]
+msgid "PCL-5 — Llista de Verificació del TEPT (DSM-5)"
+msgstr "PCL-5 — Контрольний список ПТСР (DSM-5)"
+
+msgid "Esdeveniment traumàtic de referència"
+msgstr "Травматична подія"
+
+msgid "0 — Gens"
+msgstr "0 — Зовсім ні"
+
+msgid "1 — Una mica"
+msgstr "1 — Трохи"
+
+msgid "2 — Moderadament"
+msgstr "2 — Помірно"
+
+msgid "3 — Bastant"
+msgstr "3 — Досить сильно"
+
+msgid "4 — Extremament"
+msgstr "4 — Надзвичайно сильно"
+
+msgid "1. Records repetitius, molestos i no desitjats de l'experiència"
+msgstr "1. Повторювані тривожні та небажані спогади про пережите"
+
+msgid "2. Somnis pertorbadors sobre l'experiència"
+msgstr "2. Тривожні сни, пов'язані з пережитим"
+
+msgid "3. Sentir-se o actuar com si l'experiència estigués passant de nou (flashback)"
+msgstr "3. Відчуття або поведінка, ніби пережите відбувається знову (флешбек)"
+
+msgid "4. Sentir-se molt alterat/ada quan alguna cosa recorda l'experiència"
+msgstr "4. Сильне душевне потрясіння, коли щось нагадує про пережите"
+
+msgid "5. Reaccions físiques intenses davant recordatoris (cor que batega fort, suor, dificultat per respirar)"
+msgstr "5. Сильні фізичні реакції при нагадуванні (прискорений пульс, потовиділення, задишка)"
+
+msgid "6. Evitar records, pensaments o sentiments relacionats amb l'experiència"
+msgstr "6. Уникання спогадів, думок або почуттів, пов'язаних з пережитим"
+
+msgid "7. Evitar persones, llocs, converses o situacions que recorden l'experiència"
+msgstr "7. Уникання людей, місць, розмов або ситуацій, що нагадують про пережите"
+
+msgid "8. Problemes per recordar parts importants de l'experiència"
+msgstr "8. Труднощі з пригадуванням важливих деталей пережитого"
+
+msgid "9. Creences negatives fortes sobre vostè mateix/a, els altres o el món"
+msgstr "9. Стійкі негативні переконання про себе, інших або світ"
+
+msgid "10. Culpar-se a vostè mateix/a o als altres del que va passar"
+msgstr "10. Звинувачення себе або інших у тому, що сталося"
+
+msgid "11. Sentiments negatius intensos (por, horror, ràbia, culpa, vergonya)"
+msgstr "11. Стійкі негативні почуття (страх, жах, гнів, провина, сором)"
+
+msgid "12. Pèrdua de interès en activitats que abans gaudia"
+msgstr "12. Втрата інтересу до раніше приємних занять"
+
+msgid "13. Sentir-se distant o desconnectat/ada de les altres persones"
+msgstr "13. Відчуття відчуженості або ізольованості від інших"
+
+msgid "14. Dificultats per experimentar sentiments positius"
+msgstr "14. Труднощі з переживанням позитивних емоцій"
+
+msgid "15. Comportament irritable, explosions de ràbia o agressivitat"
+msgstr "15. Дратівливість, спалахи гніву або агресивність"
+
+msgid "16. Assumir riscos o fer coses que podrien causar danys"
+msgstr "16. Ризикована поведінка або дії, що можуть завдати шкоди"
+
+msgid "17. Estar en alerta màxima, vigilant o guardant-se"
+msgstr "17. Підвищена пильність або насторогу"
+
+msgid "18. Sobresaltar-se fàcilment"
+msgstr "18. Підвищена реакція переляку"
+
+msgid "19. Dificultats per concentrar-se"
+msgstr "19. Труднощі з концентрацією уваги"
+
+msgid "20. Dificultats per adormir-se"
+msgstr "20. Труднощі із засинанням"
+
+msgid "Per sota del llindar (TEPT poc probable)"
+msgstr "Нижче порогу (ПТСР малоймовірний)"
+
+msgid "Llindar probable de TEPT — Avaluació clínica recomanada"
+msgstr "Ймовірний поріг ПТСР — рекомендується клінічна оцінка"
+
+msgid "TEPT probable — Derivació urgent recomanada"
+msgstr "Ймовірний ПТСР — рекомендується термінове направлення"
+
+# ── HSCL-25 ───────────────────────────────────────────────────────────────────
+# [translation - not officially validated in Ukrainian]
+msgid "HSCL-25 — Llista de Símptomes Hopkins"
+msgstr "HSCL-25 — Контрольний список симптомів Хопкінса"
+
+msgid "Mitjana global (25 ítems)"
+msgstr "Загальне середнє (25 пунктів)"
+
+msgid "Mitjana ansietat"
+msgstr "Середнє за тривогою"
+
+msgid "Mitjana depressió"
+msgstr "Середнє за депресією"
+
+msgid "1 — Gens"
+msgstr "1 — Зовсім ні"
+
+msgid "2 — Una mica"
+msgstr "2 — Трохи"
+
+msgid "3 — Bastant"
+msgstr "3 — Досить сильно"
+
+msgid "4 — Molt"
+msgstr "4 — Дуже сильно"
+
+msgid "A1. Tremolors"
+msgstr "A1. Тремтіння"
+
+msgid "A2. Nerviosisme o agitació interior"
+msgstr "A2. Нервовість або внутрішнє збудження"
+
+msgid "A3. Pors sobtades sense cap raó"
+msgstr "A3. Раптовий страх без причини"
+
+msgid "A4. Pors o pànic"
+msgstr "A4. Страхи або паніка"
+
+msgid "A5. Sentir-se atemoritzat/ada"
+msgstr "A5. Відчуття страху"
+
+msgid "A6. El cor que batega fort"
+msgstr "A6. Серцебиття, прискорений пульс"
+
+msgid "A7. Tremolors a les mans"
+msgstr "A7. Тремтіння рук"
+
+msgid "A8. Sensació de tensió o d'estar en un nus"
+msgstr "A8. Відчуття напруги або стиснення"
+
+msgid "A9. Atacs de pànic o terror"
+msgstr "A9. Напади паніки або жаху"
+
+msgid "A10. Estar tan inquiet/a que no pot estar quiet/a"
+msgstr "A10. Таке занепокоєння, що неможливо залишатися спокійним"
+
+msgid "D1. Sentir-se adormit/ida o amb la ment en blanc"
+msgstr "D1. Відчуття заніміння або порожнечі в голові"
+
+msgid "D2. Sentir-se sol/a"
+msgstr "D2. Відчуття самотності"
+
+msgid "D3. Sentir-se trist/a"
+msgstr "D3. Смуток"
+
+msgid "D4. Preocupar-se massa per les coses"
+msgstr "D4. Надмірне занепокоєння"
+
+msgid "D5. Sentir-se desanimat/ada respecte al futur"
+msgstr "D5. Зневіра щодо майбутнього"
+
+msgid "D6. Sentir que tot és un esforç"
+msgstr "D6. Відчуття, що все дається з великими зусиллями"
+
+msgid "D7. Sentir-se sense esperança sobre el futur"
+msgstr "D7. Безнадія щодо майбутнього"
+
+msgid "D8. Sentir que no val res"
+msgstr "D8. Відчуття власної нікчемності"
+
+msgid "D9. Sentir-se buit/ida per dins"
+msgstr "D9. Внутрішня порожнеча"
+
+msgid "D10. Sentir que alguna cosa dolenta anirà a passar"
+msgstr "D10. Передчуття, що щось погане станеться"
+
+msgid "D11. Tenir ganes de plorar"
+msgstr "D11. Бажання плакати"
+
+msgid "D12. Sentir-se atrapat/ada o encasellat/ada"
+msgstr "D12. Відчуття пастки або безвиході"
+
+msgid "D13. Culpar-se de les coses"
+msgstr "D13. Самозвинувачення"
+
+msgid "D14. Sentir-se incapaç/aç de fer les coses"
+msgstr "D14. Відчуття нездатності робити речі"
+
+msgid "D15. Tenir pensaments d'acabar amb la pròpia vida"
+msgstr "D15. Думки про те, щоб покінчити з власним життям"
+
+msgid "Distress clínic"
+msgstr "Клінічний дистрес"
+
+msgid "Sense significació clínica"
+msgstr "Без клінічної значущості"
+
+# ── IES-R ─────────────────────────────────────────────────────────────────────
+# [translation - not officially validated in Ukrainian]
+msgid "IES-R — Escala d'Impacte de l'Esdeveniment (Revisada)"
+msgstr "IES-R — Шкала впливу травматичної події (переглянута)"
+
+msgid "Descripció de l'esdeveniment"
+msgstr "Опис події"
+
+msgid "Subescala Intrusió"
+msgstr "Субшкала вторгнення"
+
+msgid "Subescala Evitació"
+msgstr "Субшкала уникання"
+
+msgid "Subescala Hiperactivació"
+msgstr "Субшкала гіперзбудження"
+
+msgid "1. Qualsevol recordatori em tornava a portar sentiments sobre això"
+msgstr "1. Будь-що нагадувало мені про це і повертало пов'язані почуття"
+
+msgid "2. Tenia dificultats per continuar dormint"
+msgstr "2. Мені було важко продовжувати спати"
+
+msgid "3. Altres coses em feien pensar en l'esdeveniment constantment"
+msgstr "3. Інші речі постійно змушували мене думати про подію"
+
+msgid "4. Sentia irritació i ràbia"
+msgstr "4. Я відчував/ла роздратування і гнів"
+
+msgid "5. Intentava no pertorbar-me quan en pensava o se me'n recordava"
+msgstr "5. Я намагався/лась не засмучуватися, коли думав/ла або згадував/ла про це"
+
+msgid "6. Hi pensava sense voler fer-ho"
+msgstr "6. Я думав/ла про це, не бажаючи того"
+
+msgid "7. Sentia com si no hagués passat o no fos real"
+msgstr "7. Здавалося, ніби цього не було або це було нереальним"
+
+msgid "8. M'allunyava de les recordances"
+msgstr "8. Я уникав/ла всього, що нагадувало про це"
+
+msgid "9. Imatges de l'esdeveniment em venien a la ment"
+msgstr "9. Образи події спливали в пам'яті"
+
+msgid "10. Estava nerviós/a i m'espaventava fàcilment"
+msgstr "10. Я був/ла схвильований/а і легко лякався/лась"
+
+msgid "11. Intentava no pensar-hi"
+msgstr "11. Я намагався/лась не думати про це"
+
+msgid "12. Era conscient que hi havia molts sentiments, però no els vaig abordar"
+msgstr "12. Я усвідомлював/ла наявність багатьох почуттів, але не звертався/лась до них"
+
+msgid "13. Els meus sentiments estaven com adormits"
+msgstr "13. Мої почуття були наче заніміли"
+
+msgid "14. Em trobava actuant o sentint com si estigués de nou en aquell moment"
+msgstr "14. Я ловив/ла себе на тому, що дію або відчуваю, ніби знову перебуваю в тому моменті"
+
+msgid "15. Tenia problemes per adormir-me"
+msgstr "15. Мені було важко заснути"
+
+msgid "16. Tenia onades de sentiments forts al respecte"
+msgstr "16. Мене накривали хвилі сильних почуттів щодо цього"
+
+msgid "17. Intentava esborrar-ho de la memòria"
+msgstr "17. Я намагався/лась стерти це з пам'яті"
+
+msgid "18. Tenia dificultats per concentrar-me"
+msgstr "18. Мені було важко зосередитися"
+
+msgid "19. El que em recordava l'esdeveniment em causava reaccions físiques (suor, cor palpitant, nàusea)"
+msgstr "19. Те, що нагадувало про подію, викликало фізичні реакції (потовиділення, прискорене серцебиття, нудота)"
+
+msgid "20. Tenia somnis sobre l'esdeveniment"
+msgstr "20. Мені снилися сни про подію"
+
+msgid "21. Em sentia vigilant i en guarda"
+msgstr "21. Я відчував/ла себе насторожено і напоготові"
+
+msgid "22. Intentava no parlar-ne"
+msgstr "22. Я намагався/лась не говорити про це"
+
+msgid "Baix — Resposta normal"
+msgstr "Низький — Нормальна реакція"
+
+msgid "Moderat — Seguiment recomanat"
+msgstr "Помірний — Рекомендується спостереження"
+
+msgid "Probable TEPT — Avaluació clínica"
+msgstr "Ймовірний ПТСР — Клінічна оцінка"
+
+msgid "TEPT probable — Derivació recomanada"
+msgstr "Ймовірний ПТСР — Рекомендується направлення"
+
+# ── WHODAS 2.0 ────────────────────────────────────────────────────────────────
+# [translation - based on WHO Ukrainian validated version]
+msgid "WHODAS 2.0 — Avaluació de Discapacitat i Funcionament (12 ítems)"
+msgstr "WHODAS 2.0 — Оцінка інвалідності та функціонування (12 пунктів)"
+
+msgid "Puntuació simple (0–48)"
+msgstr "Простий бал (0–48)"
+
+msgid "% Discapacitat"
+msgstr "% інвалідності"
+
+msgid "1 — Cap"
+msgstr "1 — Ні"
+
+msgid "2 — Lleugera"
+msgstr "2 — Легкі"
+
+msgid "3 — Moderada"
+msgstr "3 — Помірні"
+
+msgid "4 — Greu"
+msgstr "4 — Тяжкі"
+
+msgid "5 — Extrema / No pot fer-ho"
+msgstr "5 — Крайні / Не може"
+
+msgid "C1. Concentrar-se en fer alguna cosa durant deu minuts?"
+msgstr "C1. Зосередитися на чомусь протягом десяти хвилин?"
+
+msgid "C2. Recordar coses importants?"
+msgstr "C2. Пам'ятати важливі речі?"
+
+msgid "M1. Caminar llargues distàncies, com un quilòmetre?"
+msgstr "M1. Ходити пішки на великі відстані, наприклад, кілометр?"
+
+msgid "M2. Posar-se dempeus des que estava assegut/da?"
+msgstr "M2. Вставати з положення сидячи?"
+
+msgid "Au1. Rentar-se tot el cos?"
+msgstr "Au1. Мити все тіло?"
+
+msgid "Au2. Vestir-se?"
+msgstr "Au2. Одягатися?"
+
+msgid "R1. Relacionar-se amb persones que no coneix?"
+msgstr "R1. Спілкуватися з незнайомими людьми?"
+
+msgid "R2. Mantenir una amistat?"
+msgstr "R2. Підтримувати дружбу?"
+
+msgid "AV1. Les responsabilitats quotidianes a la llar?"
+msgstr "AV1. Повсякденні домашні обов'язки?"
+
+msgid "AV2. Les responsabilitats laborals o escolars principals?"
+msgstr "AV2. Основні робочі або навчальні обов'язки?"
+
+msgid "P1. Participar en activitats de la comunitat?"
+msgstr "P1. Участь у громадській діяльності?"
+
+msgid "P2. L'impacte dels problemes de salut en la seva vida en general?"
+msgstr "P2. Вплив проблем зі здоров'ям на ваше життя загалом?"
+
+msgid "Sense discapacitat (0%)"
+msgstr "Без інвалідності (0%)"
+
+msgid "Discapacitat lleu"
+msgstr "Легка інвалідність"
+
+msgid "Discapacitat moderada"
+msgstr "Помірна інвалідність"
+
+msgid "Discapacitat greu"
+msgstr "Тяжка інвалідність"
+
+msgid "Discapacitat extrema"
+msgstr "Надзвичайно тяжка інвалідність"
+
+# ── Скринінг торгівлі людьми ───────────────────────────────────────────────────
+# [translation - not officially validated in Ukrainian]
+msgid "Cribratge d'Indicadors de Tràfic d'Éssers Humans"
+msgstr "Скринінг показників торгівлі людьми"
+
+msgid "Puntuació total (màx. 36)"
+msgstr "Загальний бал (макс. 36)"
+
+msgid "Nivell de risc"
+msgstr "Рівень ризику"
+
+msgid "Risc baix"
+msgstr "Низький ризик"
+
+msgid "Risc moderat — Investigar"
+msgstr "Помірний ризик — Розслідування"
+
+msgid "Risc alt — Activar protocol"
+msgstr "Високий ризик — Активувати протокол"
+
+msgid "0 — No / Desconegut"
+msgstr "0 — Ні / Невідомо"
+
+msgid "1 — Possible"
+msgstr "1 — Можливо"
+
+msgid "2 — Sí"
+msgstr "2 — Так"
+
+msgid "Control i coacció"
+msgstr "Контроль і примус"
+
+msgid "Engany i captació"
+msgstr "Обман і вербування"
+
+msgid "Explotació"
+msgstr "Експлуатація"
+
+msgid "Vulnerabilitat"
+msgstr "Вразливість"
+
+msgid "A1. La persona sembla controlada per un tercer (moviments, comunicació, diners)"
+msgstr "A1. Здається, що людина перебуває під контролем третьої особи (пересування, спілкування, гроші)"
+
+msgid "A2. La persona té por de parlar lliurement o sembla vigilada"
+msgstr "A2. Людина боїться говорити вільно або здається, що за нею стежать"
+
+msgid "A3. La persona no controla els seus propis documents d'identitat"
+msgstr "A3. Людина не контролює власні документи"
+
+msgid "A4. La persona viu on treballa o en condicions de dependència de l'explotador"
+msgstr "A4. Людина живе там, де працює, або в умовах залежності від експлуататора"
+
+msgid "A5. La persona fa referència a haver rebut amenaces (directes o a la família)"
+msgstr "A5. Людина згадує про погрози (прямі або на адресу сім'ї)"
+
+msgid "B1. La persona va ser captada amb promeses falses (feina, allotjament, parella)"
+msgstr "B1. Людину завербували за допомогою хибних обіцянок (робота, житло, партнер)"
+
+msgid "B2. La persona va arribar al país a través d'intermediaris o xarxes"
+msgstr "B2. Людина прибула до країни через посередників або мережі"
+
+msgid "B3. La persona deu diners al captador/a ('deute de transport')"
+msgstr "B3. Людина заборгувала гроші вербувальнику («транспортний борг»)"
+
+msgid "B4. La persona desconeix la seva situació legal o la van enganyar respecte als papers"
+msgstr "B4. Людина не знає свого правового становища або її обманули щодо документів"
+
+msgid "C1. Hi ha indicis d'explotació sexual (passat o present)"
+msgstr "C1. Є ознаки сексуальної експлуатації (минулої або теперішньої)"
+
+msgid "C2. Hi ha indicis d'explotació laboral (condicions abusives, sense remuneració)"
+msgstr "C2. Є ознаки трудової експлуатації (жорстокі умови, без оплати)"
+
+msgid "C3. La persona ha estat forçada a demanar o a delinquir"
+msgstr "C3. Людину змушували жебракувати або вчиняти правопорушення"
+
+msgid "C4. La persona fa referència a haver servit en una llar en condicions d'esclavatge"
+msgstr "C4. Людина згадує про роботу в домашньому господарстві в умовах рабства"
+
+msgid "C5. La persona ha estat explotada per motiu de la seva orientació sexual o identitat de gènere"
+msgstr "C5. Людину експлуатували через сексуальну орієнтацію або гендерну ідентичність"
+
+msgid "D1. La persona es troba en situació irregular administrativa"
+msgstr "D1. Людина перебуває в нелегальному адміністративному становищі"
+
+msgid "D2. La persona no té xarxa de suport ni família accessible"
+msgstr "D2. Людина не має мережі підтримки та доступної сім'ї"
+
+msgid "D3. La persona ha patit violència, abús sexual o tortura prèvia"
+msgstr "D3. Людина зазнала насильства, сексуального насильства або тортур"
+
+msgid "D4. La persona presenta símptomes de trauma greu (dissociació, flashbacks, por extrema)"
+msgstr "D4. Людина виявляє симптоми тяжкої травми (дисоціація, флешбеки, крайній страх)"
+
+# ── Меню ──────────────────────────────────────────────────────────────────────
+msgid "Avaluacions"
+msgstr "Оцінки"
+
+msgid "PHQ-9 Depressió"
+msgstr "PHQ-9 Депресія"
+
+msgid "GAD-7 Ansietat"
+msgstr "GAD-7 Тривога"
+
+msgid "PCL-5 TEPT"
+msgstr "PCL-5 ПТСР"
+
+msgid "HSCL-25 Hopkins"
+msgstr "HSCL-25 Хопкінс"
+
+msgid "IES-R Impacte Esdeveniment"
+msgstr "IES-R Вплив події"
+
+msgid "WHODAS 2.0 Discapacitat"
+msgstr "WHODAS 2.0 Інвалідність"
+
+msgid "Cribratge Tràfic"
+msgstr "Скринінг торгівлі людьми"

@@ -54,28 +54,28 @@
         <field name="inherit_id" ref="grant_management.view_grant_application_form"/>
         <field name="arch" type="xml">
             <div name="button_box" position="inside">
-                <button name="action_view_interventions" type="object"
+                <button name="action_view_soc_interventions" type="object"
                         class="oe_stat_button" icon="fa-comments-o"
-                        invisible="intervention_count == 0">
-                    <field name="intervention_count" widget="statinfo"
+                        invisible="soc_intervention_count == 0">
+                    <field name="soc_intervention_count" widget="statinfo"
                            string="Intervencions"/>
                 </button>
-                <button name="action_view_activities" type="object"
+                <button name="action_view_soc_activities" type="object"
                         class="oe_stat_button" icon="fa-calendar-check-o"
-                        invisible="activity_count == 0">
-                    <field name="activity_count" widget="statinfo"
+                        invisible="soc_activity_count == 0">
+                    <field name="soc_activity_count" widget="statinfo"
                            string="Activitats"/>
                 </button>
-                <button name="action_view_grant_aids" type="object"
+                <button name="action_view_soc_aids" type="object"
                         class="oe_stat_button" icon="fa-money"
-                        invisible="aid_count == 0">
-                    <field name="aid_count" widget="statinfo"
+                        invisible="soc_aid_count == 0">
+                    <field name="soc_aid_count" widget="statinfo"
                            string="Ajudes"/>
                 </button>
-                <button name="action_view_grant_persons" type="object"
+                <button name="action_view_soc_persons" type="object"
                         class="oe_stat_button" icon="fa-users"
-                        invisible="person_count == 0">
-                    <field name="person_count" widget="statinfo"
+                        invisible="soc_person_count == 0">
+                    <field name="soc_person_count" widget="statinfo"
                            string="Persones ateses"/>
                 </button>
             </div>

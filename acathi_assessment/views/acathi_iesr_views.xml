@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ══ VISTA LLISTA ══════════════════════════════════════════════════════ -->
+    <record id="view_acathi_iesr_tree" model="ir.ui.view">
+        <field name="name">acathi.iesr.tree</field>
+        <field name="model">acathi.iesr</field>
+        <field name="arch" type="xml">
+            <tree string="IES-R Impacte Esdeveniment"
+                  decoration-danger="score >= 37"
+                  decoration-warning="score >= 24 and score &lt; 37">
+                <field name="date"/>
+                <field name="person_id"/>
+                <field name="case_id"/>
+                <field name="professional_id"/>
+                <field name="intrusion_score" string="Intrusió" digits="[4,1]"/>
+                <field name="avoidance_score" string="Evitació" digits="[4,1]"/>
+                <field name="hyperarousal_score" string="Hiperactivació" digits="[4,1]"/>
+                <field name="score" string="Total"/>
+                <field name="severity" string="Nivell"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ══ VISTA FORMULARI ═══════════════════════════════════════════════════ -->
+    <record id="view_acathi_iesr_form" model="ir.ui.view">
+        <field name="name">acathi.iesr.form</field>
+        <field name="model">acathi.iesr</field>
+        <field name="arch" type="xml">
+            <form string="IES-R — Escala d'Impacte de l'Esdeveniment (Revisada)">
+                <sheet>
+                    <group string="Informació general">
+                        <group>
+                            <field name="person_id"/>
+                            <field name="case_id"/>
+                        </group>
+                        <group>
+                            <field name="professional_id"/>
+                            <field name="date"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="event_description" placeholder="Descriviu breument l'esdeveniment"/>
+                    </group>
+
+                    <separator string="Instruccions"/>
+                    <div class="alert alert-info" role="alert">
+                        <p>A continuació trobareu una llista de dificultats que les persones
+                        experimenten a vegades arran d'esdeveniments molt estressants. Indiqueu
+                        en quina mesura cada ítem us ha afectat durant els
+                        <strong>darrers 7 dies</strong>.
+                        Escala: 0 = Gens · 1 = Una mica · 2 = Moderadament
+                        · 3 = Bastant · 4 = Extremament.</p>
+                    </div>
+
+                    <separator string="Ítems 1–11"/>
+                    <group col="1">
+                        <field name="q1" widget="radio" options="{'horizontal': true}"/>
+                        <field name="q2" widget="radio" options="{'horizontal': true}"/>
+                        <field name="q3" widget="radio" options="{'horizontal': true}"/>
+                        <field name="q4" widget="radio" options="{'horizontal': true}"/>
+                        <field name="q5" widget="radio" options="{'horizontal': true}"/>
+                        <field name="q6" widget="radio" options="{'horizontal': true}"/>
+                        <field name="q7" widget="radio" options="{'horizontal': true}"/>
+                        <field name="q8" widget="radio" options="{'horizontal': true}"/>
+                        <field name="q9" widget="radio" options="{'horizontal': true}"/>
+                        <field name="q10" widget="radio" options="{'horizontal': true}"/>
+                        <field name="q11" widget="radio" options="{'horizontal': true}"/>
+                    </group>
+
+                    <separator string="Ítems 12–22"/>
+                    <group col="1">
+                        <field name="q12" widget="radio" options="{'horizontal': true}"/>
+                        <field name="q13" widget="radio" options="{'horizontal': true}"/>
+                        <field name="q14" widget="radio" options="{'horizontal': true}"/>
+                        <field name="q15" widget="radio" options="{'horizontal': true}"/>
+                        <field name="q16" widget="radio" options="{'horizontal': true}"/>
+                        <field name="q17" widget="radio" options="{'horizontal': true}"/>
+                        <field name="q18" widget="radio" options="{'horizontal': true}"/>
+                        <field name="q19" widget="radio" options="{'horizontal': true}"/>
+                        <field name="q20" widget="radio" options="{'horizontal': true}"/>
+                        <field name="q21" widget="radio" options="{'horizontal': true}"/>
+                        <field name="q22" widget="radio" options="{'horizontal': true}"/>
+                    </group>
+
+                    <separator string="Resultats per subescala"/>
+                    <group>
+                        <group>
+                            <field name="intrusion_score" readonly="1" digits="[4,1]"/>
+                            <field name="avoidance_score" readonly="1" digits="[4,1]"/>
+                            <field name="hyperarousal_score" readonly="1" digits="[4,1]"/>
+                        </group>
+                        <group>
+                            <field name="score" readonly="1"/>
+                            <field name="severity" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <separator string="Observacions"/>
+                    <field name="notes" placeholder="Observacions addicionals del professional..."/>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ══ VISTA CERCA ═══════════════════════════════════════════════════════ -->
+    <record id="view_acathi_iesr_search" model="ir.ui.view">
+        <field name="name">acathi.iesr.search</field>
+        <field name="model">acathi.iesr</field>
+        <field name="arch" type="xml">
+            <search string="Cercar IES-R">
+                <field name="person_id" string="Persona"/>
+                <field name="professional_id" string="Professional"/>
+                <field name="date" string="Data"/>
+                <field name="event_description" string="Esdeveniment"/>
+                <filter string="Any actual" name="filter_this_year"
+                        domain="[('date', '>=', (context_today()).strftime('%Y') + '-01-01'),
+                                  ('date', '&lt;=', (context_today()).strftime('%Y') + '-12-31')]"/>
+                <separator/>
+                <filter string="Nivell moderat o superior" name="filter_moderate"
+                        domain="[('score', '>=', 24)]"/>
+                <group expand="0" string="Agrupar per">
+                    <filter string="Persona" name="group_person" context="{'group_by': 'person_id'}"/>
+                    <filter string="Professional" name="group_professional" context="{'group_by': 'professional_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ══ ACCIÓ ══════════════════════════════════════════════════════════════ -->
+    <record id="action_acathi_iesr" model="ir.actions.act_window">
+        <field name="name">IES-R Impacte Esdeveniment</field>
+        <field name="res_model">acathi.iesr</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_acathi_iesr_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Registreu una nova avaluació IES-R
+            </p>
+        </field>
+    </record>
+
+</odoo>

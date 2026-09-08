@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ══ VISTA LLISTA ══════════════════════════════════════════════════════ -->
+    <record id="view_acathi_hscl25_tree" model="ir.ui.view">
+        <field name="name">acathi.hscl25.tree</field>
+        <field name="model">acathi.hscl25</field>
+        <field name="arch" type="xml">
+            <tree string="HSCL-25 Hopkins"
+                  decoration-danger="score > 1.75">
+                <field name="date"/>
+                <field name="person_id"/>
+                <field name="case_id"/>
+                <field name="professional_id"/>
+                <field name="anxiety_score" string="Ansietat" digits="[4,2]"/>
+                <field name="depression_score" string="Depressió" digits="[4,2]"/>
+                <field name="score" string="Mitjana global" digits="[4,2]"/>
+                <field name="severity" string="Nivell"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ══ VISTA FORMULARI ═══════════════════════════════════════════════════ -->
+    <record id="view_acathi_hscl25_form" model="ir.ui.view">
+        <field name="name">acathi.hscl25.form</field>
+        <field name="model">acathi.hscl25</field>
+        <field name="arch" type="xml">
+            <form string="HSCL-25 — Llista de Símptomes Hopkins">
+                <sheet>
+                    <group string="Informació general">
+                        <group>
+                            <field name="person_id"/>
+                            <field name="case_id"/>
+                        </group>
+                        <group>
+                            <field name="professional_id"/>
+                            <field name="date"/>
+                        </group>
+                    </group>
+
+                    <separator string="Instruccions"/>
+                    <div class="alert alert-info" role="alert">
+                        <p>La llista fa referència a problemes i queixes que les persones
+                        a vegades tenen. Indiqueu en quina mesura cada problema us ha
+                        molestat els <strong>últims 7 dies</strong>.
+                        Escala: 1 = Gens · 2 = Una mica · 3 = Bastant · 4 = Molt.</p>
+                    </div>
+
+                    <separator string="Part I — Ansietat (ítems A1–A10)"/>
+                    <group col="1">
+                        <field name="a1" widget="radio" options="{'horizontal': true}"/>
+                        <field name="a2" widget="radio" options="{'horizontal': true}"/>
+                        <field name="a3" widget="radio" options="{'horizontal': true}"/>
+                        <field name="a4" widget="radio" options="{'horizontal': true}"/>
+                        <field name="a5" widget="radio" options="{'horizontal': true}"/>
+                        <field name="a6" widget="radio" options="{'horizontal': true}"/>
+                        <field name="a7" widget="radio" options="{'horizontal': true}"/>
+                        <field name="a8" widget="radio" options="{'horizontal': true}"/>
+                        <field name="a9" widget="radio" options="{'horizontal': true}"/>
+                        <field name="a10" widget="radio" options="{'horizontal': true}"/>
+                    </group>
+
+                    <separator string="Part II — Depressió (ítems D1–D15)"/>
+                    <group col="1">
+                        <field name="d1" widget="radio" options="{'horizontal': true}"/>
+                        <field name="d2" widget="radio" options="{'horizontal': true}"/>
+                        <field name="d3" widget="radio" options="{'horizontal': true}"/>
+                        <field name="d4" widget="radio" options="{'horizontal': true}"/>
+                        <field name="d5" widget="radio" options="{'horizontal': true}"/>
+                        <field name="d6" widget="radio" options="{'horizontal': true}"/>
+                        <field name="d7" widget="radio" options="{'horizontal': true}"/>
+                        <field name="d8" widget="radio" options="{'horizontal': true}"/>
+                        <field name="d9" widget="radio" options="{'horizontal': true}"/>
+                        <field name="d10" widget="radio" options="{'horizontal': true}"/>
+                        <field name="d11" widget="radio" options="{'horizontal': true}"/>
+                        <field name="d12" widget="radio" options="{'horizontal': true}"/>
+                        <field name="d13" widget="radio" options="{'horizontal': true}"/>
+                        <field name="d14" widget="radio" options="{'horizontal': true}"/>
+                        <field name="d15" widget="radio" options="{'horizontal': true}"/>
+                    </group>
+
+                    <separator string="Resultats"/>
+                    <group>
+                        <group>
+                            <field name="anxiety_score" readonly="1" digits="[4,2]"/>
+                            <field name="depression_score" readonly="1" digits="[4,2]"/>
+                        </group>
+                        <group>
+                            <field name="score" readonly="1" digits="[4,2]"/>
+                            <field name="severity" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <separator string="Observacions"/>
+                    <field name="notes" placeholder="Observacions addicionals del professional..."/>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ══ VISTA CERCA ═══════════════════════════════════════════════════════ -->
+    <record id="view_acathi_hscl25_search" model="ir.ui.view">
+        <field name="name">acathi.hscl25.search</field>
+        <field name="model">acathi.hscl25</field>
+        <field name="arch" type="xml">
+            <search string="Cercar HSCL-25">
+                <field name="person_id" string="Persona"/>
+                <field name="professional_id" string="Professional"/>
+                <field name="date" string="Data"/>
+                <filter string="Any actual" name="filter_this_year"
+                        domain="[('date', '>=', (context_today()).strftime('%Y') + '-01-01'),
+                                  ('date', '&lt;=', (context_today()).strftime('%Y') + '-12-31')]"/>
+                <separator/>
+                <filter string="Significació clínica" name="filter_clinical"
+                        domain="[('score', '>', 1.75)]"/>
+                <group expand="0" string="Agrupar per">
+                    <filter string="Persona" name="group_person" context="{'group_by': 'person_id'}"/>
+                    <filter string="Professional" name="group_professional" context="{'group_by': 'professional_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ══ ACCIÓ ══════════════════════════════════════════════════════════════ -->
+    <record id="action_acathi_hscl25" model="ir.actions.act_window">
+        <field name="name">HSCL-25 Hopkins</field>
+        <field name="res_model">acathi.hscl25</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_acathi_hscl25_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Registreu una nova avaluació HSCL-25
+            </p>
+        </field>
+    </record>
+
+</odoo>

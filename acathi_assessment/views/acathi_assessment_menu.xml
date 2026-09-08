@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Menú arrel: Avaluacions, dins del menú principal d'acathi_social -->
+    <menuitem
+        id="menu_acathi_assessment_root"
+        name="Avaluacions"
+        parent="acathi_social.menu_acathi_root"
+        sequence="90"/>
+
+    <!-- Submenús per a cada instrument -->
+    <menuitem
+        id="menu_acathi_phq9"
+        name="PHQ-9 Depressió"
+        parent="menu_acathi_assessment_root"
+        action="action_acathi_phq9"
+        sequence="10"/>
+
+    <menuitem
+        id="menu_acathi_gad7"
+        name="GAD-7 Ansietat"
+        parent="menu_acathi_assessment_root"
+        action="action_acathi_gad7"
+        sequence="20"/>
+
+    <menuitem
+        id="menu_acathi_pcl5"
+        name="PCL-5 TEPT"
+        parent="menu_acathi_assessment_root"
+        action="action_acathi_pcl5"
+        sequence="30"/>
+
+    <menuitem
+        id="menu_acathi_hscl25"
+        name="HSCL-25 Hopkins"
+        parent="menu_acathi_assessment_root"
+        action="action_acathi_hscl25"
+        sequence="40"/>
+
+    <menuitem
+        id="menu_acathi_iesr"
+        name="IES-R Impacte Esdeveniment"
+        parent="menu_acathi_assessment_root"
+        action="action_acathi_iesr"
+        sequence="50"/>
+
+    <menuitem
+        id="menu_acathi_whodas"
+        name="WHODAS 2.0 Discapacitat"
+        parent="menu_acathi_assessment_root"
+        action="action_acathi_whodas"
+        sequence="60"/>
+
+    <menuitem
+        id="menu_acathi_trafficking"
+        name="Cribratge Tràfic"
+        parent="menu_acathi_assessment_root"
+        action="action_acathi_trafficking"
+        sequence="70"/>
+
+    <menuitem
+        id="menu_acathi_assessment_sessions"
+        name="🔗 Sessions Portal Mòbil"
+        parent="menu_acathi_assessment_root"
+        action="action_acathi_assessment_session"
+        sequence="90"/>
+
+</odoo>

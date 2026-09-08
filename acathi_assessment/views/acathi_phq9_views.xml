@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ══ VISTA LLISTA ══════════════════════════════════════════════════════ -->
+    <record id="view_acathi_phq9_tree" model="ir.ui.view">
+        <field name="name">acathi.phq9.tree</field>
+        <field name="model">acathi.phq9</field>
+        <field name="arch" type="xml">
+            <tree string="PHQ-9 Depressió"
+                  decoration-danger="score >= 15"
+                  decoration-warning="score >= 10 and score &lt; 15">
+                <field name="date"/>
+                <field name="person_id"/>
+                <field name="case_id"/>
+                <field name="professional_id"/>
+                <field name="score" string="Puntuació"/>
+                <field name="severity" string="Nivell"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ══ VISTA FORMULARI ═══════════════════════════════════════════════════ -->
+    <record id="view_acathi_phq9_form" model="ir.ui.view">
+        <field name="name">acathi.phq9.form</field>
+        <field name="model">acathi.phq9</field>
+        <field name="arch" type="xml">
+            <form string="PHQ-9 — Escala de Depressió">
+                <sheet>
+                    <group string="Informació general">
+                        <group>
+                            <field name="person_id"/>
+                            <field name="case_id"/>
+                        </group>
+                        <group>
+                            <field name="professional_id"/>
+                            <field name="date"/>
+                        </group>
+                    </group>
+
+                    <separator string="Instruccions"/>
+                    <div class="alert alert-info" role="alert">
+                        <p>Per a cada problema de la llista, indiqueu amb quina freqüència
+                        l'heu tingut durant les <strong>dues darreres setmanes</strong>.
+                        Escala: 0 = Mai · 1 = Alguns dies · 2 = Més de la meitat dels dies
+                        · 3 = Quasi cada dia.</p>
+                    </div>
+
+                    <separator string="Ítems"/>
+                    <group col="1">
+                        <field name="q1" widget="radio" options="{'horizontal': true}"/>
+                        <field name="q2" widget="radio" options="{'horizontal': true}"/>
+                        <field name="q3" widget="radio" options="{'horizontal': true}"/>
+                        <field name="q4" widget="radio" options="{'horizontal': true}"/>
+                        <field name="q5" widget="radio" options="{'horizontal': true}"/>
+                        <field name="q6" widget="radio" options="{'horizontal': true}"/>
+                        <field name="q7" widget="radio" options="{'horizontal': true}"/>
+                        <field name="q8" widget="radio" options="{'horizontal': true}"/>
+                        <field name="q9" widget="radio" options="{'horizontal': true}"/>
+                    </group>
+
+                    <separator string="Resultats"/>
+                    <group>
+                        <group>
+                            <field name="score" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="severity" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <separator string="Observacions"/>
+                    <field name="notes" placeholder="Observacions addicionals del professional..."/>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ══ VISTA CERCA ═══════════════════════════════════════════════════════ -->
+    <record id="view_acathi_phq9_search" model="ir.ui.view">
+        <field name="name">acathi.phq9.search</field>
+        <field name="model">acathi.phq9</field>
+        <field name="arch" type="xml">
+            <search string="Cercar PHQ-9">
+                <field name="person_id" string="Persona"/>
+                <field name="professional_id" string="Professional"/>
+                <field name="date" string="Data"/>
+                <filter string="Any actual" name="filter_this_year"
+                        domain="[('date', '>=', (context_today()).strftime('%Y') + '-01-01'),
+                                  ('date', '&lt;=', (context_today()).strftime('%Y') + '-12-31')]"/>
+                <separator/>
+                <filter string="Depressió moderada o greu" name="filter_moderate_plus"
+                        domain="[('score', '>=', 10)]"/>
+                <group expand="0" string="Agrupar per">
+                    <filter string="Persona" name="group_person" context="{'group_by': 'person_id'}"/>
+                    <filter string="Professional" name="group_professional" context="{'group_by': 'professional_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ══ ACCIÓ ══════════════════════════════════════════════════════════════ -->
+    <record id="action_acathi_phq9" model="ir.actions.act_window">
+        <field name="name">PHQ-9 Depressió</field>
+        <field name="res_model">acathi.phq9</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_acathi_phq9_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Registreu una nova avaluació PHQ-9
+            </p>
+        </field>
+    </record>
+
+</odoo>

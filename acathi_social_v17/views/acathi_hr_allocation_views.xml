@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ═══════════════════════════════════════════════════════
+         HR-04: Vista llista imputació de personal
+    ═══════════════════════════════════════════════════════════ -->
+
+    <record id="view_grant_hr_allocation_tree" model="ir.ui.view">
+        <field name="name">grant.hr.allocation.tree</field>
+        <field name="model">grant.hr.allocation</field>
+        <field name="arch" type="xml">
+            <tree string="Imputació de personal"
+                  decoration-muted="imputed_hours == 0">
+                <field name="employee_id"/>
+                <field name="grant_application_id"/>
+                <field name="year"/>
+                <field name="month_num"/>
+                <field name="percentage" string="% Ded."
+                       widget="float" digits="[5,1]"/>
+                <field name="attendance_hours" string="H. treballades"
+                       widget="float" digits="[5,1]" optional="show"/>
+                <field name="imputed_hours" string="H. imputades"
+                       widget="float" digits="[5,1]"/>
+                <field name="hourly_cost" string="€/h"
+                       widget="float" digits="[8,4]" optional="show"/>
+                <field name="total_cost" string="Cost (€)"
+                       widget="float" digits="[8,2]" sum="Total (€)"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════
+         HR-04: Vista formulari
+    ═══════════════════════════════════════════════════════════ -->
+
+    <record id="view_grant_hr_allocation_form" model="ir.ui.view">
+        <field name="name">grant.hr.allocation.form</field>
+        <field name="model">grant.hr.allocation</field>
+        <field name="arch" type="xml">
+            <form string="Imputació de personal">
+                <header>
+                    <button name="action_suggest_percentage" type="object"
+                            string="Calcula suggeriment d'intervencions"
+                            class="btn-secondary"
+                            confirm="Això sobreescriurà el % actual amb el suggeriment basat en intervencions. Continuar?"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group string="Empleat i subvenció">
+                            <field name="employee_id"/>
+                            <field name="grant_application_id"
+                                   options="{'no_create': True}"/>
+                        </group>
+                        <group string="Període">
+                            <field name="year"/>
+                            <field name="month_num"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Dedicació">
+                            <field name="percentage" widget="float"
+                                   digits="[5,1]"/>
+                            <field name="attendance_hours" readonly="1"
+                                   widget="float" digits="[5,1]"/>
+                            <field name="imputed_hours" readonly="1"
+                                   widget="float" digits="[5,1]"/>
+                        </group>
+                        <group string="Cost (€)">
+                            <field name="hourly_cost" widget="float"
+                                   digits="[8,4]"/>
+                            <field name="total_cost" readonly="1"
+                                   widget="float" digits="[8,2]"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="notes" placeholder="Notes internes..."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════
+         HR-04: Vista de cerca
+    ═══════════════════════════════════════════════════════════ -->
+
+    <record id="view_grant_hr_allocation_search" model="ir.ui.view">
+        <field name="name">grant.hr.allocation.search</field>
+        <field name="model">grant.hr.allocation</field>
+        <field name="arch" type="xml">
+            <search string="Cerca imputació">
+                <field name="employee_id"/>
+                <field name="grant_application_id"/>
+                <field name="year"/>
+                <filter name="year_current" string="Any actual"
+                        domain="[('year', '=', context_today().year)]"/>
+                <group expand="0" string="Agrupar per">
+                    <filter name="group_grant" string="Subvenció"
+                            context="{'group_by': 'grant_application_id'}"/>
+                    <filter name="group_employee" string="Empleat/da"
+                            context="{'group_by': 'employee_id'}"/>
+                    <filter name="group_month" string="Mes"
+                            context="{'group_by': 'month_num'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════
+         HR-04: Acció i menú
+    ═══════════════════════════════════════════════════════════ -->
+
+    <record id="action_grant_hr_allocation" model="ir.actions.act_window">
+        <field name="name">Imputació hores personal</field>
+        <field name="res_model">grant.hr.allocation</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_group_grant': 1}</field>
+    </record>
+
+    <menuitem id="menu_grant_hr_allocation"
+              name="Imputació hores personal"
+              parent="acathi_social.menu_acathi_root"
+              action="action_grant_hr_allocation"
+              sequence="80"/>
+
+    <!-- ═══════════════════════════════════════════════════════
+         HR-04: Smart button a grant.application
+    ═══════════════════════════════════════════════════════════ -->
+
+    <record id="view_grant_application_form_hr04" model="ir.ui.view">
+        <field name="name">grant.application.form.hr04</field>
+        <field name="model">grant.application</field>
+        <field name="inherit_id" ref="grant_management.view_grant_application_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_view_soc_hr_allocations" type="object"
+                        class="oe_stat_button" icon="fa-clock-o"
+                        invisible="soc_hr_total_hours == 0">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="soc_hr_total_hours"
+                                   widget="float" digits="[5,1]"/>h
+                        </span>
+                        <span class="o_stat_text">Personal</span>
+                    </div>
+                </button>
+            </div>
+        </field>
+    </record>
+
+</odoo>

@@ -45,8 +45,10 @@
                         </button>
                     </div>
                     <div class="oe_title">
-                        <h1><field name="name"/></h1>
-                        <h3><field name="reference"/></h3>
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Nom del pis..."/></h1>
+                        <label for="reference"/>
+                        <h3><field name="reference" readonly="1"/></h3>
                     </div>
                     <group>
                         <group string="Ubicación">
@@ -142,6 +144,6 @@
     <record id="action_acathi_housing" model="ir.actions.act_window">
         <field name="name">Pisos de Acogida</field>
         <field name="res_model">acathi.housing</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">tree,form</field>
     </record>
 </odoo>

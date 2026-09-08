@@ -1,0 +1,17 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_acathi_phq9_professional,acathi.phq9 professional,model_acathi_phq9,acathi_social.group_acathi_professional,1,1,1,0
+access_acathi_phq9_manager,acathi.phq9 manager,model_acathi_phq9,acathi_social.group_acathi_manager,1,1,1,1
+access_acathi_gad7_professional,acathi.gad7 professional,model_acathi_gad7,acathi_social.group_acathi_professional,1,1,1,0
+access_acathi_gad7_manager,acathi.gad7 manager,model_acathi_gad7,acathi_social.group_acathi_manager,1,1,1,1
+access_acathi_pcl5_professional,acathi.pcl5 professional,model_acathi_pcl5,acathi_social.group_acathi_professional,1,1,1,0
+access_acathi_pcl5_manager,acathi.pcl5 manager,model_acathi_pcl5,acathi_social.group_acathi_manager,1,1,1,1
+access_acathi_hscl25_professional,acathi.hscl25 professional,model_acathi_hscl25,acathi_social.group_acathi_professional,1,1,1,0
+access_acathi_hscl25_manager,acathi.hscl25 manager,model_acathi_hscl25,acathi_social.group_acathi_manager,1,1,1,1
+access_acathi_iesr_professional,acathi.iesr professional,model_acathi_iesr,acathi_social.group_acathi_professional,1,1,1,0
+access_acathi_iesr_manager,acathi.iesr manager,model_acathi_iesr,acathi_social.group_acathi_manager,1,1,1,1
+access_acathi_whodas_professional,acathi.whodas professional,model_acathi_whodas,acathi_social.group_acathi_professional,1,1,1,0
+access_acathi_whodas_manager,acathi.whodas manager,model_acathi_whodas,acathi_social.group_acathi_manager,1,1,1,1
+access_acathi_trafficking_screen_professional,acathi.trafficking.screen professional,model_acathi_trafficking_screen,acathi_social.group_acathi_professional,1,1,1,0
+access_acathi_trafficking_screen_manager,acathi.trafficking.screen manager,model_acathi_trafficking_screen,acathi_social.group_acathi_manager,1,1,1,1
+access_acathi_assessment_session_professional,acathi.assessment.session professional,model_acathi_assessment_session,acathi_social.group_acathi_professional,1,1,1,0
+access_acathi_assessment_session_manager,acathi.assessment.session manager,model_acathi_assessment_session,acathi_social.group_acathi_manager,1,1,1,1

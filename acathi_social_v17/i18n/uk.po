@@ -1,0 +1,154 @@
+# Translation of acathi_social to Ukrainian
+# Copyright (C) ACATHI
+msgid ""
+msgstr ""
+"Project-Id-Version: acathi_social\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-23 00:00+0000\n"
+"PO-Revision-Date: 2026-08-23 00:00+0000\n"
+"Last-Translator: ACATHI\n"
+"Language-Team: Ukrainian\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# ── HR-04: grant.hr.allocation ────────────────────────────────────────────────
+msgid "Imputació mensual d'hores de personal a subvenció"
+msgstr "Щомісячний розподіл робочих годин співробітників на грант"
+
+msgid "Empleat/da"
+msgstr "Співробітник/ця"
+
+msgid "Subvenció"
+msgstr "Грант"
+
+msgid "Any"
+msgstr "Рік"
+
+msgid "Mes"
+msgstr "Місяць"
+
+msgid "% Dedicació"
+msgstr "% посвяти"
+
+msgid "Hores treballades al mes"
+msgstr "Відпрацьованих годин на місяць"
+
+msgid "Hores imputades"
+msgstr "Розподілені години"
+
+msgid "Cost/hora (€)"
+msgstr "Вартість/година (€)"
+
+msgid "Cost imputat (€)"
+msgstr "Розподілені витрати (€)"
+
+msgid "Notes"
+msgstr "Нотатки"
+
+msgid "Imputació de personal"
+msgstr "Розподіл персоналу"
+
+msgid "Imputació hores personal"
+msgstr "Розподіл годин персоналу"
+
+msgid "Registres personal"
+msgstr "Записи персоналу"
+
+msgid "Cost personal (€)"
+msgstr "Витрати на персонал (€)"
+
+# Місяці
+msgid "Gener"
+msgstr "Січень"
+
+msgid "Febrer"
+msgstr "Лютий"
+
+msgid "Març"
+msgstr "Березень"
+
+msgid "Abril"
+msgstr "Квітень"
+
+msgid "Maig"
+msgstr "Травень"
+
+msgid "Juny"
+msgstr "Червень"
+
+msgid "Juliol"
+msgstr "Липень"
+
+msgid "Agost"
+msgstr "Серпень"
+
+msgid "Setembre"
+msgstr "Вересень"
+
+msgid "Octubre"
+msgstr "Жовтень"
+
+msgid "Novembre"
+msgstr "Листопад"
+
+msgid "Desembre"
+msgstr "Грудень"
+
+# Сповіщення кнопки пропозиції
+msgid "Dades incompletes"
+msgstr "Неповні дані"
+
+msgid "Sense dades"
+msgstr "Немає даних"
+
+msgid "Suggeriment aplicat"
+msgstr "Пропозицію застосовано"
+
+# ── AUT-01: acathi.case нові поля ─────────────────────────────────────────────
+msgid "Silenciar avisos fins a"
+msgstr "Відкласти сповіщення до"
+
+msgid "Darrera intervenció"
+msgstr "Остання інтервенція"
+
+msgid "Seguiment"
+msgstr "Супровід"
+
+msgid "Reobrir cas"
+msgstr "Повторно відкрити справу"
+
+msgid "ACATHI: Avisos seguiment de casos inactius"
+msgstr "ACATHI: Сповіщення про неактивні справи"
+
+# ── SUB-02: grant.application нові поля ───────────────────────────────────────
+msgid "Intervencions socials"
+msgstr "Соціальні інтервенції"
+
+msgid "Activitats socials"
+msgstr "Соціальні заходи"
+
+msgid "Ajudes econòmiques"
+msgstr "Економічна допомога"
+
+msgid "Intervencions"
+msgstr "Інтервенції"
+
+msgid "Activitats"
+msgstr "Заходи"
+
+msgid "Ajudes"
+msgstr "Допомога"
+
+msgid "Persones ateses"
+msgstr "Особи, що отримали послуги"
+
+msgid "Persones ateses (úniques)"
+msgstr "Особи, що отримали послуги (унікальні)"
+
+msgid "Font automàtica"
+msgstr "Автоматичне джерело"
+
+msgid "Manual"
+msgstr "Вручну"

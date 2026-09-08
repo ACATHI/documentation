@@ -1,0 +1,154 @@
+# Translation of acathi_social to French
+# Copyright (C) ACATHI
+msgid ""
+msgstr ""
+"Project-Id-Version: acathi_social\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-23 00:00+0000\n"
+"PO-Revision-Date: 2026-08-23 00:00+0000\n"
+"Last-Translator: ACATHI\n"
+"Language-Team: French\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# ── HR-04: grant.hr.allocation ────────────────────────────────────────────────
+msgid "Imputació mensual d'hores de personal a subvenció"
+msgstr "Imputation mensuelle des heures du personnel à la subvention"
+
+msgid "Empleat/da"
+msgstr "Employé/e"
+
+msgid "Subvenció"
+msgstr "Subvention"
+
+msgid "Any"
+msgstr "Année"
+
+msgid "Mes"
+msgstr "Mois"
+
+msgid "% Dedicació"
+msgstr "% Dédicace"
+
+msgid "Hores treballades al mes"
+msgstr "Heures travaillées par mois"
+
+msgid "Hores imputades"
+msgstr "Heures imputées"
+
+msgid "Cost/hora (€)"
+msgstr "Coût/heure (€)"
+
+msgid "Cost imputat (€)"
+msgstr "Coût imputé (€)"
+
+msgid "Notes"
+msgstr "Notes"
+
+msgid "Imputació de personal"
+msgstr "Imputation du personnel"
+
+msgid "Imputació hores personal"
+msgstr "Imputation heures personnel"
+
+msgid "Registres personal"
+msgstr "Registres personnel"
+
+msgid "Cost personal (€)"
+msgstr "Coût personnel (€)"
+
+# Mois
+msgid "Gener"
+msgstr "Janvier"
+
+msgid "Febrer"
+msgstr "Février"
+
+msgid "Març"
+msgstr "Mars"
+
+msgid "Abril"
+msgstr "Avril"
+
+msgid "Maig"
+msgstr "Mai"
+
+msgid "Juny"
+msgstr "Juin"
+
+msgid "Juliol"
+msgstr "Juillet"
+
+msgid "Agost"
+msgstr "Août"
+
+msgid "Setembre"
+msgstr "Septembre"
+
+msgid "Octubre"
+msgstr "Octobre"
+
+msgid "Novembre"
+msgstr "Novembre"
+
+msgid "Desembre"
+msgstr "Décembre"
+
+# Notifications bouton suggestion
+msgid "Dades incompletes"
+msgstr "Données incomplètes"
+
+msgid "Sense dades"
+msgstr "Pas de données"
+
+msgid "Suggeriment aplicat"
+msgstr "Suggestion appliquée"
+
+# ── AUT-01: acathi.case nouveaux champs ───────────────────────────────────────
+msgid "Silenciar avisos fins a"
+msgstr "Mettre les alertes en sourdine jusqu'au"
+
+msgid "Darrera intervenció"
+msgstr "Dernière intervention"
+
+msgid "Seguiment"
+msgstr "Suivi"
+
+msgid "Reobrir cas"
+msgstr "Rouvrir le dossier"
+
+msgid "ACATHI: Avisos seguiment de casos inactius"
+msgstr "ACATHI: Alertes de suivi des dossiers inactifs"
+
+# ── SUB-02: grant.application nouveaux champs ─────────────────────────────────
+msgid "Intervencions socials"
+msgstr "Interventions sociales"
+
+msgid "Activitats socials"
+msgstr "Activités sociales"
+
+msgid "Ajudes econòmiques"
+msgstr "Aides économiques"
+
+msgid "Intervencions"
+msgstr "Interventions"
+
+msgid "Activitats"
+msgstr "Activités"
+
+msgid "Ajudes"
+msgstr "Aides"
+
+msgid "Persones ateses"
+msgstr "Personnes accompagnées"
+
+msgid "Persones ateses (úniques)"
+msgstr "Personnes accompagnées (uniques)"
+
+msgid "Font automàtica"
+msgstr "Source automatique"
+
+msgid "Manual"
+msgstr "Manuel"

@@ -1,0 +1,617 @@
+# Translation of acathi_assessment to English
+# Copyright (C) ACATHI
+msgid ""
+msgstr ""
+"Project-Id-Version: acathi_assessment\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-23 00:00+0000\n"
+"PO-Revision-Date: 2026-08-23 00:00+0000\n"
+"Last-Translator: ACATHI\n"
+"Language-Team: English\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# ── Common fields ─────────────────────────────────────────────────────────────
+msgid "Persona atesa"
+msgstr "Service user"
+
+msgid "Cas"
+msgstr "Case"
+
+msgid "Professional"
+msgstr "Professional"
+
+msgid "Data d'administració"
+msgstr "Administration date"
+
+msgid "Puntuació total"
+msgstr "Total score"
+
+msgid "Nivell / Interpretació"
+msgstr "Level / Interpretation"
+
+msgid "Observacions"
+msgstr "Notes"
+
+# ── PHQ-9 (Kroenke et al., original validated version) ────────────────────────
+msgid "PHQ-9 — Escala de Depressió"
+msgstr "PHQ-9 — Depression Scale"
+
+msgid "0 — Mai"
+msgstr "0 — Not at all"
+
+msgid "1 — Alguns dies"
+msgstr "1 — Several days"
+
+msgid "2 — Més de la meitat dels dies"
+msgstr "2 — More than half the days"
+
+msgid "3 — Quasi cada dia"
+msgstr "3 — Nearly every day"
+
+msgid "1. Tenir poc interès o plaer en fer les coses"
+msgstr "1. Little interest or pleasure in doing things"
+
+msgid "2. Sentir-se desanimat/ada, deprimit/ida o sense esperança"
+msgstr "2. Feeling down, depressed, or hopeless"
+
+msgid "3. Dificultats per adormir-se, continuar dormint o dormir massa"
+msgstr "3. Trouble falling or staying asleep, or sleeping too much"
+
+msgid "4. Sentir-se cansat/ada o tenir poca energia"
+msgstr "4. Feeling tired or having little energy"
+
+msgid "5. Poc apetit o menjar en excés"
+msgstr "5. Poor appetite or overeating"
+
+msgid "6. Sentir-se malament amb vostè mateix/a, o pensar que ha fallat"
+msgstr "6. Feeling bad about yourself — or that you are a failure"
+
+msgid "7. Dificultats per concentrar-se (llegir, mirar la televisió, etc.)"
+msgstr "7. Trouble concentrating on things, such as reading or watching television"
+
+msgid "8. Moure's o parlar tan lentament que la gent ho hagi notat, o estar tan inquiet/a que s'ha mogut molt"
+msgstr "8. Moving or speaking so slowly that other people could have noticed, or being so fidgety or restless"
+
+msgid "9. Pensaments que seria millor estar mort/a, o de fer-se mal"
+msgstr "9. Thoughts that you would be better off dead or of hurting yourself"
+
+msgid "Depressió mínima"
+msgstr "Minimal depression"
+
+msgid "Depressió lleu"
+msgstr "Mild depression"
+
+msgid "Depressió moderada"
+msgstr "Moderate depression"
+
+msgid "Depressió moderadament greu"
+msgstr "Moderately severe depression"
+
+msgid "Depressió greu"
+msgstr "Severe depression"
+
+# ── GAD-7 ─────────────────────────────────────────────────────────────────────
+msgid "GAD-7 — Escala d'Ansietat Generalitzada"
+msgstr "GAD-7 — Generalized Anxiety Disorder Scale"
+
+msgid "1. Sentir-se nerviós/a, ansiós/a o a la vora del precipici"
+msgstr "1. Feeling nervous, anxious, or on edge"
+
+msgid "2. No poder aturar o controlar la preocupació"
+msgstr "2. Not being able to stop or control worrying"
+
+msgid "3. Preocupar-se massa per coses diverses"
+msgstr "3. Worrying too much about different things"
+
+msgid "4. Dificultats per relaxar-se"
+msgstr "4. Trouble relaxing"
+
+msgid "5. Estar tan inquiet/a que és difícil estar quiet/a"
+msgstr "5. Being so restless that it is hard to sit still"
+
+msgid "6. Enfadar-se o irritar-se fàcilment"
+msgstr "6. Becoming easily annoyed or irritable"
+
+msgid "7. Sentir por com si pogués passar alguna cosa terrible"
+msgstr "7. Feeling afraid, as if something awful might happen"
+
+msgid "Ansietat mínima"
+msgstr "Minimal anxiety"
+
+msgid "Ansietat lleu"
+msgstr "Mild anxiety"
+
+msgid "Ansietat moderada"
+msgstr "Moderate anxiety"
+
+msgid "Ansietat greu"
+msgstr "Severe anxiety"
+
+# ── PCL-5 ─────────────────────────────────────────────────────────────────────
+msgid "PCL-5 — Llista de Verificació del TEPT (DSM-5)"
+msgstr "PCL-5 — PTSD Checklist (DSM-5)"
+
+msgid "Esdeveniment traumàtic de referència"
+msgstr "Reference traumatic event"
+
+msgid "0 — Gens"
+msgstr "0 — Not at all"
+
+msgid "1 — Una mica"
+msgstr "1 — A little bit"
+
+msgid "2 — Moderadament"
+msgstr "2 — Moderately"
+
+msgid "3 — Bastant"
+msgstr "3 — Quite a bit"
+
+msgid "4 — Extremament"
+msgstr "4 — Extremely"
+
+msgid "1. Records repetitius, molestos i no desitjats de l'experiència"
+msgstr "1. Repeated, disturbing, and unwanted memories of the experience"
+
+msgid "2. Somnis pertorbadors sobre l'experiència"
+msgstr "2. Repeated, disturbing dreams of the experience"
+
+msgid "3. Sentir-se o actuar com si l'experiència estigués passant de nou (flashback)"
+msgstr "3. Suddenly feeling or acting as if the experience were actually happening again (flashback)"
+
+msgid "4. Sentir-se molt alterat/ada quan alguna cosa recorda l'experiència"
+msgstr "4. Feeling very upset when something reminded you of the experience"
+
+msgid "5. Reaccions físiques intenses davant recordatoris (cor que batega fort, suor, dificultat per respirar)"
+msgstr "5. Having strong physical reactions when something reminded you of the experience (heart pounding, trouble breathing, sweating)"
+
+msgid "6. Evitar records, pensaments o sentiments relacionats amb l'experiència"
+msgstr "6. Avoiding memories, thoughts, or feelings related to the experience"
+
+msgid "7. Evitar persones, llocs, converses o situacions que recorden l'experiència"
+msgstr "7. Avoiding external reminders of the experience (people, places, conversations, activities, objects, or situations)"
+
+msgid "8. Problemes per recordar parts importants de l'experiència"
+msgstr "8. Trouble remembering important parts of the experience"
+
+msgid "9. Creences negatives fortes sobre vostè mateix/a, els altres o el món"
+msgstr "9. Having strong negative beliefs about yourself, other people, or the world"
+
+msgid "10. Culpar-se a vostè mateix/a o als altres del que va passar"
+msgstr "10. Blaming yourself or someone else for the experience or what happened after it"
+
+msgid "11. Sentiments negatius intensos (por, horror, ràbia, culpa, vergonya)"
+msgstr "11. Having strong negative feelings such as fear, horror, anger, guilt, or shame"
+
+msgid "12. Pèrdua de interès en activitats que abans gaudia"
+msgstr "12. Loss of interest in activities that you used to enjoy"
+
+msgid "13. Sentir-se distant o desconnectat/ada de les altres persones"
+msgstr "13. Feeling distant or cut off from other people"
+
+msgid "14. Dificultats per experimentar sentiments positius"
+msgstr "14. Trouble experiencing positive feelings"
+
+msgid "15. Comportament irritable, explosions de ràbia o agressivitat"
+msgstr "15. Irritable behavior, angry outbursts, or acting aggressively"
+
+msgid "16. Assumir riscos o fer coses que podrien causar danys"
+msgstr "16. Taking too many risks or doing things that could cause you harm"
+
+msgid "17. Estar en alerta màxima, vigilant o guardant-se"
+msgstr "17. Being 'superalert' or watchful or on guard"
+
+msgid "18. Sobresaltar-se fàcilment"
+msgstr "18. Feeling jumpy or easily startled"
+
+msgid "19. Dificultats per concentrar-se"
+msgstr "19. Having difficulty concentrating"
+
+msgid "20. Dificultats per adormir-se"
+msgstr "20. Trouble falling or staying asleep"
+
+msgid "Per sota del llindar (TEPT poc probable)"
+msgstr "Below threshold (PTSD unlikely)"
+
+msgid "Llindar probable de TEPT — Avaluació clínica recomanada"
+msgstr "Probable PTSD threshold — Clinical assessment recommended"
+
+msgid "TEPT probable — Derivació urgent recomanada"
+msgstr "Probable PTSD — Urgent referral recommended"
+
+# ── HSCL-25 ───────────────────────────────────────────────────────────────────
+msgid "HSCL-25 — Llista de Símptomes Hopkins"
+msgstr "HSCL-25 — Hopkins Symptom Checklist"
+
+msgid "Mitjana global (25 ítems)"
+msgstr "Global mean (25 items)"
+
+msgid "Mitjana ansietat"
+msgstr "Anxiety mean"
+
+msgid "Mitjana depressió"
+msgstr "Depression mean"
+
+msgid "1 — Gens"
+msgstr "1 — Not at all"
+
+msgid "2 — Una mica"
+msgstr "2 — A little"
+
+msgid "3 — Bastant"
+msgstr "3 — Quite a bit"
+
+msgid "4 — Molt"
+msgstr "4 — Extremely"
+
+msgid "A1. Tremolors"
+msgstr "A1. Trembling"
+
+msgid "A2. Nerviosisme o agitació interior"
+msgstr "A2. Nervousness or shakiness inside"
+
+msgid "A3. Pors sobtades sense cap raó"
+msgstr "A3. Suddenly scared for no reason"
+
+msgid "A4. Pors o pànic"
+msgstr "A4. Fearfulness or panic"
+
+msgid "A5. Sentir-se atemoritzat/ada"
+msgstr "A5. Feeling afraid"
+
+msgid "A6. El cor que batega fort"
+msgstr "A6. Heart pounding or racing"
+
+msgid "A7. Tremolors a les mans"
+msgstr "A7. Hands trembling"
+
+msgid "A8. Sensació de tensió o d'estar en un nus"
+msgstr "A8. Feeling tense or keyed up"
+
+msgid "A9. Atacs de pànic o terror"
+msgstr "A9. Spells of terror or panic"
+
+msgid "A10. Estar tan inquiet/a que no pot estar quiet/a"
+msgstr "A10. Feeling so restless you couldn't sit still"
+
+msgid "D1. Sentir-se adormit/ida o amb la ment en blanc"
+msgstr "D1. Feeling low in energy or slowed down"
+
+msgid "D2. Sentir-se sol/a"
+msgstr "D2. Feeling lonely"
+
+msgid "D3. Sentir-se trist/a"
+msgstr "D3. Feeling sad"
+
+msgid "D4. Preocupar-se massa per les coses"
+msgstr "D4. Worrying too much about things"
+
+msgid "D5. Sentir-se desanimat/ada respecte al futur"
+msgstr "D5. Feeling blue"
+
+msgid "D6. Sentir que tot és un esforç"
+msgstr "D6. Feeling everything is an effort"
+
+msgid "D7. Sentir-se sense esperança sobre el futur"
+msgstr "D7. Feelings of hopelessness about the future"
+
+msgid "D8. Sentir que no val res"
+msgstr "D8. Feeling worthless"
+
+msgid "D9. Sentir-se buit/ida per dins"
+msgstr "D9. Feeling empty inside"
+
+msgid "D10. Sentir que alguna cosa dolenta anirà a passar"
+msgstr "D10. Feeling that something bad is going to happen"
+
+msgid "D11. Tenir ganes de plorar"
+msgstr "D11. Feeling like crying easily"
+
+msgid "D12. Sentir-se atrapat/ada o encasellat/ada"
+msgstr "D12. Feeling trapped or caught"
+
+msgid "D13. Culpar-se de les coses"
+msgstr "D13. Blaming yourself for things"
+
+msgid "D14. Sentir-se incapaç/aç de fer les coses"
+msgstr "D14. Feeling unable to do things"
+
+msgid "D15. Tenir pensaments d'acabar amb la pròpia vida"
+msgstr "D15. Thoughts of ending your life"
+
+msgid "Distress clínic"
+msgstr "Clinical distress"
+
+msgid "Sense significació clínica"
+msgstr "No clinical significance"
+
+# ── IES-R ─────────────────────────────────────────────────────────────────────
+msgid "IES-R — Escala d'Impacte de l'Esdeveniment (Revisada)"
+msgstr "IES-R — Impact of Event Scale (Revised)"
+
+msgid "Descripció de l'esdeveniment"
+msgstr "Event description"
+
+msgid "Subescala Intrusió"
+msgstr "Intrusion subscale"
+
+msgid "Subescala Evitació"
+msgstr "Avoidance subscale"
+
+msgid "Subescala Hiperactivació"
+msgstr "Hyperarousal subscale"
+
+msgid "1. Qualsevol recordatori em tornava a portar sentiments sobre això"
+msgstr "1. Any reminder brought back feelings about it"
+
+msgid "2. Tenia dificultats per continuar dormint"
+msgstr "2. I had trouble staying asleep"
+
+msgid "3. Altres coses em feien pensar en l'esdeveniment constantment"
+msgstr "3. Other things kept making me think about it"
+
+msgid "4. Sentia irritació i ràbia"
+msgstr "4. I felt irritable and angry"
+
+msgid "5. Intentava no pertorbar-me quan en pensava o se me'n recordava"
+msgstr "5. I tried not to be upset when I thought about it or was reminded of it"
+
+msgid "6. Hi pensava sense voler fer-ho"
+msgstr "6. I thought about it when I didn't mean to"
+
+msgid "7. Sentia com si no hagués passat o no fos real"
+msgstr "7. I felt as if it hadn't happened or wasn't real"
+
+msgid "8. M'allunyava de les recordances"
+msgstr "8. I stayed away from reminders of it"
+
+msgid "9. Imatges de l'esdeveniment em venien a la ment"
+msgstr "9. Pictures about it popped into my mind"
+
+msgid "10. Estava nerviós/a i m'espaventava fàcilment"
+msgstr "10. I was jumpy and easily startled"
+
+msgid "11. Intentava no pensar-hi"
+msgstr "11. I tried not to think about it"
+
+msgid "12. Era conscient que hi havia molts sentiments, però no els vaig abordar"
+msgstr "12. I was aware that I still had a lot of feelings about it, but I didn't deal with them"
+
+msgid "13. Els meus sentiments estaven com adormits"
+msgstr "13. My feelings about it were kind of numb"
+
+msgid "14. Em trobava actuant o sentint com si estigués de nou en aquell moment"
+msgstr "14. I found myself acting or feeling as if I were back at that time"
+
+msgid "15. Tenia problemes per adormir-me"
+msgstr "15. I had trouble falling asleep"
+
+msgid "16. Tenia onades de sentiments forts al respecte"
+msgstr "16. I had waves of strong feelings about it"
+
+msgid "17. Intentava esborrar-ho de la memòria"
+msgstr "17. I tried to remove it from my memory"
+
+msgid "18. Tenia dificultats per concentrar-me"
+msgstr "18. I had trouble concentrating"
+
+msgid "19. El que em recordava l'esdeveniment em causava reaccions físiques (suor, cor palpitant, nàusea)"
+msgstr "19. Reminders of it caused me to have physical reactions, such as sweating, trouble breathing, or nausea"
+
+msgid "20. Tenia somnis sobre l'esdeveniment"
+msgstr "20. I had dreams about it"
+
+msgid "21. Em sentia vigilant i en guarda"
+msgstr "21. I felt watchful and on-guard"
+
+msgid "22. Intentava no parlar-ne"
+msgstr "22. I tried not to talk about it"
+
+msgid "Baix — Resposta normal"
+msgstr "Low — Normal response"
+
+msgid "Moderat — Seguiment recomanat"
+msgstr "Moderate — Follow-up recommended"
+
+msgid "Probable TEPT — Avaluació clínica"
+msgstr "Probable PTSD — Clinical assessment"
+
+msgid "TEPT probable — Derivació recomanada"
+msgstr "Probable PTSD — Referral recommended"
+
+# ── WHODAS 2.0 ────────────────────────────────────────────────────────────────
+msgid "WHODAS 2.0 — Avaluació de Discapacitat i Funcionament (12 ítems)"
+msgstr "WHODAS 2.0 — Disability and Functioning Assessment (12 items)"
+
+msgid "Puntuació simple (0–48)"
+msgstr "Simple score (0–48)"
+
+msgid "% Discapacitat"
+msgstr "% Disability"
+
+msgid "1 — Cap"
+msgstr "1 — None"
+
+msgid "2 — Lleugera"
+msgstr "2 — Mild"
+
+msgid "3 — Moderada"
+msgstr "3 — Moderate"
+
+msgid "4 — Greu"
+msgstr "4 — Severe"
+
+msgid "5 — Extrema / No pot fer-ho"
+msgstr "5 — Extreme / Cannot do"
+
+msgid "C1. Concentrar-se en fer alguna cosa durant deu minuts?"
+msgstr "C1. Concentrating on doing something for ten minutes?"
+
+msgid "C2. Recordar coses importants?"
+msgstr "C2. Remembering to do important things?"
+
+msgid "M1. Caminar llargues distàncies, com un quilòmetre?"
+msgstr "M1. Walking long distances, such as a kilometre?"
+
+msgid "M2. Posar-se dempeus des que estava assegut/da?"
+msgstr "M2. Standing up from sitting down?"
+
+msgid "Au1. Rentar-se tot el cos?"
+msgstr "Au1. Washing your whole body?"
+
+msgid "Au2. Vestir-se?"
+msgstr "Au2. Getting dressed?"
+
+msgid "R1. Relacionar-se amb persones que no coneix?"
+msgstr "R1. Dealing with people you do not know?"
+
+msgid "R2. Mantenir una amistat?"
+msgstr "R2. Maintaining a friendship?"
+
+msgid "AV1. Les responsabilitats quotidianes a la llar?"
+msgstr "AV1. Your day-to-day work/household responsibilities?"
+
+msgid "AV2. Les responsabilitats laborals o escolars principals?"
+msgstr "AV2. Your most important work/school tasks?"
+
+msgid "P1. Participar en activitats de la comunitat?"
+msgstr "P1. Joining in community activities?"
+
+msgid "P2. L'impacte dels problemes de salut en la seva vida en general?"
+msgstr "P2. The impact of your health problems on your life overall?"
+
+msgid "Sense discapacitat (0%)"
+msgstr "No disability (0%)"
+
+msgid "Discapacitat lleu"
+msgstr "Mild disability"
+
+msgid "Discapacitat moderada"
+msgstr "Moderate disability"
+
+msgid "Discapacitat greu"
+msgstr "Severe disability"
+
+msgid "Discapacitat extrema"
+msgstr "Extreme disability"
+
+# ── Trafficking screening ─────────────────────────────────────────────────────
+msgid "Cribratge d'Indicadors de Tràfic d'Éssers Humans"
+msgstr "Trafficking Indicators Screening"
+
+msgid "Puntuació total (màx. 36)"
+msgstr "Total score (max. 36)"
+
+msgid "Nivell de risc"
+msgstr "Risk level"
+
+msgid "Risc baix"
+msgstr "Low risk"
+
+msgid "Risc moderat — Investigar"
+msgstr "Moderate risk — Investigate"
+
+msgid "Risc alt — Activar protocol"
+msgstr "High risk — Activate protocol"
+
+msgid "0 — No / Desconegut"
+msgstr "0 — No / Unknown"
+
+msgid "1 — Possible"
+msgstr "1 — Possible"
+
+msgid "2 — Sí"
+msgstr "2 — Yes"
+
+msgid "Control i coacció"
+msgstr "Control and coercion"
+
+msgid "Engany i captació"
+msgstr "Deception and recruitment"
+
+msgid "Explotació"
+msgstr "Exploitation"
+
+msgid "Vulnerabilitat"
+msgstr "Vulnerability"
+
+msgid "A1. La persona sembla controlada per un tercer (moviments, comunicació, diners)"
+msgstr "A1. The person appears to be controlled by a third party (movements, communication, money)"
+
+msgid "A2. La persona té por de parlar lliurement o sembla vigilada"
+msgstr "A2. The person is afraid to speak freely or appears to be watched"
+
+msgid "A3. La persona no controla els seus propis documents d'identitat"
+msgstr "A3. The person does not control their own identity documents"
+
+msgid "A4. La persona viu on treballa o en condicions de dependència de l'explotador"
+msgstr "A4. The person lives where they work or in conditions of dependency on the exploiter"
+
+msgid "A5. La persona fa referència a haver rebut amenaces (directes o a la família)"
+msgstr "A5. The person refers to having received threats (direct or to family)"
+
+msgid "B1. La persona va ser captada amb promeses falses (feina, allotjament, parella)"
+msgstr "B1. The person was recruited with false promises (work, accommodation, partner)"
+
+msgid "B2. La persona va arribar al país a través d'intermediaris o xarxes"
+msgstr "B2. The person arrived in the country through intermediaries or networks"
+
+msgid "B3. La persona deu diners al captador/a ('deute de transport')"
+msgstr "B3. The person owes money to the recruiter ('transport debt')"
+
+msgid "B4. La persona desconeix la seva situació legal o la van enganyar respecte als papers"
+msgstr "B4. The person does not know their legal situation or was misled about their papers"
+
+msgid "C1. Hi ha indicis d'explotació sexual (passat o present)"
+msgstr "C1. There are signs of sexual exploitation (past or present)"
+
+msgid "C2. Hi ha indicis d'explotació laboral (condicions abusives, sense remuneració)"
+msgstr "C2. There are signs of labour exploitation (abusive conditions, without pay)"
+
+msgid "C3. La persona ha estat forçada a demanar o a delinquir"
+msgstr "C3. The person has been forced to beg or to commit crimes"
+
+msgid "C4. La persona fa referència a haver servit en una llar en condicions d'esclavatge"
+msgstr "C4. The person refers to having worked in a household under conditions of servitude"
+
+msgid "C5. La persona ha estat explotada per motiu de la seva orientació sexual o identitat de gènere"
+msgstr "C5. The person has been exploited because of their sexual orientation or gender identity"
+
+msgid "D1. La persona es troba en situació irregular administrativa"
+msgstr "D1. The person is in an irregular administrative situation"
+
+msgid "D2. La persona no té xarxa de suport ni família accessible"
+msgstr "D2. The person has no support network or accessible family"
+
+msgid "D3. La persona ha patit violència, abús sexual o tortura prèvia"
+msgstr "D3. The person has experienced previous violence, sexual abuse, or torture"
+
+msgid "D4. La persona presenta símptomes de trauma greu (dissociació, flashbacks, por extrema)"
+msgstr "D4. The person shows symptoms of severe trauma (dissociation, flashbacks, extreme fear)"
+
+# ── Menus ─────────────────────────────────────────────────────────────────────
+msgid "Avaluacions"
+msgstr "Assessments"
+
+msgid "PHQ-9 Depressió"
+msgstr "PHQ-9 Depression"
+
+msgid "GAD-7 Ansietat"
+msgstr "GAD-7 Anxiety"
+
+msgid "PCL-5 TEPT"
+msgstr "PCL-5 PTSD"
+
+msgid "HSCL-25 Hopkins"
+msgstr "HSCL-25 Hopkins"
+
+msgid "IES-R Impacte Esdeveniment"
+msgstr "IES-R Event Impact"
+
+msgid "WHODAS 2.0 Discapacitat"
+msgstr "WHODAS 2.0 Disability"
+
+msgid "Cribratge Tràfic"
+msgstr "Trafficking Screening"

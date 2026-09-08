@@ -1,0 +1,154 @@
+# Translation of acathi_social to Arabic
+# Copyright (C) ACATHI
+msgid ""
+msgstr ""
+"Project-Id-Version: acathi_social\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-23 00:00+0000\n"
+"PO-Revision-Date: 2026-08-23 00:00+0000\n"
+"Last-Translator: ACATHI\n"
+"Language-Team: Arabic\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# ── HR-04: grant.hr.allocation ────────────────────────────────────────────────
+msgid "Imputació mensual d'hores de personal a subvenció"
+msgstr "توزيع ساعات الموظفين الشهرية على المنحة"
+
+msgid "Empleat/da"
+msgstr "الموظف/ة"
+
+msgid "Subvenció"
+msgstr "المنحة"
+
+msgid "Any"
+msgstr "السنة"
+
+msgid "Mes"
+msgstr "الشهر"
+
+msgid "% Dedicació"
+msgstr "% الانخراط"
+
+msgid "Hores treballades al mes"
+msgstr "ساعات العمل في الشهر"
+
+msgid "Hores imputades"
+msgstr "الساعات المُدرَجة"
+
+msgid "Cost/hora (€)"
+msgstr "التكلفة/الساعة (€)"
+
+msgid "Cost imputat (€)"
+msgstr "التكلفة المُدرَجة (€)"
+
+msgid "Notes"
+msgstr "ملاحظات"
+
+msgid "Imputació de personal"
+msgstr "توزيع ساعات الموظفين"
+
+msgid "Imputació hores personal"
+msgstr "توزيع ساعات الموظفين"
+
+msgid "Registres personal"
+msgstr "سجلات الموظفين"
+
+msgid "Cost personal (€)"
+msgstr "تكلفة الموظفين (€)"
+
+# الأشهر
+msgid "Gener"
+msgstr "يناير"
+
+msgid "Febrer"
+msgstr "فبراير"
+
+msgid "Març"
+msgstr "مارس"
+
+msgid "Abril"
+msgstr "أبريل"
+
+msgid "Maig"
+msgstr "مايو"
+
+msgid "Juny"
+msgstr "يونيو"
+
+msgid "Juliol"
+msgstr "يوليو"
+
+msgid "Agost"
+msgstr "أغسطس"
+
+msgid "Setembre"
+msgstr "سبتمبر"
+
+msgid "Octubre"
+msgstr "أكتوبر"
+
+msgid "Novembre"
+msgstr "نوفمبر"
+
+msgid "Desembre"
+msgstr "ديسمبر"
+
+# إشعارات زر الاقتراح
+msgid "Dades incompletes"
+msgstr "بيانات غير مكتملة"
+
+msgid "Sense dades"
+msgstr "لا توجد بيانات"
+
+msgid "Suggeriment aplicat"
+msgstr "تم تطبيق الاقتراح"
+
+# ── AUT-01: acathi.case حقول جديدة ───────────────────────────────────────────
+msgid "Silenciar avisos fins a"
+msgstr "كتم التنبيهات حتى"
+
+msgid "Darrera intervenció"
+msgstr "آخر تدخل"
+
+msgid "Seguiment"
+msgstr "متابعة"
+
+msgid "Reobrir cas"
+msgstr "إعادة فتح الملف"
+
+msgid "ACATHI: Avisos seguiment de casos inactius"
+msgstr "ACATHI: تنبيهات متابعة الملفات غير النشطة"
+
+# ── SUB-02: grant.application حقول جديدة ─────────────────────────────────────
+msgid "Intervencions socials"
+msgstr "التدخلات الاجتماعية"
+
+msgid "Activitats socials"
+msgstr "الأنشطة الاجتماعية"
+
+msgid "Ajudes econòmiques"
+msgstr "المساعدات الاقتصادية"
+
+msgid "Intervencions"
+msgstr "التدخلات"
+
+msgid "Activitats"
+msgstr "الأنشطة"
+
+msgid "Ajudes"
+msgstr "المساعدات"
+
+msgid "Persones ateses"
+msgstr "الأشخاص المُستفيدون"
+
+msgid "Persones ateses (úniques)"
+msgstr "الأشخاص المُستفيدون (فريدون)"
+
+msgid "Font automàtica"
+msgstr "المصدر التلقائي"
+
+msgid "Manual"
+msgstr "يدوي"

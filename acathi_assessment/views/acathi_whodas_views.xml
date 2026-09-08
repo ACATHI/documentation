@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ══ VISTA LLISTA ══════════════════════════════════════════════════════ -->
+    <record id="view_acathi_whodas_tree" model="ir.ui.view">
+        <field name="name">acathi.whodas.tree</field>
+        <field name="model">acathi.whodas</field>
+        <field name="arch" type="xml">
+            <tree string="WHODAS 2.0 Discapacitat"
+                  decoration-danger="score_pct >= 50.0"
+                  decoration-warning="score_pct >= 25.0 and score_pct &lt; 50.0">
+                <field name="date"/>
+                <field name="person_id"/>
+                <field name="case_id"/>
+                <field name="professional_id"/>
+                <field name="score" string="Puntuació (0–48)"/>
+                <field name="score_pct" string="% Discapacitat" digits="[4,1]"/>
+                <field name="severity" string="Nivell"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ══ VISTA FORMULARI ═══════════════════════════════════════════════════ -->
+    <record id="view_acathi_whodas_form" model="ir.ui.view">
+        <field name="name">acathi.whodas.form</field>
+        <field name="model">acathi.whodas</field>
+        <field name="arch" type="xml">
+            <form string="WHODAS 2.0 — Avaluació de Discapacitat i Funcionament">
+                <sheet>
+                    <group string="Informació general">
+                        <group>
+                            <field name="person_id"/>
+                            <field name="case_id"/>
+                        </group>
+                        <group>
+                            <field name="professional_id"/>
+                            <field name="date"/>
+                        </group>
+                    </group>
+
+                    <separator string="Instruccions"/>
+                    <div class="alert alert-info" role="alert">
+                        <p>Indiqueu la dificultat que heu tingut per fer les activitats
+                        descrites a continuació durant els <strong>darrers 30 dies</strong>.
+                        Per a cada activitat, penseu en el nivell de dificultat experimentat,
+                        incloent-hi l'augment del temps necessari, el dolor o malestar,
+                        i les feines fetes lentament o amb cura.<br/>
+                        Escala: 1 = Cap · 2 = Lleugera · 3 = Moderada · 4 = Greu
+                        · 5 = Extrema / No pot fer-ho.</p>
+                    </div>
+
+                    <separator string="Domini 1 — Cognició"/>
+                    <group col="1">
+                        <field name="s1_1" widget="radio" options="{'horizontal': true}"/>
+                        <field name="s1_2" widget="radio" options="{'horizontal': true}"/>
+                    </group>
+
+                    <separator string="Domini 2 — Mobilitat"/>
+                    <group col="1">
+                        <field name="s2_1" widget="radio" options="{'horizontal': true}"/>
+                        <field name="s2_2" widget="radio" options="{'horizontal': true}"/>
+                    </group>
+
+                    <separator string="Domini 3 — Autocura"/>
+                    <group col="1">
+                        <field name="s3_1" widget="radio" options="{'horizontal': true}"/>
+                        <field name="s3_2" widget="radio" options="{'horizontal': true}"/>
+                    </group>
+
+                    <separator string="Domini 4 — Relacions"/>
+                    <group col="1">
+                        <field name="s4_1" widget="radio" options="{'horizontal': true}"/>
+                        <field name="s4_2" widget="radio" options="{'horizontal': true}"/>
+                    </group>
+
+                    <separator string="Domini 5 — Activitats de vida"/>
+                    <group col="1">
+                        <field name="s5_1" widget="radio" options="{'horizontal': true}"/>
+                        <field name="s5_2" widget="radio" options="{'horizontal': true}"/>
+                    </group>
+
+                    <separator string="Domini 6 — Participació"/>
+                    <group col="1">
+                        <field name="s6_1" widget="radio" options="{'horizontal': true}"/>
+                        <field name="s6_2" widget="radio" options="{'horizontal': true}"/>
+                    </group>
+
+                    <separator string="Resultats"/>
+                    <group>
+                        <group>
+                            <field name="score" readonly="1"/>
+                            <field name="score_pct" readonly="1" digits="[4,1]"/>
+                        </group>
+                        <group>
+                            <field name="severity" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <separator string="Observacions"/>
+                    <field name="notes" placeholder="Observacions addicionals del professional..."/>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ══ VISTA CERCA ═══════════════════════════════════════════════════════ -->
+    <record id="view_acathi_whodas_search" model="ir.ui.view">
+        <field name="name">acathi.whodas.search</field>
+        <field name="model">acathi.whodas</field>
+        <field name="arch" type="xml">
+            <search string="Cercar WHODAS 2.0">
+                <field name="person_id" string="Persona"/>
+                <field name="professional_id" string="Professional"/>
+                <field name="date" string="Data"/>
+                <filter string="Any actual" name="filter_this_year"
+                        domain="[('date', '>=', (context_today()).strftime('%Y') + '-01-01'),
+                                  ('date', '&lt;=', (context_today()).strftime('%Y') + '-12-31')]"/>
+                <separator/>
+                <filter string="Discapacitat moderada o superior" name="filter_moderate"
+                        domain="[('score_pct', '>=', 25.0)]"/>
+                <group expand="0" string="Agrupar per">
+                    <filter string="Persona" name="group_person" context="{'group_by': 'person_id'}"/>
+                    <filter string="Professional" name="group_professional" context="{'group_by': 'professional_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ══ ACCIÓ ══════════════════════════════════════════════════════════════ -->
+    <record id="action_acathi_whodas" model="ir.actions.act_window">
+        <field name="name">WHODAS 2.0 Discapacitat</field>
+        <field name="res_model">acathi.whodas</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_acathi_whodas_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Registreu una nova avaluació WHODAS 2.0
+            </p>
+        </field>
+    </record>
+
+</odoo>

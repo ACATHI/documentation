@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_acathi_assessment_session_list" model="ir.ui.view">
+        <field name="name">acathi.assessment.session.list</field>
+        <field name="model">acathi.assessment.session</field>
+        <field name="arch" type="xml">
+            <tree string="Sessions d'avaluació"
+                  decoration-success="state == 'completed'"
+                  decoration-muted="state == 'expired'"
+                  decoration-warning="state == 'pending'">
+                <field name="create_date" string="Creada"/>
+                <field name="person_id"/>
+                <field name="instrument"/>
+                <field name="language"/>
+                <field name="professional_id"/>
+                <field name="state" widget="badge"
+                       decoration-warning="state == 'pending'"
+                       decoration-success="state == 'completed'"
+                       decoration-muted="state == 'expired'"/>
+                <field name="expiry_date" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_acathi_assessment_session_form" model="ir.ui.view">
+        <field name="name">acathi.assessment.session.form</field>
+        <field name="model">acathi.assessment.session</field>
+        <field name="arch" type="xml">
+            <form string="Sessió d'avaluació">
+                <header>
+                    <button name="action_send_whatsapp" type="object"
+                            string="📲 Enviar per WhatsApp"
+                            class="btn-primary"
+                            invisible="state != 'pending'"
+                            confirm="S'enviarà un missatge WhatsApp al telèfon registrat de la persona. Continuar?"/>
+                    <button name="action_reset" type="object"
+                            string="Regenerar enllaç"
+                            class="btn-secondary"
+                            invisible="state == 'pending'"
+                            confirm="Es generarà un nou token i la sessió tornarà a 'Pendent'. Continuar?"/>
+                    <button name="action_expire" type="object"
+                            string="Caducar"
+                            invisible="state != 'pending'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="pending,completed,expired"/>
+                </header>
+                <sheet>
+                    <!-- Opcions de lliurament (A, B, C) -->
+                    <div class="alert alert-info mb-3" invisible="state != 'pending'">
+                        <strong>📋 Opcions d'enviament</strong><br/>
+                        <b>A — Copiar:</b> Fes clic a la URL i copia-la.<br/>
+                        <b>B — WhatsApp:</b> Utilitza el botó de dalt per enviar automàticament.<br/>
+                        <b>C — QR:</b> Fes clic a «Veure QR» perquè la persona l'escanegi.
+                    </div>
+
+                    <group>
+                        <group string="Persona i cas">
+                            <field name="person_id"/>
+                            <field name="case_id"
+                                   domain="[('person_id','=',person_id)]"/>
+                            <field name="professional_id"/>
+                        </group>
+                        <group string="Instrument">
+                            <field name="instrument"/>
+                            <field name="language"/>
+                            <field name="expiry_date"/>
+                        </group>
+                    </group>
+
+                    <group string="Accés mòbil" invisible="state != 'pending'">
+                        <field name="portal_url" string="URL del formulari"
+                               widget="url" readonly="1"/>
+                        <field name="qr_url" string="URL del QR (imprimible)"
+                               widget="url" readonly="1"/>
+                    </group>
+
+                    <group string="Resultat" invisible="state != 'completed'">
+                        <field name="result_phq9_id" readonly="1"
+                               invisible="instrument != 'phq9'"/>
+                        <field name="result_gad7_id" readonly="1"
+                               invisible="instrument != 'gad7'"/>
+                        <field name="result_pcl5_id" readonly="1"
+                               invisible="instrument != 'pcl5'"/>
+                        <field name="result_hscl25_id" readonly="1"
+                               invisible="instrument != 'hscl25'"/>
+                        <field name="result_iesr_id" readonly="1"
+                               invisible="instrument != 'iesr'"/>
+                        <field name="result_whodas_id" readonly="1"
+                               invisible="instrument != 'whodas'"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_acathi_assessment_session_search" model="ir.ui.view">
+        <field name="name">acathi.assessment.session.search</field>
+        <field name="model">acathi.assessment.session</field>
+        <field name="arch" type="xml">
+            <search string="Cercar sessions">
+                <field name="person_id"/>
+                <field name="professional_id"/>
+                <separator/>
+                <filter name="pending"   string="Pendents"   domain="[('state','=','pending')]"/>
+                <filter name="completed" string="Completades" domain="[('state','=','completed')]"/>
+                <filter name="expired"   string="Caducades"  domain="[('state','=','expired')]"/>
+                <group expand="0" string="Agrupar per">
+                    <filter name="group_instrument" string="Instrument"
+                            context="{'group_by': 'instrument'}"/>
+                    <filter name="group_professional" string="Professional"
+                            context="{'group_by': 'professional_id'}"/>
+                    <filter name="group_state" string="Estat"
+                            context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_acathi_assessment_session" model="ir.actions.act_window">
+        <field name="name">Sessions d'avaluació</field>
+        <field name="res_model">acathi.assessment.session</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_acathi_assessment_session_search"/>
+        <field name="context">{'search_default_pending': 1}</field>
+    </record>
+
+</odoo>
