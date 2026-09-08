@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_acathi_firma_session_list" model="ir.ui.view">
+        <field name="name">acathi.firma.session.list</field>
+        <field name="model">acathi.firma.session</field>
+        <field name="arch" type="xml">
+            <tree string="Sessions de firma"
+                  decoration-success="state == 'signed'"
+                  decoration-muted="state == 'expired'"
+                  decoration-warning="state == 'pending'">
+                <field name="document_id"/>
+                <field name="signatory_name" string="Firmant"/>
+                <field name="phone"/>
+                <field name="state" widget="badge"
+                       decoration-warning="state == 'pending'"
+                       decoration-success="state == 'signed'"
+                       decoration-muted="state == 'expired'"/>
+                <field name="expiry_date" string="Caducitat" optional="show"/>
+                <field name="signed_date" string="Firmat el" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_acathi_firma_session_form" model="ir.ui.view">
+        <field name="name">acathi.firma.session.form</field>
+        <field name="model">acathi.firma.session</field>
+        <field name="arch" type="xml">
+            <form string="Sessió de firma">
+                <header>
+                    <button name="action_send_whatsapp" type="object"
+                            string="📲 Enviar per WhatsApp" class="btn-primary"
+                            invisible="state != 'pending'"
+                            confirm="S'enviarà un WhatsApp amb l'enllaç de firma. Continuar?"/>
+                    <button name="action_reset" type="object"
+                            string="Regenerar enllaç" class="btn-secondary"
+                            invisible="state == 'pending'"
+                            confirm="Es generarà un nou token. Continuar?"/>
+                    <button name="action_expire" type="object"
+                            string="Caducar"
+                            invisible="state != 'pending'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="pending,signed,expired"/>
+                </header>
+                <sheet>
+                    <div class="mb-3" invisible="state != 'pending'">
+                        <button name="action_open_position_picker" type="object"
+                                string="📍 Definir posició de firma"
+                                class="btn btn-secondary"/>
+                    </div>
+                    <group string="Posició de firma" invisible="state != 'pending'">
+                        <field name="sig_page" string="Pàgina (0=última)"/>
+                        <field name="sig_x_pct" string="X (%)"/>
+                        <field name="sig_y_pct" string="Y (% des de baix)"/>
+                    </group>
+                    <div class="alert alert-info mb-3" invisible="state != 'pending'">
+                        <strong>📋 Opcions d'enviament</strong><br/>
+                        <b>A — Copiar:</b> Copia la URL i envia-la manualment.<br/>
+                        <b>B — WhatsApp:</b> Botó de dalt per enviar automàticament.<br/>
+                        <b>C — QR:</b> Fes clic a «URL del QR» per imprimir-lo.
+                    </div>
+                    <group>
+                        <group string="Document i firmant">
+                            <field name="document_id"/>
+                            <field name="person_id"/>
+                            <field name="signatory_name"/>
+                            <field name="phone"/>
+                        </group>
+                        <group string="Accés">
+                            <field name="expiry_date"/>
+                            <field name="portal_url" widget="url" readonly="1"
+                                   string="URL del formulari"
+                                   invisible="state != 'pending'"/>
+                            <field name="qr_url" widget="url" readonly="1"
+                                   string="URL del QR"
+                                   invisible="state != 'pending'"/>
+                        </group>
+                    </group>
+                    <group string="Resultat" invisible="state != 'signed'">
+                        <field name="signed_date" readonly="1"/>
+                        <field name="signed_document" filename="signed_document_filename"
+                               widget="binary" readonly="1" string="PDF firmat"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_acathi_firma_session_search" model="ir.ui.view">
+        <field name="name">acathi.firma.session.search</field>
+        <field name="model">acathi.firma.session</field>
+        <field name="arch" type="xml">
+            <search string="Cercar sessions">
+                <field name="signatory_name"/>
+                <field name="document_id"/>
+                <field name="person_id"/>
+                <separator/>
+                <filter name="pending" string="Pendents" domain="[('state','=','pending')]"/>
+                <filter name="signed" string="Firmats" domain="[('state','=','signed')]"/>
+                <filter name="expired" string="Caducats" domain="[('state','=','expired')]"/>
+                <group expand="0" string="Agrupar per">
+                    <filter name="group_document" string="Document"
+                            context="{'group_by': 'document_id'}"/>
+                    <filter name="group_state" string="Estat"
+                            context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_acathi_firma_session" model="ir.actions.act_window">
+        <field name="name">Sessions de firma</field>
+        <field name="res_model">acathi.firma.session</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_acathi_firma_session_search"/>
+        <field name="context">{'search_default_pending': 1}</field>
+    </record>
+
+</odoo>

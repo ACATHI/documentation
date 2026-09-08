@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_acathi_firma_document_user,acathi.firma.document user,model_acathi_firma_document,acathi_social.group_acathi_user,1,1,1,0
+access_acathi_firma_document_manager,acathi.firma.document manager,model_acathi_firma_document,acathi_social.group_acathi_manager,1,1,1,1
+access_acathi_firma_session_user,acathi.firma.session user,model_acathi_firma_session,acathi_social.group_acathi_user,1,1,1,0
+access_acathi_firma_session_manager,acathi.firma.session manager,model_acathi_firma_session,acathi_social.group_acathi_manager,1,1,1,1

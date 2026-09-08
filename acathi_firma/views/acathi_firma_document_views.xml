@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_acathi_firma_document_list" model="ir.ui.view">
+        <field name="name">acathi.firma.document.list</field>
+        <field name="model">acathi.firma.document</field>
+        <field name="arch" type="xml">
+            <tree string="Documents per a firma"
+                  decoration-success="state == 'completed'"
+                  decoration-muted="state == 'cancelled'"
+                  decoration-warning="state == 'draft'">
+                <field name="name"/>
+                <field name="state" widget="badge"
+                       decoration-warning="state == 'draft'"
+                       decoration-info="state == 'active'"
+                       decoration-success="state == 'completed'"
+                       decoration-muted="state == 'cancelled'"/>
+                <field name="total_firmants" string="Firmants"/>
+                <field name="signed_count" string="Firmats"/>
+                <field name="create_date" string="Creat"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_acathi_firma_document_form" model="ir.ui.view">
+        <field name="name">acathi.firma.document.form</field>
+        <field name="model">acathi.firma.document</field>
+        <field name="arch" type="xml">
+            <form string="Document per a firma">
+                <header>
+                    <button name="action_activate" type="object"
+                            string="Posar en circulació" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_draft" type="object"
+                            string="Tornar a esborrany"
+                            invisible="state not in ('active','cancelled')"/>
+                    <button name="action_cancel" type="object"
+                            string="Cancel·lar"
+                            invisible="state in ('cancelled','completed')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,active,completed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" icon="fa-pencil" type="object"
+                                name="action_view_sessions">
+                            <field name="signed_count" widget="statinfo"
+                                   string="Firmats"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Nom del document..."/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="document_file" filename="document_filename"
+                                   widget="binary" string="PDF"/>
+                            <field name="document_filename" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="description" placeholder="Instruccions per al firmant (opcional)"/>
+                        </group>
+                    </group>
+
+                    <group string="PDF final" invisible="signed_count == 0">
+                        <field name="signed_master" filename="signed_master_filename"
+                               widget="binary" readonly="1"
+                               string="PDF amb totes les firmes"/>
+                        <field name="signed_master_filename" invisible="1"/>
+                    </group>
+
+                    <separator string="Firmants"/>
+                    <field name="session_ids" mode="tree">
+                        <tree decoration-success="state == 'signed'"
+                              decoration-muted="state == 'expired'">
+                            <field name="signatory_name" string="Nom"/>
+                            <field name="phone" string="Telèfon"/>
+                            <field name="state" widget="badge"
+                                   decoration-warning="state == 'pending'"
+                                   decoration-success="state == 'signed'"
+                                   decoration-muted="state == 'expired'"/>
+                            <field name="expiry_date" string="Caducitat"/>
+                            <field name="signed_date" string="Firmat el" optional="show"/>
+                            <button name="action_send_whatsapp" type="object"
+                                    string="WhatsApp" icon="fa-whatsapp"
+                                    invisible="state != 'pending'"/>
+                        </tree>
+                    </field>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_acathi_firma_document" model="ir.actions.act_window">
+        <field name="name">Documents per a firma</field>
+        <field name="res_model">acathi.firma.document</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_acathi_firma_root"
+              name="Firma Digital"
+              parent="acathi_social.menu_acathi_root"
+              sequence="80"/>
+
+    <menuitem id="menu_acathi_firma_documents"
+              name="Documents"
+              parent="menu_acathi_firma_root"
+              action="action_acathi_firma_document"
+              sequence="10"/>
+
+    <menuitem id="menu_acathi_firma_sessions"
+              name="Sessions de firma"
+              parent="menu_acathi_firma_root"
+              action="action_acathi_firma_session"
+              sequence="20"/>
+
+</odoo>
